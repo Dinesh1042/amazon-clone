@@ -1,0 +1,29 @@
+<div class="images-container">
+  <div class="main-image">
+    <img [src]="images[mainImageIndex]" [alt]="title" />
+  </div>
+  <div class="images-wrap">
+    <div
+      *ngFor="let image of images; index as i"
+      class="img-slide"
+      [ngClass]="{
+        'prev-slide': i === prevImgIndex,
+        'active-slide': i === mainImageIndex,
+        'next-slide': i === nextImgIndex
+      }"
+      (transitionend)="isImageAnimationEnded = true"
+      (transitionstart)="isImageAnimationEnded = false"
+      (click)="mainImageIndex = i"
+    >
+      <img [src]="image" alt="" />
+    </div>
+  </div>
+  <div class="action-btn">
+    <button class="btn btn-light" (click)="prev()">
+      <span class="bi bi-arrow-left"></span>
+    </button>
+    <button class="btn btn-light" (click)="next()">
+      <span class="bi bi-arrow-right"></span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+@import "src/scss/_variables.scss";
+
+.container-sm {
+  max-width: 600px;
+  margin-top: 2rem;
+  h1 {
+    font-size: calc(1.375rem + 1vw);
+  }
+}
+
+.footer {
+  .divider {
+    text-align: center;
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background-color: $gray-300;
+      top: 51%;
+      left: 0;
+    }
+  }
+  .text-info {
+    font-size: 0.87rem;
+    z-index: 5;
+    background-color: #fff;
+    padding: 0.2em 1em;
+    position: relative;
+  }
+}

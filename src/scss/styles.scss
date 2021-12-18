@@ -1,0 +1,55 @@
+@import "variables";
+@import "breakpoints";
+@import "button-loading";
+
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-icons/font/bootstrap-icons";
+
+@import "swiper/scss";
+
+@mixin boxShadow {
+  box-shadow: 0 0 3px 2px rgb(228 121 17 / 50%);
+  border-color: $primary;
+}
+
+.btn-primary {
+  &:hover {
+    background-color: darken($primary, 10);
+    border-color: darken($primary, 10);
+  }
+}
+
+.form-control {
+  &:focus {
+    @include boxShadow();
+  }
+}
+
+.text-brownred {
+  color: $brownRed;
+}
+
+.fs-sm {
+  font-size: 0.85rem;
+}
+
+.btn-sm-block {
+  width: 100%;
+  @include breakpoint(sm) {
+    width: fit-content;
+  }
+}
+
+.btn-xl-block {
+  @include breakpoint(xl) {
+    width: 100%;
+  }
+}
+
+a {
+  color: $darkOrange;
+}
+
+.swiper-h-100.swiper-slide-h-auto .swiper-slide {
+  height: auto !important;
+}

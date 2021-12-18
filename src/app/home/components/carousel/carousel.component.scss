@@ -1,0 +1,26 @@
+@import "src/scss/_breakpoints.scss";
+
+img {
+  width: 100%;
+  min-height: 150px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel {
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.swiper {
+  height: 22vh;
+
+  @include breakpoint(sm) {
+    height: 30vh;
+  }
+
+  @include breakpoint(md) {
+    height: 100%;
+  }
+}

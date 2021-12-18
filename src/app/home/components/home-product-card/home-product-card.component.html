@@ -1,0 +1,31 @@
+<div class="card h-100" (click)="showProduct(product)">
+  <div class="card-img-top">
+    <img [src]="product.images[0]" [alt]="product.title" />
+  </div>
+  <div class="card-body">
+    <p class="card-product-title m-0">{{ product.title | short }}</p>
+    <div class="rating">
+      <star-rating [rating]="product.rating" [fontSize]="1"></star-rating>
+    </div>
+    <div class="price-container">
+      <div class="price-col-1">
+        <p class="price text-brownred">
+          {{ product.price | currency }}
+        </p>
+        <p
+          class="fs-sm original-price text-muted text-decoration-line-through"
+          *ngIf="product.isOfferProduct"
+        >
+          {{ product.originalPrice | currency }}
+        </p>
+      </div>
+      <div class="price-col-2" *ngIf="product.isOfferProduct">
+        <p class="fs-sm save-price text-muted">
+          Save {{ product.priceDifference | currency }} ({{
+            product.offerPercentage
+          }}%)
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

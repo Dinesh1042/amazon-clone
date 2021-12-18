@@ -1,0 +1,47 @@
+<form [formGroup]="signInForm" class="form" (ngSubmit)="signUser()">
+  <div class="form-group mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input
+      formControlName="email"
+      type="text"
+      class="form-control"
+      id="email"
+      [class.is-invalid]="email?.touched && email?.invalid"
+      autofocus
+    />
+
+    <div class="invalid-feedback">
+      <div *ngIf="email?.hasError('required')">Email is required</div>
+      <div *ngIf="email?.hasError('email')">Please enter a valid email.</div>
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input
+      formControlName="password"
+      type="password"
+      class="form-control"
+      id="password"
+      [class.is-invalid]="password?.touched && password?.invalid"
+    />
+    <div class="wrap">
+      <div
+        class="invalid-feedback"
+        *ngIf="password?.touched && password?.hasError('required')"
+      >
+        Password is required
+      </div>
+
+      <div class="forget-password">
+        <a href="">Forget password?</a>
+      </div>
+    </div>
+  </div>
+  <button
+    [buttonLoader]="loading"
+    [disabled]="signInForm.invalid"
+    class="btn btn-primary w-100 mt-2"
+  >
+    Sign In
+  </button>
+</form>

@@ -1,0 +1,29 @@
+<div class="container-lg mb-3">
+  <ng-container *ngIf="product && !error">
+    <product-detail [product]="product">
+      <div class="addCartBtn mt-3">
+        <add-cart-btn [product]="product"></add-cart-btn>
+      </div>
+    </product-detail>
+  </ng-container>
+  <ng-container *ngIf="loading && !error">
+    <loader></loader>
+  </ng-container>
+  <ng-container *ngIf="error && !loading">
+    <div class="m-4">
+      <error>
+        <ng-container class="alert-heading"
+          >Oops! Something is missing</ng-container
+        >
+        <ng-container class="alert-message">
+          {{
+            error.message === "No Product Found"
+              ? "We Cannot find the product what you are looking for."
+              : error.message
+          }}
+        </ng-container>
+        <a routerLink="/" class="alert-action btn btn-dark">Go Home</a>
+      </error>
+    </div>
+  </ng-container>
+</div>

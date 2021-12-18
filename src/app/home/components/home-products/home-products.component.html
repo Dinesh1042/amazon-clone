@@ -1,0 +1,23 @@
+<div class="wrap mt-4">
+  <header class="mb-3">
+    <ng-content select=".title"></ng-content>
+  </header>
+  <swiper
+    class="swiper swiper-h-100 swiper-slide-h-auto"
+    [config]="swiperConfig"
+  >
+    <!-- Product Slide -->
+    <ng-container *ngIf="products$ | async as products; else swiperLoader">
+      <ng-template *ngFor="let product of products" swiperSlide>
+        <home-product-card [product]="product"></home-product-card>
+      </ng-template>
+    </ng-container>
+
+    <!-- Product Loader -->
+    <ng-template #swiperLoader>
+      <ng-template swiperSlide *ngFor="let slide of productLoaderSlides">
+        <home-product-loader></home-product-loader>
+      </ng-template>
+    </ng-template>
+  </swiper>
+</div>

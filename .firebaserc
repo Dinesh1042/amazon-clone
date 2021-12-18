@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "fir-dd21b"
+  },
+  "targets": {
+    "fir-dd21b": {
+      "hosting": {
+        "amazon": [
+          "fir-dd21b"
+        ]
+      }
+    }
+  }
+}

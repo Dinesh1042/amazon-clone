@@ -1,0 +1,38 @@
+<div class="container-lg">
+  <ng-container *ngIf="product; else loadingOrError">
+    <product-detail [product]="product">
+      <div class="actionBtns btns text-end">
+        <button
+          [buttonLoader]="deleteActionLoading"
+          (click)="deleteAlert()"
+          class="btn btn-danger"
+        >
+          Delete
+        </button>
+        <button (click)="editProduct()" class="btn btn-success ms-3">
+          Edit
+        </button>
+      </div>
+    </product-detail>
+  </ng-container>
+  <ng-template #loadingOrError>
+    <div *ngIf="pageLoading" class="loading">
+      <loader></loader>
+    </div>
+    <error *ngIf="error && error?.message">
+      <ng-container class="alert-heading"
+        >Oops! Something is missing</ng-container
+      >
+      <ng-container class="alert-message">
+        {{
+          error.message === "No Product Found"
+            ? "We Cannot find the product what you are looking for."
+            : error.message
+        }}
+      </ng-container>
+      <a routerLink="../" class="alert-action btn btn-outline-dark"
+        >View all products</a
+      >
+    </error>
+  </ng-template>
+</div>

@@ -1,0 +1,25 @@
+@import "src/scss/_variables.scss";
+
+.wrap {
+  position: relative;
+  margin-top: 0.25rem;
+  .invalid-feedback {
+    position: absolute;
+    display: flex;
+    width: fit-content;
+    margin-top: 0;
+  }
+
+  .forget-password {
+    font-size: 0.9rem;
+    text-align: end;
+    a {
+      color: darken($primary, 18);
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+        color: darken($primary, 12);
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@import "src/scss/_variables.scss";
+
+.container {
+  height: 72.5vh;
+  display: grid;
+  place-items: center;
+}
+
+.text-primary {
+  border-color: $darkOrange;
+  border-right-color: transparent;
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.35rem;
+}

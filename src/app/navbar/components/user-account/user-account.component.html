@@ -1,0 +1,22 @@
+<a
+  *ngIf="user$ | async as user; else loadingOrAnonymousUser"
+  class="user-account"
+  routerLink="/auth/signin"
+>
+  <div class="user text-1">Hello, {{ user.displayName }}</div>
+  <div class="account-list text-bold text-2">Account & Lists</div>
+</a>
+
+<ng-template #loadingOrAnonymousUser>
+  <div *ngIf="loading; else anonymousUser">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <ng-template #anonymousUser>
+    <a class="user-account" routerLink="/auth/signin">
+      <div class="user text-1">Hello, Sign In</div>
+      <div class="account-list text-bold text-2">Account & Lists</div>
+    </a>
+  </ng-template>
+</ng-template>

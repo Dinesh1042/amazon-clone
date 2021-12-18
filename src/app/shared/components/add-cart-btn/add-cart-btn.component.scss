@@ -1,0 +1,15 @@
+@import "src/scss/_variables.scss";
+
+.button-wrap {
+  display: flex;
+  align-items: center;
+  background-color: lighten($primary, 23);
+
+  border-radius: 0.25rem;
+  width: fit-content;
+}
+
+.quantity {
+  padding-inline: 1.5rem;
+  pointer-events: none;
+}

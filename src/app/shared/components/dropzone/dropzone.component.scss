@@ -1,0 +1,51 @@
+@import "src/scss/_variables.scss";
+
+.dropzone {
+  text-align: center;
+  padding: 2.2rem;
+  border: 2px dashed darken($primary, 5);
+  border-radius: 0.5rem;
+  text-align: center;
+  transition: 200ms ease-in-out background-color, 200ms ease-in-out border-color;
+  user-select: none;
+
+  & img {
+    width: 4rem;
+    -webkit-user-drag: none;
+  }
+
+  &.hovered {
+    background-color: transparentize($primary, 0.7);
+    border-color: darken($primary, 5);
+  }
+
+  .btn {
+    padding: 0;
+  }
+
+  .btn-link {
+    color: darken($primary, 15);
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+      color: darken($primary, 5);
+    }
+  }
+
+  .dropzone-text {
+    margin: 0;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    gap: 0.3rem;
+    color: $gray-700;
+    .btn {
+      vertical-align: middle;
+    }
+  }
+
+  .dropzone-info-text {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: -0.05rem;
+  }
+}

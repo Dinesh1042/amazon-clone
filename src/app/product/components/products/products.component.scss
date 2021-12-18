@@ -1,0 +1,10 @@
+@import "src/scss/_breakpoints.scss";
+
+.products-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  @include breakpoint(sm) {
+    grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));
+  }
+}

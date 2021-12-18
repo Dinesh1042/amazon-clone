@@ -1,0 +1,98 @@
+<div class="card">
+  <input
+    type="file"
+    #inputFileEl
+    (change)="onChange($event)"
+    multiple
+    accept=".jpg,.png,.jpeg"
+    maxlength="5"
+    class="d-none"
+  />
+  <div
+    *ngIf="!product.images.length; else imagePreviewTemplate"
+    class="dropzone-wrap"
+  >
+    <dropzone (dropped)="onChange($event)" [multiple]="true"></dropzone>
+  </div>
+  <ng-template #imagePreviewTemplate>
+    <div class="images-wrap">
+      <div class="main-img-wrap">
+        <div
+          *ngIf="
+            product.images[mainImageIndex] | fileToDataUrl | async as mainImg;
+            else loader
+          "
+          class="main-img"
+        >
+          <img [src]="mainImg" [alt]="product.title" />
+        </div>
+        <ng-template #loader>
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </ng-template>
+      </div>
+      <div class="images-grid">
+        <div
+          *ngFor="let image of product.images; index as i"
+          class="img-wrap"
+          [class.active]="mainImageIndex === i"
+          (click)="mainImageIndex = i"
+        >
+          <ng-container
+            *ngIf="image | fileToDataUrl | async as img; else loader"
+          >
+            <img [src]="img" alt="" />
+            <button (click)="removeImage($event, i)" class="img-btn-close">
+              <span class="bi bi-x-lg"></span>
+            </button>
+          </ng-container>
+          <ng-template #loader>
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </ng-template>
+        </div>
+        <div *ngIf="product.images.length < 4" class="add-img-btn">
+          <button (click)="inputFileEl.click()" class="btn btn-primary">
+            <span class="bi bi-plus-lg d-block"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class="card-body">
+    <div *ngIf="product.title" class="title-wrap">
+      <h5 class="card-title">
+        {{ product.title }}
+      </h5>
+    </div>
+    <div class="badge-wrap" *ngIf="product.category">
+      <span class="badge bg-primary">
+        {{ product.category | camelCaseSplit | titlecase }}
+      </span>
+    </div>
+    <div *ngIf="product.price" class="price-wrap d-flex">
+      <h5 class="price">
+        {{ product.price | currency }}
+      </h5>
+      <ng-container *ngIf="product.isOfferProduct">
+        <p class="text-muted text-decoration-line-through fs-sm">
+          {{ product.originalPrice | currency }}
+        </p>
+        <p class="text-muted fs-sm">
+          Save {{ product.priceDifference | currency }} ({{
+            product.offerPercentage
+          }}%)
+        </p>
+      </ng-container>
+    </div>
+    <div *ngIf="product.rating !== null" class="rating">
+      <star-rating [rating]="product.rating"></star-rating>
+    </div>
+    <div *ngIf="product.description" class="description">
+      <p>{{ product.description }}</p>
+    </div>
+  </div>
+</div>

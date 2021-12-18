@@ -1,0 +1,8 @@
+@import "src/scss/_variables.scss";
+
+.star-cont {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: $darkOrange;
+}

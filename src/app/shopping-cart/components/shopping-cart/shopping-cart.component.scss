@@ -1,0 +1,54 @@
+@import "src/scss/_variables.scss";
+@import "src/scss/_breakpoints.scss";
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid $gray-400;
+  padding: 0.5rem 1rem;
+  p {
+    margin: 0;
+    font-weight: bold;
+  }
+}
+
+.cart-container {
+  margin-bottom: 2rem;
+}
+
+.cart-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-top: 1px solid $gray-400;
+  p {
+    margin: 0;
+  }
+}
+
+main {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+
+  .proceed-card {
+    order: -1;
+  }
+
+  @include breakpoint(xl) {
+    grid-template-columns: 68% 1fr;
+    .proceed-card {
+      order: unset;
+    }
+  }
+
+  &.empty-cart {
+    grid-template-columns: 1fr;
+  }
+}
+
+.empty-cart {
+  min-height: 65vh;
+}

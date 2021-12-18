@@ -1,0 +1,47 @@
+<div class="container-lg mt-4 mb-4">
+  <div class="row" *ngIf="!loading && !error; else errorOrLoader">
+    <header class="mb-3 header d-flex align-items-center">
+      <a class="btn btn-light btn-sm" routerLink="../">
+        <span class="bi bi-arrow-left"></span>
+      </a>
+      <h2 class="m-0 ms-3">
+        {{ isEditProduct ? "Edit Product" : "Add Product" }}
+      </h2>
+    </header>
+    <div class="col-md-7 order-1">
+      <admin-product-form
+        [isEditProduct]="isEditProduct"
+        [editProduct]="editProduct"
+        (productFormEvent)="productFormEvent($event)"
+        [cardComponent]="cardComponent"
+        (changesSavedEvent)="changesSavedEvent($event)"
+      ></admin-product-form>
+    </div>
+    <div class="col-md-5 order-md-1 mb-3">
+      <admin-product-card
+        #cardComponent
+        [product]="product"
+      ></admin-product-card>
+    </div>
+  </div>
+  <ng-template #errorOrLoader>
+    <error *ngIf="error && error?.message">
+      <ng-container class="alert-heading"
+        >Oops! Something is missing</ng-container
+      >
+      <ng-container class="alert-message">
+        {{
+          error.message === "No Product Found"
+            ? "We Cannot find the product what you are looking for."
+            : error.message
+        }}
+      </ng-container>
+      <a routerLink="../../" class="alert-action btn btn-outline-dark"
+        >View Products</a
+      >
+    </error>
+    <ng-container *ngIf="loading">
+      <loader></loader>
+    </ng-container>
+  </ng-template>
+</div>

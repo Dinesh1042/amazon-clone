@@ -1,0 +1,126 @@
+<div class="container-lg mt-3 mb-4">
+  <header class="d-flex align-items-center justify-content-between">
+    <h2 class="m-0">Manage Products</h2>
+    <a routerLink="./new" class="btn btn-success">Add Product</a>
+  </header>
+
+  <div
+    *ngIf="filteredProducts && !error; else loadingOrErrorTemplate"
+    class="mt-4"
+  >
+    <div>
+      <input
+        #f
+        (keyup)="filterProduct(f)"
+        type="text"
+        placeholder="Search for an item"
+        class="form-control"
+      />
+    </div>
+
+    <table
+      *ngIf="filteredProducts?.length; else noProductFound"
+      class="table mt-4 table-bordered table-striped table-hover"
+    >
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Price</th>
+          <th>List Price</th>
+          <th>Save</th>
+          <th>Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          (click)="product.pid && navigateToProduct(product.pid)"
+          *ngFor="let product of filteredProducts; index as i"
+        >
+          <td>{{ i + 1 }}</td>
+          <td>{{ product.title | short }}</td>
+          <td>{{ product.price | currency }}</td>
+          <td>
+            {{ product.originalPrice | currency }}
+          </td>
+          <td>
+            {{ product.priceDifference | currency }} ({{
+              product.offerPercentage
+            }}%)
+          </td>
+          <td>
+            <star-rating [rating]="product.rating" [fontSize]="1"></star-rating>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ul class="list-group list-group-flush mt-4">
+      <li
+        *ngFor="let product of filteredProducts; index as i"
+        class="list-group-item list-group-item-action"
+        (click)="product.pid && navigateToProduct(product.pid)"
+      >
+        <div class="col-img">
+          <div class="product-img">
+            <img
+              class="img-fluid"
+              [src]="product.images[0]"
+              [alt]="product.title"
+            />
+          </div>
+        </div>
+
+        <div class="col-detail">
+          <h5>
+            {{ product.title | short }}
+          </h5>
+
+          <div class="rating mt-1">
+            <star-rating [rating]="product.rating" [fontSize]="1"></star-rating>
+          </div>
+          <div class="price-container mt-1">
+            <div class="price-col-1">
+              <p class="text-brownred m-0 price">
+                {{ product.price | currency }}
+              </p>
+              <p
+                *ngIf="product.isOfferProduct"
+                class="fs-sm m-0 text-muted text-decoration-line-through"
+              >
+                {{ product.originalPrice | currency }}
+              </p>
+            </div>
+            <div *ngIf="product.isOfferProduct" class="price-col-2">
+              <p class="fs-sm m-0 text-muted">
+                Save {{ product.priceDifference | currency }} ({{
+                  product.offerPercentage
+                }}%)
+              </p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <ng-template #noProductFound>
+      <div class="alert alert-danger mt-4">
+        No product found on this "{{ f.value }}" keyword
+      </div>
+    </ng-template>
+  </div>
+  <ng-template #loadingOrErrorTemplate>
+    <div *ngIf="pageLoading && !error">
+      <loader></loader>
+    </div>
+    <error *ngIf="error">
+      <ng-container class="alert-heading"
+        >Oops! Something is missing</ng-container
+      >
+      <ng-container class="alert-message">
+        {{ error.message }}
+      </ng-container>
+      <a routerLink="/" class="alert-action btn btn-dark-outline">Go Home</a>
+    </error>
+  </ng-template>
+</div>

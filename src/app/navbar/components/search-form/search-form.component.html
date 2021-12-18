@@ -1,0 +1,57 @@
+<form
+  class="form"
+  [formGroup]="searchForm"
+  (ngSubmit)="onSearch()"
+  (scroll)="suggestionListActive = false"
+>
+  <div class="form-group" [class.focus]="formControlFocused">
+    <div class="select-group">
+      <select
+        formControlName="category"
+        #s
+        (change)="onCategoryChange(s)"
+        class="select-original"
+      >
+        <option value="">All Categories</option>
+        <option value="computer">Computer & Accessories</option>
+        <option value="technology">Technology</option>
+        <option value="something">Something</option>
+      </select>
+      <div class="form-select">{{ selectedCategory | camelCaseSplit }}</div>
+    </div>
+    <input
+      (focus)="suggestionListActive = formControlFocused = true"
+      (focusout)="formControlFocused = false"
+      type="text"
+      class="form-control shadow-none"
+      placeholder="Search"
+      formControlName="query"
+      (keydown)="suggestionKeyDown($event)"
+    />
+    <button class="btn btn-primary">
+      <span class="bi bi-search"></span>
+    </button>
+    <div
+      class="search-suggestions list-group list-group-flush"
+      *ngIf="suggestionListActive && searchQuery?.value.length"
+    >
+      <a
+        [routerLink]="['./products']"
+        [queryParams]="{ query: suggestion }"
+        *ngFor="let suggestion of suggestionList; index as i"
+        class="list-group-item list-group-item-action"
+        (click)="suggestionListActive = false"
+        [class.active]="suggestionIndex === i"
+        (click)="suggestionIndex = -1"
+      >
+        {{ suggestion }}
+      </a>
+    </div>
+  </div>
+</form>
+<div
+  class="overlay"
+  *ngIf="
+    suggestionListActive && suggestionList.length && searchQuery?.value.length
+  "
+></div>

@@ -1,0 +1,55 @@
+@import "src/scss/_breakpoints.scss";
+
+.navbar {
+  @include breakpoint(md) {
+    padding-top: 0.57rem;
+    padding-bottom: 0.57rem;
+  }
+}
+
+.container-lg {
+  display: grid;
+  grid-template-areas:
+    "logo nav-right"
+    "search-form search-form";
+  flex-wrap: nowrap;
+  @include breakpoint(md) {
+    display: flex;
+    gap: 1.2rem;
+  }
+}
+
+.navbar-brand {
+  grid-area: logo;
+  margin-right: 0;
+  padding: 0;
+}
+
+.search-box {
+  grid-area: search-form;
+  margin-top: 0.7rem;
+  margin-bottom: 0.3rem;
+  @include breakpoint(md) {
+    margin-top: 0;
+    margin-bottom: 0;
+    flex-grow: 1;
+  }
+}
+
+.nav-right {
+  grid-area: nav-right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.5rem;
+}
+
+.shopping-cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  .btn-text {
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,44 @@
+@import "src/scss/_variables.scss";
+
+.alert-card {
+  position: fixed;
+  z-index: 1100;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  width: 95%;
+  max-width: 500px;
+  box-shadow: 0 2px 3px 0 rgba(60, 64, 67, 0.3),
+    0 6px 10px 4px rgba(60, 64, 67, 0.15);
+  overflow: hidden;
+}
+
+.alert-header {
+  h4 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+  margin-bottom: 1rem;
+}
+
+.alert-body {
+  background: rgb(250, 229, 227);
+  color: $danger;
+  padding: 1rem 1.5rem;
+  border-radius: 0.25rem;
+  display: flex;
+  gap: 0.8rem;
+  p {
+    margin: 0;
+  }
+}
+
+.alert-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}

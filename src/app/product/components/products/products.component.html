@@ -1,0 +1,18 @@
+<div class="container-lg mt-4 mb-4">
+  <ng-container *ngIf="products$ | async as products">
+    <ng-container *ngIf="products.length; else noProductsFound">
+      <div class="products-wrap">
+        <product-card
+          *ngFor="let product of products"
+          [product]="product"
+        ></product-card>
+      </div>
+    </ng-container>
+    <ng-template #noProductsFound>
+      <div class="alert alert-warning mt-4">No Products Found</div>
+    </ng-template>
+  </ng-container>
+  <ng-container *ngIf="loading">
+    <loader></loader>
+  </ng-container>
+</div>

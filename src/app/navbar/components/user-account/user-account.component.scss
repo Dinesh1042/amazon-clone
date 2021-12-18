@@ -1,0 +1,37 @@
+@import "src/scss/_variables.scss";
+
+.user-account {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+
+  .user {
+    color: $gray-500;
+    font-size: 0.8rem;
+    transition: 200ms ease color;
+  }
+  .account-list {
+    color: $gray-300;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: -0.15rem;
+    transition: 200ms ease color;
+  }
+  &:hover {
+    .user {
+      color: $gray-400;
+    }
+    .account-list {
+      color: $gray-100;
+    }
+  }
+}
+
+.loader {
+  width: 6.3125rem;
+  text-align: center;
+}

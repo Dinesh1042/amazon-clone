@@ -1,0 +1,68 @@
+@import "src/scss/_variables.scss";
+@import "src/scss/_breakpoints.scss";
+
+.cart-product {
+  display: grid;
+  grid-template-areas: "product product" "quantity price";
+  gap: 1.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid $gray-200;
+
+  p {
+    margin: 0;
+  }
+
+  &-col-1 {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    grid-area: product;
+  }
+
+  &-col-2 {
+    grid-area: quantity;
+  }
+
+  &-col-3 {
+    justify-self: flex-end;
+    text-align: end;
+    grid-area: price;
+  }
+
+  &-img {
+    img {
+      width: 100%;
+    }
+    width: 70px;
+  }
+
+  @include breakpoint(sm) {
+    grid-template-areas: "product price" "quantity .";
+  }
+
+  @include breakpoint(md) {
+    grid-template-areas: unset;
+    grid-template-columns: 3fr 2fr 1fr;
+    &-col-1,
+    &-col-2,
+    &-col-3 {
+      grid-area: unset;
+    }
+  }
+}
+
+.price-container {
+  .price-col-1 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .price {
+    font-size: 1.2rem;
+  }
+
+  p {
+    margin: 0;
+  }
+}

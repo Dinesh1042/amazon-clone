@@ -1,0 +1,22 @@
+<div class="alert-card">
+  <div class="alert-header">
+    <h4>
+      {{ title }}
+    </h4>
+  </div>
+
+  <div class="alert-body">
+    <span class="bi bi-exclamation-triangle-fill"></span>
+    <p>
+      {{ body }}
+    </p>
+  </div>
+  <div class="alert-footer">
+    <button [mat-dialog-close]="false" class="btn btn-light">
+      {{ cancelButton || "Cancel" }}
+    </button>
+    <button [mat-dialog-close]="true" class="btn btn-danger">
+      {{ confirmButton || "Delete" }}
+    </button>
+  </div>
+</div>

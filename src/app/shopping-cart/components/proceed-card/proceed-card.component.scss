@@ -1,0 +1,8 @@
+@import "src/scss/_breakpoints.scss";
+
+@include breakpoint(xl) {
+  .card {
+    position: sticky;
+    top: 5rem;
+  }
+}

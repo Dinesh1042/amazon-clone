@@ -1,0 +1,49 @@
+<div class="cart-product">
+  <!-- Col 1 -->
+  <div class="cart-product-col-1">
+    <div class="cart-product-img">
+      <img [src]="cartProduct.images[0]" [alt]="cartProduct.title" />
+    </div>
+    <div class="cart-product-detail">
+      <a
+        class="text-decoration-none text-body"
+        [routerLink]="['/products', cartProduct.pid]"
+        >{{ cartProduct.title | short }}</a
+      >
+      <star-rating [fontSize]="1" [rating]="cartProduct.rating"></star-rating>
+      <div class="price-container">
+        <div class="price-col-1">
+          <p class="price text-brownred">
+            {{ cartProduct.price | currency }}
+          </p>
+          <p
+            class="fs-sm original-price text-muted text-decoration-line-through"
+            *ngIf="cartProduct.isOfferProduct"
+          >
+            {{ cartProduct.originalPrice | currency }}
+          </p>
+        </div>
+        <div class="price-col-2" *ngIf="cartProduct.isOfferProduct">
+          <p class="fs-sm save-price text-muted">
+            Save {{ cartProduct.priceDifference | currency }} ({{
+              cartProduct.offerPercentage
+            }}%)
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Col 2 -->
+  <div class="cart-product-col-2">
+    <add-cart-btn [product]="cartProduct"></add-cart-btn>
+  </div>
+  <!-- Col 3 -->
+  <div class="cart-product-col-3">
+    <div class="amount">
+      <div class="text-muted fs-sm">
+        {{ cartProduct.price | currency }} x {{ cartProduct.quantity }}
+      </div>
+      <div>{{ cartProduct.cartItemTotalPrice | currency }}</div>
+    </div>
+  </div>
+</div>

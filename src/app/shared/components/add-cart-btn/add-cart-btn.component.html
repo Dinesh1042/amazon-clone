@@ -1,0 +1,21 @@
+<div class="addToCartContainer">
+  <button
+    (click)="addToCart($event)"
+    *ngIf="quantity < 1; else quantityChanger"
+    class="btn btn-primary"
+  >
+    Add to Cart
+  </button>
+
+  <ng-template #quantityChanger>
+    <div class="button-wrap">
+      <button class="btn btn-primary" (click)="decreaseQuantity($event)">
+        <span class="bi bi-dash"></span>
+      </button>
+      <div class="quantity">{{ quantity }} in cart</div>
+      <button (click)="increaseQuantity($event)" class="btn btn-primary">
+        <span class="bi bi-plus"></span>
+      </button>
+    </div>
+  </ng-template>
+</div>

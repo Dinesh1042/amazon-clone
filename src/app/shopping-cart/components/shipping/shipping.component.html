@@ -1,0 +1,34 @@
+<div class="container-lg mt-4 mb-4">
+  <ng-container *ngIf="shoppingCart">
+    <ng-container *ngIf="shoppingCart.cartProductCount > 0; else emptyCart">
+      <header class="mb-4">
+        <h4 class="m-0">Shipping</h4>
+      </header>
+      <div class="row">
+        <div class="col-md-7 order-1 col-xl-8">
+          <shipping-form
+            [orderPlacedLoading]="orderPlacedLoading"
+            (placeOrderEvent)="placeOrder($event)"
+          ></shipping-form>
+        </div>
+        <div class="col-md-5 order-md-1 mb-4 col-xl-4">
+          <order-summary [shoppingCart]="shoppingCart"></order-summary>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #emptyCart>
+      <div class="mt-5 pt-2">
+        <empty-cart></empty-cart>
+      </div>
+    </ng-template>
+  </ng-container>
+  <ng-container *ngIf="loading">
+    <loader></loader>
+  </ng-container>
+  <ng-container *ngIf="error">
+    <error>
+      <ng-container class="alert-heading">An Error Occurred!</ng-container>
+      <ng-container>{{ error.message }}</ng-container>
+    </error>
+  </ng-container>
+</div>

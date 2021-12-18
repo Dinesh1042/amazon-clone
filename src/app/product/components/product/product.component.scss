@@ -1,0 +1,9 @@
+@import "src/scss/_breakpoints.scss";
+
+.container-lg {
+  padding-inline: 0;
+  @include breakpoint(md) {
+    padding-inline: 0.75rem;
+    margin-top: 1.5rem;
+  }
+}

@@ -1,0 +1,26 @@
+@import "src/scss/_variables.scss";
+
+.categories-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  .card {
+    cursor: pointer;
+    transition: 200ms ease-in-out transform, 200ms ease-in-out background-color;
+    &-body {
+      padding-block: 0.529rem;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+      background-color: lighten($darkOrange, 35);
+      .bi {
+        color: $darkOrange;
+      }
+      border-color: lighten($darkOrange, 30);
+    }
+  }
+  .bi {
+    font-size: 1.8rem;
+  }
+}

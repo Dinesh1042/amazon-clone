@@ -1,0 +1,24 @@
+<div class="container-lg">
+  <ng-container *ngIf="orderData">
+    <div class="alert alert-success mt-4">
+      Your order has been placed! You will receive an email shortly.
+    </div>
+  </ng-container>
+  <!-- Loader -->
+  <ng-container *ngIf="loading">
+    <loader></loader>
+  </ng-container>
+  <!-- Error -->
+  <ng-container *ngIf="error">
+    <error>
+      <ng-container class="alert-heading"
+        >Oops! Something is missing</ng-container
+      >
+      <ng-container class="alert-message">{{ error.message }}</ng-container>
+
+      <a routerLink="/" class="alert-action btn btn-outline-dark">
+        View Orders
+      </a>
+    </error>
+  </ng-container>
+</div>

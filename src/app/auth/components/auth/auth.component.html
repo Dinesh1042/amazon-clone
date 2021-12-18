@@ -1,0 +1,47 @@
+<div class="container-sm mb-4">
+  <div class="brand-wrap text-center">
+    <a routerLink="/" class="brand-logo">
+      <img src="assets/amazon-logo-dark.svg" width="140" alt="" />
+    </a>
+  </div>
+
+  <div *ngIf="authError | async as authError" class="alert alert-danger mt-3">
+    {{ authError }}
+  </div>
+
+  <header class="header mt-3">
+    <h1>{{ isSignUrl ? "Sign In" : "Create Account" }}</h1>
+  </header>
+
+  <div class="form mt-3">
+    <router-outlet></router-outlet>
+  </div>
+
+  <footer class="footer mt-4">
+    <div class="divider">
+      <span class="text-info text-muted">{{
+        isSignUrl ? "New to Amazon?" : "Already have an account?"
+      }}</span>
+    </div>
+
+    <div class="cta-buttons mt-4">
+      <a
+        (click)="removeAuthError()"
+        *ngIf="isSignUrl; else signInTemplateBtn"
+        routerLink="./register"
+        queryParamsHandling="preserve"
+        class="btn btn-dark w-100"
+        >Create your Amazon account</a
+      >
+      <ng-template #signInTemplateBtn>
+        <a
+          (click)="removeAuthError()"
+          routerLink="./signin"
+          queryParamsHandling="preserve"
+          class="btn btn-dark w-100"
+          >Sign in your Amazon account</a
+        >
+      </ng-template>
+    </div>
+  </footer>
+</div>

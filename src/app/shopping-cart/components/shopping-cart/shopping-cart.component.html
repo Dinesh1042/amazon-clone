@@ -1,0 +1,59 @@
+<div class="container-lg mt-4 mb-4">
+  <header *ngIf="shoppingCart?.cartProductCount">
+    <h4 class="m-0">Shopping Cart</h4>
+  </header>
+  <main
+    class="mt-4"
+    [class.empty-cart]="shoppingCart.cartProductCount <= 0"
+    *ngIf="shoppingCart && !loading"
+  >
+    <ng-container *ngIf="shoppingCart.cartProductCount > 0; else emptyCart">
+      <div class="cart-container">
+        <div class="cart-header">
+          <div class="cart-header-title">
+            <p>Products</p>
+          </div>
+          <div class="cart-header-price">
+            <p>Price</p>
+          </div>
+        </div>
+        <div class="cart-products">
+          <shopping-cart-product
+            *ngFor="
+              let cartProduct of shoppingCart.shoppingCartItems;
+              trackBy: trackByCartId
+            "
+            [cartProduct]="cartProduct"
+          ></shopping-cart-product>
+        </div>
+        <div class="cart-footer">
+          <p>Cart Total</p>
+          <h5>{{ shoppingCart.cartTotalPrice | currency }}</h5>
+        </div>
+      </div>
+
+      <div class="proceed-card">
+        <proceed-card [shoppingCart]="shoppingCart"></proceed-card>
+      </div>
+    </ng-container>
+
+    <ng-template #emptyCart>
+      <div class="mt-4 empty-cart">
+        <empty-cart></empty-cart>
+      </div>
+    </ng-template>
+  </main>
+  <!-- Loader -->
+  <ng-container *ngIf="loading">
+    <loader></loader>
+  </ng-container>
+  <!-- Error -->
+  <ng-container *ngIf="error">
+    <error>
+      <ng-container class="alert-heading">A Error Occurred!</ng-container>
+      <ng-container class="alert-message">
+        {{ error.message }}
+      </ng-container>
+    </error>
+  </ng-container>
+</div>

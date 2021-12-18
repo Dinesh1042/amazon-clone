@@ -1,0 +1,25 @@
+<div
+  dropzone
+  (hovered)="hovered = $event"
+  (dropEvent)="onChange($event)"
+  class="dropzone"
+  [class.hovered]="hovered"
+>
+  <input
+    type="file"
+    #inputEl
+    class="d-none"
+    [accept]="accept"
+    [multiple]="multiple"
+    (change)="onChange($event)"
+  />
+  <img class="dropzone-img" src="assets/file_upload_icon.svg" alt="" />
+  <p class="dropzone-text" *ngIf="!hovered; else dropReleaseTemplate">
+    Drop your image here, or
+    <button (click)="inputEl.click()" class="btn btn-link">browse</button>
+  </p>
+  <ng-template #dropReleaseTemplate>
+    <p class="dropzone-text">Release to add your images.</p>
+  </ng-template>
+  <span class="dropzone-info-text text-muted"> Supports JPG, PNG.</span>
+</div>

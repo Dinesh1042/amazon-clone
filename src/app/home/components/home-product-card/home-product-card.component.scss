@@ -1,0 +1,49 @@
+@import "src/scss/_variables.scss";
+@import "src/scss/_breakpoints.scss";
+
+.card {
+  cursor: pointer;
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  @include breakpoint(md) {
+    &:hover {
+      img {
+        transform: scale(1.01);
+      }
+    }
+  }
+}
+
+.card-img-top {
+  padding: 0.5rem;
+  height: 12rem;
+  background-color: $gray-100;
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+    transition: 200ms ease-in-out transform;
+  }
+}
+
+.card-product-title {
+  font-size: 1.125rem;
+}
+
+.price-container {
+  .price-col-1 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .price {
+    font-size: 1.2rem;
+  }
+
+  p {
+    margin: 0;
+  }
+}

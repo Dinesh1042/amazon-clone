@@ -1,0 +1,47 @@
+@import "src/scss/_variables.scss";
+
+.card {
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.card-header,
+.card-footer {
+  background-color: $white;
+  border-color: $gray-300;
+  padding: 1rem;
+}
+
+.cart-product {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1rem;
+
+  &:not(&:last-child) {
+    border-bottom: 1px solid $gray-200;
+  }
+
+  &-img {
+    height: 3.125rem;
+    width: 3.125rem;
+    aspect-ratio: 1 / 1;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+  &-content {
+    display: flex;
+    flex-direction: column;
+    .productAndPrice {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      .product-total {
+        font-weight: 500;
+      }
+    }
+  }
+}

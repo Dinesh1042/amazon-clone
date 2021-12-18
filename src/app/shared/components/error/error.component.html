@@ -1,0 +1,11 @@
+<div class="cont">
+  <div class="alert-wrap mt-5 text-center">
+    <h3 class="text-danger">
+      <ng-content select=".alert-heading"></ng-content>
+    </h3>
+    <p class="text-muted error-message mb-4">
+      <ng-content select=".alert-message"></ng-content>
+    </p>
+    <ng-content select=".alert-action"></ng-content>
+  </div>
+</div>

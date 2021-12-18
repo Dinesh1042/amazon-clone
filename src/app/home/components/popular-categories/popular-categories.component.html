@@ -1,0 +1,18 @@
+<div class="wrap mt-4">
+  <h5>Popular Categories</h5>
+  <div class="categories-container mt-3">
+    <a
+      routerLink="/products"
+      [queryParams]="{
+        category: category.name,
+        query: category.query
+      }"
+      *ngFor="let category of categories"
+      class="card"
+    >
+      <div class="card-body">
+        <span class="bi" [class]="'bi-' + category.icon"></span>
+      </div>
+    </a>
+  </div>
+</div>

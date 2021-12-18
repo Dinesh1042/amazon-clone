@@ -1,0 +1,106 @@
+@import "src/scss/_variables.scss";
+@import "src/scss/_breakpoints.scss";
+
+.footer {
+  background: $dark;
+}
+
+.container-lg {
+  display: grid;
+  text-align: left;
+  padding: 4rem 2rem;
+  gap: 1rem;
+
+  @include breakpoint(sm) {
+    grid-template-areas: "footer-link-1 footer-link-2 footer-link-3" "footer-link-4 brand brand";
+  }
+
+  @include breakpoint(md) {
+    grid-template-areas: "brand . footer-link-1 footer-link-2 footer-link-3 footer-link-4";
+  }
+}
+
+.brand-wrap {
+  align-items: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+  order: 1;
+  .brand-img {
+    width: 110px;
+    img {
+      width: 100%;
+    }
+  }
+
+  .rights-text {
+    color: $gray-700;
+  }
+
+  @include breakpoint(sm) {
+    grid-area: brand;
+    margin-top: 0;
+    .rights-text {
+      max-width: 20ch;
+      text-align: center;
+    }
+  }
+
+  @include breakpoint(md) {
+    order: unset;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: flex-start;
+    justify-self: center;
+    .rights-text {
+      text-align: left;
+    }
+  }
+}
+
+.footer-link {
+  .links-title {
+    font-size: 0.95rem;
+    color: $gray-400;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  li {
+    a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      color: $gray-600;
+      transition: 200ms ease-in-out color;
+      &:hover {
+        color: $gray-500;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@include breakpoint(sm) {
+  .footer-link {
+    @for $i from 1 to 5 {
+      &-#{$i} {
+        grid-area: footer-link-#{$i};
+        justify-self: center;
+        @include breakpoint(md) {
+          justify-self: flex-start;
+        }
+      }
+    }
+  }
+}

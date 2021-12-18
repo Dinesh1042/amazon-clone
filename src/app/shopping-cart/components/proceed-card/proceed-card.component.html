@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-body">
+    <p class="fs-sm">
+      <span class="bi bi-check-circle-fill me-1 text-success"></span>
+      <span class="text-success">
+        Your order is eligible for FREE Delivery.
+      </span>
+      <span> Select this option at checkout. </span>
+    </p>
+    <div class="subtotal-wrap d-flex align-items-baseline mb-3">
+      <p class="m-0">Subtotal ({{ shoppingCart.cartProductCount }} items) :</p>
+      <h5 class="m-0 ms-1">
+        {{ shoppingCart.cartTotalPrice | currency }}
+      </h5>
+    </div>
+    <button
+      (click)="navigateToCheckOut()"
+      class="btn btn-success btn-sm-block btn-xl-block btn-lg"
+    >
+      Proceed to Buy
+    </button>
+  </div>
+</div>

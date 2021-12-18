@@ -1,0 +1,114 @@
+<form
+  [formGroup]="productForm"
+  class="form"
+  autocomplete="off"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="form-group mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input
+      formControlName="title"
+      type="text"
+      id="title"
+      class="form-control"
+      [class.is-invalid]="title?.touched && title?.invalid"
+      autofocus
+    />
+    <div class="invalid-feedback">
+      <div *ngIf="title?.hasError('required')">Title is required.</div>
+      <div *ngIf="title?.hasError('minlength')">
+        Title must be minimum
+        {{ title?.errors?.minlength.requiredLength }} characters length.
+      </div>
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label for="category" class="form-label">Category</label>
+    <select
+      formControlName="category"
+      id="category"
+      class="form-select"
+      [class.is-invalid]="category?.touched && category?.invalid"
+    >
+      <option value="electronics">Electronics</option>
+      <option value="computerAndAccessories">Computer and Accessories</option>
+      <option value="clothes">Clothes</option>
+      <option value="laptop">Laptop</option>
+    </select>
+    <div class="invalid-feedback">
+      <div *ngIf="category?.hasError('required')">Category is required.</div>
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label for="originalPrice" class="form-label">Original Price</label>
+    <input
+      formControlName="originalPrice"
+      type="number"
+      id="originalPrice"
+      class="form-control"
+      [class.is-invalid]="originalPrice?.touched && originalPrice?.invalid"
+      min="0"
+    />
+    <div class="invalid-feedback">
+      <div *ngIf="originalPrice?.hasError('required')">Price is required.</div>
+      <div *ngIf="originalPrice?.hasError('min')">
+        Price must be minimum 0 or greater.
+      </div>
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label for="offerPrice" class="form-label">Offer Price</label>
+    <input
+      formControlName="offerPrice"
+      type="number"
+      id="offerPrice"
+      class="form-control"
+      [class.is-invalid]="offerPrice?.touched && offerPrice?.invalid"
+      min="0"
+    />
+    <div class="invalid-feedback">
+      <div *ngIf="offerPrice?.hasError('required')">
+        Offer Price is required.
+      </div>
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label for="rating" class="form-label">Rating</label>
+    <input
+      formControlName="rating"
+      type="number"
+      id="rating"
+      class="form-control"
+      [class.is-invalid]="rating?.touched && rating?.invalid"
+      min="0"
+      max="5"
+    />
+    <div class="invalid-feedback">
+      <div *ngIf="rating?.hasError('required')">Rating is required.</div>
+      <div *ngIf="rating?.hasError('min') || rating?.hasError('max')">
+        Rating must be minimum 0 and maximum of 5.
+      </div>
+    </div>
+  </div>
+  <div class="form-group mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea
+      formControlName="description"
+      id="description"
+      class="form-control"
+      [class.is-invalid]="description?.touched && description?.invalid"
+    ></textarea>
+    <div class="invalid-feedback">
+      <div *ngIf="description?.hasError('required')">
+        Description is required.
+      </div>
+    </div>
+  </div>
+  <button
+    [buttonLoader]="loading"
+    [disabled]="productForm.invalid || images.length < 4"
+    class="btn btn-success"
+  >
+    {{ isEditProduct ? "Update Product" : "Add Product" }}
+  </button>
+</form>

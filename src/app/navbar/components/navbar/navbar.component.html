@@ -1,0 +1,34 @@
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-lg">
+    <a routerLink="/" class="navbar-brand">
+      <img src="assets/amazon-logo.svg" alt="amazon" width="115" />
+    </a>
+    <div class="search-box">
+      <search-form></search-form>
+    </div>
+    <div class="nav-right">
+      <div class="user-account">
+        <user-account></user-account>
+      </div>
+      <div class="shopping-cart">
+        <a
+          routerLink="/shopping-cart"
+          class="btn btn-primary shadow-none shopping-cart-btn"
+        >
+          <img src="assets/icon-cart.svg" alt="" />
+          <ng-container
+            *ngIf="
+              shoppingCart$ | async as shoppingCart;
+              else noProductTemplate
+            "
+          >
+            <span class="btn-text">{{ shoppingCart.cartProductCount }}</span>
+          </ng-container>
+          <ng-template #noProductTemplate>
+            <span class="btn-text">0</span>
+          </ng-template>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
