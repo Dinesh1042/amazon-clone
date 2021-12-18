@@ -11,9 +11,9 @@ import { EditComponentDeactivateGuard } from './guard/edit-component-deactivate.
 
 const routes: Route[] = [
   {
-    path: '',
-    redirectTo: 'admin/products',
+    path: 'admin',
     pathMatch: 'full',
+    redirectTo: 'admin/products',
   },
   {
     path: 'admin/products',
