@@ -1,13 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, of, Subscription } from 'rxjs';
+import { EMPTY, Observable, of, Subscription } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   map,
   switchMap,
 } from 'rxjs/operators';
+import { Category } from 'shared/models/category';
+import { CategoryService } from 'shared/services/category.service';
 import { ProductService } from 'shared/services/product.service';
 
 @Component({
@@ -22,6 +24,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
   suggestionList: string[] = [];
   suggestionIndex = -1;
   suggestionListActive = false;
+  categoryList!: Observable<Category[]>;
 
   private isKeyDown = false;
   private defaultCategory = 'All Categories';
@@ -31,7 +34,8 @@ export class SearchFormComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private categoryService: CategoryService
   ) {
     this.searchForm = this.fb.group({
       query: [null, [Validators.required]],
@@ -40,6 +44,8 @@ export class SearchFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.categoryList = this.categoryService.getCategories();
+
     this.subscriptions.add(
       this.route.queryParamMap.subscribe((param) => {
         const queries = {
@@ -118,7 +124,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
     return this.searchForm.get('query');
   }
 
-  get category() {
+  get categories() {
     return this.searchForm.get('category');
   }
 

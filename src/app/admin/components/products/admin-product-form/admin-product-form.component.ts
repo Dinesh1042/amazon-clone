@@ -9,9 +9,11 @@ import {
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseError } from '@firebase/util';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { Category } from 'shared/models/category';
 import { Product } from 'shared/models/product';
+import { CategoryService } from 'shared/services/category.service';
 import { ProductService } from 'shared/services/product.service';
 
 import { AdminProductCardComponent } from '../admin-product-card/admin-product-card.component';
@@ -31,6 +33,7 @@ export class AdminProductFormComponent implements OnInit, OnDestroy {
 
   productForm: FormGroup;
   loading = false;
+  categoryList!: Observable<Category[]>;
 
   private productFormSubscription!: Subscription;
   private filesEventSubscription!: Subscription;
@@ -41,6 +44,7 @@ export class AdminProductFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
+    private categoryService: CategoryService,
     private router: Router
   ) {
     this.productForm = this.fb.group({
@@ -58,6 +62,8 @@ export class AdminProductFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.categoryList = this.categoryService.getCategories();
+
     this.productFormEvent.emit(this.productForm.value);
 
     this.productFormSubscription = this.productForm.valueChanges.subscribe(

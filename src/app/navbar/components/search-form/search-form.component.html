@@ -13,9 +13,12 @@
         class="select-original"
       >
         <option value="">All Categories</option>
-        <option value="computer">Computer & Accessories</option>
-        <option value="technology">Technology</option>
-        <option value="something">Something</option>
+        <option
+          *ngFor="let category of categoryList | async"
+          [value]="category.value"
+        >
+          {{ category.name }}
+        </option>
       </select>
       <div class="form-select">{{ selectedCategory | camelCaseSplit }}</div>
     </div>
