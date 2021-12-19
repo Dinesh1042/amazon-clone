@@ -27,16 +27,7 @@ export class AuthService {
     private firebaseUser: FirebaseUserService,
     private cartService: ShoppingCartService,
     @Inject('amazonCartId') private amazonCart: string
-  ) {
-    this.user$
-      .pipe(
-        take(1),
-        switchMap((user) =>
-          user ? this.cartService.checkExistingCart() : of(null)
-        )
-      )
-      .subscribe();
-  }
+  ) {}
 
   createAccount(newUserCredential: NewUser) {
     const { name: displayName, username } = newUserCredential;

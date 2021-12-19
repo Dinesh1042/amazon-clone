@@ -9,20 +9,18 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { forkJoin, of } from 'rxjs';
+import { of } from 'rxjs';
 import {
-  concatMap,
   distinctUntilChanged,
   map,
-  mapTo,
   shareReplay,
   switchMap,
   take,
   tap,
 } from 'rxjs/operators';
+import { ShoppingCartProductFactory } from 'shared/helpers/shopping-cart-product';
 import { Product } from 'shared/models/product';
 import { ShoppingCart } from 'shared/models/shopping-cart';
-import { ShoppingCartProductFactory } from 'shared/helpers/shopping-cart-product';
 
 import { UserService } from './user.service';
 
@@ -42,12 +40,11 @@ export class ShoppingCartService {
     return shoppingCartId.pipe(
       switchMap((cartId) => {
         const docRef = doc(this.firestore, `shopping_cart/${cartId}`);
-
         return docData(docRef).pipe(
           distinctUntilChanged(),
-          map((cartProducts) => {
-            return new ShoppingCart(cartProducts ? cartProducts : {});
-          })
+          map(
+            (cartProducts) => new ShoppingCart(cartProducts ? cartProducts : {})
+          )
         );
       }),
       shareReplay(1)
@@ -223,27 +220,18 @@ export class ShoppingCartService {
     oldCartId: string,
     newCartId: string
   ) {
-    return this.getShoppingCart(oldCartId).pipe(
-      switchMap((oldCartData) =>
-        !oldCartData
-          ? of(`No Old Cart data Found!`)
-          : this.getShoppingCart(newCartId).pipe(
-              switchMap((newCartData) =>
-                !newCartData && !oldCartData
-                  ? of(`No new Cart Data`)
-                  : this.mergeShoppingCart(newCartId, oldCartData, newCartData)
-              ),
-              take(1)
+    return this.getShoppingCart(newCartId).pipe(
+      switchMap((newCartData) =>
+        !newCartData
+          ? of('NewCart Data is Empty')
+          : this.getShoppingCart(oldCartId).pipe(
+              switchMap((oldCartData) =>
+                this.mergeShoppingCart(oldCartId, oldCartData, newCartData)
+              )
             )
       ),
-
-      concatMap(() =>
-        forkJoin([
-          this.removeCartWithCartId(oldCartId),
-          this.userService.updateCartId(newCartId),
-        ]).pipe(mapTo('removed user'))
-      ),
-      take(1)
+      map(() => this.saveLocal(this.amazonCart, oldCartId)),
+      switchMap(() => this.removeCartWithCartId(newCartId))
     );
   }
 
@@ -253,12 +241,12 @@ export class ShoppingCartService {
   }
 
   private mergeShoppingCart(
-    newCartId: string,
+    oldCartId: string,
     oldCartData: { [pid: string]: any } = {},
     newCartData: { [pid: string]: any } = {}
   ) {
     const updatedCartData = { ...oldCartData, ...newCartData };
-    const docRef = doc(this.firestore, `shopping_cart/${newCartId}`);
+    const docRef = doc(this.firestore, `shopping_cart/${oldCartId}`);
 
     return setDoc(docRef, updatedCartData).then(
       this.handleSuccess.bind(this, `Data Merged`)

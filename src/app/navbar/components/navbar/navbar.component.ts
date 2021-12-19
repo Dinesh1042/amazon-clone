@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
   constructor(private cartService: ShoppingCartService) {}
 
   ngOnInit(): void {
+    console.log('navbarinitialized');
     this.cartLoading = true;
     this.shoppingCart$ = this.cartService.getCart().pipe(
       tap(
