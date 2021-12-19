@@ -1,29 +1,19 @@
 <div class="images-container">
   <div class="main-image">
-    <img [src]="images[mainImageIndex]" [alt]="title" />
+    <swiper [loop]="true" class="swiper">
+      <ng-template *ngFor="let image of images" swiperSlide>
+        <img [src]="image" [alt]="title" />
+      </ng-template>
+    </swiper>
   </div>
-  <div class="images-wrap">
+  <div class="thumbnail-images">
     <div
+      class="thumbnail-image"
+      [class.active]="i === currentImageIndex"
       *ngFor="let image of images; index as i"
-      class="img-slide"
-      [ngClass]="{
-        'prev-slide': i === prevImgIndex,
-        'active-slide': i === mainImageIndex,
-        'next-slide': i === nextImgIndex
-      }"
-      (transitionend)="isImageAnimationEnded = true"
-      (transitionstart)="isImageAnimationEnded = false"
-      (click)="mainImageIndex = i"
+      (click)="slideImage(i + 1)"
     >
-      <img [src]="image" alt="" />
+      <img [src]="image" [alt]="title" />
     </div>
-  </div>
-  <div class="action-btn">
-    <button class="btn btn-light" (click)="prev()">
-      <span class="bi bi-arrow-left"></span>
-    </button>
-    <button class="btn btn-light" (click)="next()">
-      <span class="bi bi-arrow-right"></span>
-    </button>
   </div>
 </div>

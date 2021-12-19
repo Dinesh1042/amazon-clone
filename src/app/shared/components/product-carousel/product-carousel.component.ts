@@ -1,36 +1,49 @@
-import { Component, Input } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { SwiperComponent } from 'swiper/angular';
 
 @Component({
   selector: 'product-carousel',
   templateUrl: './product-carousel.component.html',
   styleUrls: ['./product-carousel.component.scss'],
 })
-export class ProductCarouselComponent {
+export class ProductCarouselComponent implements AfterViewInit, OnDestroy {
   @Input('images') images: any[] = [];
   @Input('title') title: string = '';
 
-  constructor() {}
+  @ViewChild(SwiperComponent) swiperEl!: SwiperComponent;
 
-  mainImageIndex = 0;
-  isImageAnimationEnded = true;
+  currentImageIndex = 0;
 
-  next() {
-    if (this.isImageAnimationEnded) this.mainImageIndex = this.nextImgIndex;
+  private subscription: Subscription = new Subscription();
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) {}
+
+  ngAfterViewInit() {
+    this.subscription.add(
+      this.swiperEl.indexChange
+        .asObservable()
+        .subscribe(this.handleIndexChange.bind(this))
+    );
   }
 
-  prev() {
-    if (this.isImageAnimationEnded) this.mainImageIndex = this.prevImgIndex;
+  slideImage(index: number) {
+    this.swiperEl.swiperRef.slideTo(index, 400);
   }
 
-  get nextImgIndex() {
-    return this.mainImageIndex < this.images.length - 1
-      ? 1 + this.mainImageIndex
-      : 0;
+  handleIndexChange(index: number) {
+    this.currentImageIndex = index;
+    this.changeDetectorRef.detectChanges();
   }
 
-  get prevImgIndex() {
-    return this.mainImageIndex <= 0
-      ? this.images.length - 1
-      : this.mainImageIndex - 1;
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

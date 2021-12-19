@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
+import { SwiperModule } from 'swiper/angular';
 
 import { AddCartBtnComponent } from './components/add-cart-btn/add-cart-btn.component';
 import { AlertComponent } from './components/alert/alert.component';
@@ -41,6 +42,7 @@ import { ShortPipe } from './pipes/short.pipe';
     MatDialogModule,
     MatSnackBarModule,
     RouterModule.forChild([]),
+    SwiperModule,
   ],
   exports: [
     AddCartBtnComponent,
