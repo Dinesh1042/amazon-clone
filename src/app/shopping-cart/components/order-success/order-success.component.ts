@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, take } from 'rxjs/operators';
-import { MyOrder } from 'shared/models/my-orders';
+import { MyOrder } from 'shared/models/orders/my-orders/my-order';
 import { OrderService } from 'shared/services/order.service';
 
 @Component({
@@ -26,14 +26,14 @@ export class OrderSuccessComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-
+    this.orderService.getOrders().subscribe(console.log);
     this.navigationOrderData
       ? this.handleOrderSuccessData(this.navigationOrderData)
       : this.route.paramMap
           .pipe(
             take(1),
             switchMap((params) =>
-              this.orderService.getOrderById(params.get('orderId')!)
+              this.orderService.getOrder(params.get('orderId')!)
             )
           )
           .subscribe(
@@ -45,6 +45,7 @@ export class OrderSuccessComponent implements OnInit {
   private handleOrderSuccessData(data: MyOrder) {
     this.orderData = data;
     this.loading = false;
+    console.log(data);
   }
 
   private handleOrderErrorData(error: Error) {

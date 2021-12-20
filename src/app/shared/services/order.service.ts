@@ -7,10 +7,13 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 import { from, Observable, of, throwError } from 'rxjs';
-import { mapTo, switchMap, take } from 'rxjs/operators';
-import { MyOrder, MyOrders } from 'shared/models/my-orders';
-import { Order } from 'shared/models/order';
-import { OrderSuccess } from 'shared/models/orderSuccess';
+import { map, mapTo, switchMap } from 'rxjs/operators';
+import { MyOrder } from 'shared/models/orders/my-orders/my-order';
+import { MyOrders } from 'shared/models/orders/my-orders/my-orders';
+import {
+  OrderInterface,
+  OrdersInterface,
+} from 'shared/models/orders/orders-interface';
 
 import { ShoppingCartService } from './shopping-cart.service';
 import { UserService } from './user.service';
@@ -25,51 +28,51 @@ export class OrderService {
     private cartService: ShoppingCartService
   ) {}
 
-  placeOrder(order: Order) {
+  placeOrder(order: OrderInterface): Observable<OrdersInterface> {
     return this.userService.appUser$.pipe(
       switchMap((user) => {
-        if (!user) return throwError('No User Found!');
-
-        const { uid } = user;
+        if (!user) return throwError(new Error('No User!'));
 
         const collectionRef = collection(this.firestore, `orders`);
         const { id: orderId } = doc(collectionRef);
 
-        const docRef = doc(this.firestore, `/orders/${uid}`);
+        const docRef = doc(this.firestore, `/orders/${user.uid}`);
 
         const newOrder = {
-          [orderId]: { ...order, orderPlaced: new Date().getTime() },
+          [orderId]: order,
         };
 
         return from(setDoc(docRef, newOrder, { merge: true })).pipe(
           switchMap(() => this.cartService.removeCart()),
           mapTo(newOrder)
         );
-      }),
-      take(1)
-    ) as Observable<OrderSuccess>;
+      })
+    );
   }
 
   getOrders() {
     return this.userService.appUser$.pipe(
-      switchMap((user) =>
-        !user?.uid
-          ? throwError('No User Found!')
-          : docData(doc(this.firestore, `/orders/${user.uid}`))
-      )
-    ) as Observable<MyOrders>;
+      switchMap((user) => {
+        if (!user) return throwError(new Error('No User'));
+
+        const docRef = doc(this.firestore, `/orders/${user.uid}`);
+        return docData(docRef).pipe(map((orders) => new MyOrders(orders)));
+      })
+    );
   }
 
-  getOrderById(orderId: string) {
+  getOrder(orderId: string) {
     return this.getOrders().pipe(
-      switchMap((orders) =>
-        orders && orders[orderId]
-          ? of(orders[orderId])
-          : throwError(
-              new Error('We cannot find the order what you are looking for.')
-            )
-      ),
-      take(1)
-    ) as Observable<MyOrder>;
+      switchMap(({ myOrderMap }) => {
+        const currentOrder = myOrderMap[orderId];
+
+        if (!currentOrder)
+          return throwError(
+            new Error('We cannot find the order what you are looking for!')
+          );
+
+        return of(new MyOrder(currentOrder, orderId));
+      })
+    );
   }
 }

@@ -3,8 +3,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { Order } from 'shared/models/order';
-import { OrderSuccess } from 'shared/models/orderSuccess';
+import { MyOrder } from 'shared/models/orders/my-orders/my-order';
+import {
+  OrderInterface,
+  OrdersInterface,
+} from 'shared/models/orders/orders-interface';
 import { Shipping } from 'shared/models/shipping';
 import { ShoppingCart } from 'shared/models/shopping-cart';
 import { OrderService } from 'shared/services/order.service';
@@ -45,17 +48,19 @@ export class ShippingComponent implements OnInit {
     if (this.shoppingCart) {
       this.orderPlacedLoading = true;
 
-      const order: Order = {
+      const order: OrderInterface = {
         products: this.shoppingCart.shoppingCartMap,
         shipping,
+        orderPlaced: Date.now(),
       };
 
       this.orderService
         .placeOrder(order)
         .pipe(take(1))
         .subscribe(
-          this.handleOrderSuccess.bind(this),
-          this.handleOrderError.bind(this)
+          this.handleOrderPlacedSuccess.bind(this),
+          this.handleOrderPlacedError.bind(this),
+          this.showSnackBar.bind(this, 'Order Placed Successfully!')
         );
     }
   }
@@ -70,24 +75,25 @@ export class ShippingComponent implements OnInit {
     this.loading = false;
   }
 
-  private handleOrderSuccess(orderSuccess: OrderSuccess | null) {
-    if (orderSuccess) {
-      const orderId = Object.keys(orderSuccess)[0];
-      this.router.navigate(['/order-success', orderId], {
-        state: orderSuccess[orderId],
-      });
-      this.snackBar.open('Order Placed Successfully', undefined, {
-        duration: 2000,
-        horizontalPosition: 'right',
-        verticalPosition: 'bottom',
-      });
-    }
-
+  private handleOrderPlacedSuccess(orderSuccess: OrdersInterface) {
+    const [orderId, order] = Object.entries(orderSuccess)[0];
+    this.router.navigate(['/order-success', orderId], {
+      state: new MyOrder(order, orderId),
+    });
     this.orderPlacedLoading = false;
   }
 
-  private handleOrderError(error: Error) {
+  private handleOrderPlacedError(error: Error) {
     this.orderPlacedLoading = false;
+    this.error = error;
+  }
+
+  private showSnackBar(message: string) {
+    this.snackBar.open(message, undefined, {
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+    });
   }
 
   ngOnDestroy() {
