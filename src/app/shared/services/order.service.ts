@@ -8,12 +8,9 @@ import {
 } from '@angular/fire/firestore';
 import { from, Observable, of, throwError } from 'rxjs';
 import { map, mapTo, switchMap } from 'rxjs/operators';
-import { MyOrder } from 'shared/models/orders/my-orders/my-order';
-import { MyOrders } from 'shared/models/orders/my-orders/my-orders';
-import {
-  OrderInterface,
-  OrdersInterface,
-} from 'shared/models/orders/orders-interface';
+import { Order, OrderInterface } from 'shared/models/orders/order';
+
+import { Orders, OrdersInterface } from 'shared/models/orders/orders';
 
 import { ShoppingCartService } from './shopping-cart.service';
 import { UserService } from './user.service';
@@ -37,7 +34,6 @@ export class OrderService {
         const { id: orderId } = doc(collectionRef);
 
         const docRef = doc(this.firestore, `/orders/${user.uid}`);
-
         const newOrder = {
           [orderId]: order,
         };
@@ -56,22 +52,22 @@ export class OrderService {
         if (!user) return throwError(new Error('No User'));
 
         const docRef = doc(this.firestore, `/orders/${user.uid}`);
-        return docData(docRef).pipe(map((orders) => new MyOrders(orders)));
+        return docData(docRef).pipe(map((orders) => new Orders(orders)));
       })
     );
   }
 
   getOrder(orderId: string) {
     return this.getOrders().pipe(
-      switchMap(({ myOrderMap }) => {
-        const currentOrder = myOrderMap[orderId];
+      switchMap(({ ordersMap }) => {
+        const currentOrder = ordersMap[orderId];
 
         if (!currentOrder)
           return throwError(
             new Error('We cannot find the order what you are looking for!')
           );
 
-        return of(new MyOrder(currentOrder, orderId));
+        return of(new Order(currentOrder, orderId));
       })
     );
   }

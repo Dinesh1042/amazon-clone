@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, take } from 'rxjs/operators';
-import { MyOrder } from 'shared/models/orders/my-orders/my-order';
+import { Order } from 'shared/models/orders/order';
 import { OrderService } from 'shared/services/order.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { OrderService } from 'shared/services/order.service';
   templateUrl: './order-success.component.html',
 })
 export class OrderSuccessComponent implements OnInit {
-  orderData?: MyOrder;
-  navigationOrderData: MyOrder | undefined;
+  orderData?: Order;
+  navigationOrderData: Order | undefined;
   loading = false;
   error: Error | null = null;
 
@@ -20,13 +20,13 @@ export class OrderSuccessComponent implements OnInit {
     private orderService: OrderService
   ) {
     this.navigationOrderData = router.getCurrentNavigation()?.extras.state as
-      | MyOrder
+      | Order
       | undefined;
   }
 
   ngOnInit() {
     this.loading = true;
-    this.orderService.getOrders().subscribe(console.log);
+
     this.navigationOrderData
       ? this.handleOrderSuccessData(this.navigationOrderData)
       : this.route.paramMap
@@ -42,10 +42,9 @@ export class OrderSuccessComponent implements OnInit {
           );
   }
 
-  private handleOrderSuccessData(data: MyOrder) {
+  private handleOrderSuccessData(data: Order) {
     this.orderData = data;
     this.loading = false;
-    console.log(data);
   }
 
   private handleOrderErrorData(error: Error) {

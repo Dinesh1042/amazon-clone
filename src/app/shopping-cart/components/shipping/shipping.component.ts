@@ -3,11 +3,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { MyOrder } from 'shared/models/orders/my-orders/my-order';
-import {
-  OrderInterface,
-  OrdersInterface,
-} from 'shared/models/orders/orders-interface';
+import { orderProductFactory } from 'shared/helpers/order-product-factory';
+import { Order, OrderInterface } from 'shared/models/orders/order';
+import { OrdersInterface } from 'shared/models/orders/orders';
 import { Shipping } from 'shared/models/shipping';
 import { ShoppingCart } from 'shared/models/shopping-cart';
 import { OrderService } from 'shared/services/order.service';
@@ -33,6 +31,7 @@ export class ShippingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.orderService.getOrders().subscribe(console.log);
     this.loading = true;
     this.subscription.add(
       this.cartService
@@ -45,24 +44,25 @@ export class ShippingComponent implements OnInit {
   }
 
   placeOrder(shipping: Shipping) {
-    if (this.shoppingCart) {
-      this.orderPlacedLoading = true;
+    if (!this.shoppingCart) return;
 
-      const order: OrderInterface = {
-        products: this.shoppingCart.shoppingCartMap,
-        shipping,
-        orderPlaced: Date.now(),
-      };
+    this.orderPlacedLoading = true;
 
-      this.orderService
-        .placeOrder(order)
-        .pipe(take(1))
-        .subscribe(
-          this.handleOrderPlacedSuccess.bind(this),
-          this.handleOrderPlacedError.bind(this),
-          this.showSnackBar.bind(this, 'Order Placed Successfully!')
-        );
-    }
+    const order: OrderInterface = {
+      products: orderProductFactory(this.shoppingCart.shoppingCartMap),
+      shipping,
+      orderPlaced: Date.now(),
+      isDelivered: false,
+    };
+
+    this.orderService
+      .placeOrder(order)
+      .pipe(take(1))
+      .subscribe(
+        this.handleOrderPlacedSuccess.bind(this),
+        this.handleOrderPlacedError.bind(this),
+        this.showSnackBar.bind(this, 'Order Placed Successfully!')
+      );
   }
 
   private handleCartSuccess(cart: ShoppingCart) {
@@ -78,7 +78,7 @@ export class ShippingComponent implements OnInit {
   private handleOrderPlacedSuccess(orderSuccess: OrdersInterface) {
     const [orderId, order] = Object.entries(orderSuccess)[0];
     this.router.navigate(['/order-success', orderId], {
-      state: new MyOrder(order, orderId),
+      state: new Order(order, orderId),
     });
     this.orderPlacedLoading = false;
   }
