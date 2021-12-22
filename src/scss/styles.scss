@@ -19,9 +19,57 @@
   }
 }
 
+.bg-primary-dark {
+  color: $white;
+  background-color: $darkOrange;
+}
+
+.btn-outline-primary-dark {
+  color: $darkOrange;
+  border-color: $darkOrange;
+
+  &:hover {
+    color: $white;
+    background-color: $darkOrange;
+  }
+}
+
+.text-bold-500 {
+  font-weight: 500;
+}
+
 .form-control {
   &:focus {
     @include boxShadow();
+  }
+}
+
+.card.card-shadow {
+  border: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  padding: 1rem;
+  .card-header {
+    padding: 0;
+    padding-inline: 0.5rem;
+    padding-bottom: 0.8rem;
+    background-color: $white;
+
+    h6 {
+      margin: 0;
+    }
+  }
+
+  .card-header + .card-body {
+    padding: 0.5rem;
+  }
+
+  .card-footer {
+    padding: 0;
+    padding-inline: 0.5rem;
+    padding-top: 0.8rem;
+    background-color: $white;
   }
 }
 
@@ -52,4 +100,8 @@ a {
 
 .swiper-h-100.swiper-slide-h-auto .swiper-slide {
   height: auto !important;
+}
+
+.container-lg.manage-mh {
+  min-height: 72vh;
 }

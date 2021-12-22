@@ -1,22 +1,13 @@
 @import "src/scss/_variables.scss";
 
-.card {
-  border: none;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-
-.card-header,
-.card-footer {
-  background-color: $white;
-  border-color: $gray-300;
-  padding: 1rem;
-}
-
 .cart-product {
   display: flex;
   align-items: center;
   gap: 1rem;
   padding-block: 1rem;
+  transition: 200ms ease-in-out background-color;
+  background-color: $white;
+  padding-inline: 0.5rem;
 
   &:not(&:last-child) {
     border-bottom: 1px solid $gray-200;
@@ -30,6 +21,7 @@
       height: 100%;
       width: 100%;
       object-fit: contain;
+      mix-blend-mode: multiply;
     }
   }
   &-content {
@@ -43,5 +35,10 @@
         font-weight: 500;
       }
     }
+  }
+  cursor: pointer;
+
+  &:hover {
+    background-color: $gray-200;
   }
 }

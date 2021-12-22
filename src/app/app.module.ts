@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { FooterModule } from './footer/footer.module';
 import { HomeModule } from './home/home.module';
 import { NavbarModule } from './navbar/navbar.module';
+import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 
@@ -27,6 +28,7 @@ import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
     FooterModule,
     HomeModule,
     NavbarModule,
+    OrderModule,
     ProductModule,
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
@@ -38,4 +40,4 @@ import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

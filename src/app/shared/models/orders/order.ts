@@ -26,7 +26,11 @@ export class Order implements OrderInterface {
   }
 
   get orderTotal() {
-    return this.productsArr.reduce((acc, val) => acc + val.productTotal, 0);
+    return this.productsArr.reduce((acc, val) => acc + val.itemTotalPrice, 0);
+  }
+
+  get orderQuantity() {
+    return this.productsArr.reduce((acc, val) => acc + val.quantity, 0);
   }
 }
 

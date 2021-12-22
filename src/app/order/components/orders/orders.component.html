@@ -1,0 +1,37 @@
+<ng-container *ngIf="orders">
+  <div class="order-wrap" *ngIf="orders.length > 0; else emptyOrders">
+    <order-card *ngFor="let order of orders" [order]="order"></order-card>
+  </div>
+  <ng-template #emptyOrders>
+    <div class="mt-5">
+      <empty-order>
+        <ng-container class="title">
+          {{ isUpComingOrders ? "No Upcoming orders" : "No Past Orders" }}
+        </ng-container>
+        <ng-container class="message">
+          {{
+            isUpComingOrders
+              ? "Looks like you don't have any upcoming orders."
+              : "Looks like you don't have any past orders."
+          }}
+        </ng-container>
+      </empty-order>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- Loading -->
+<ng-container *ngIf="loading">
+  <loader></loader>
+</ng-container>
+<!-- Error -->
+<ng-container *ngIf="error">
+  <error>
+    <ng-container class="alert-heading"
+      >Oops! Something went Wrong!</ng-container
+    >
+    <ng-container class="alert-message">
+      {{ error.message }}
+    </ng-container>
+    <button class="btn btn-outline-dark">Go Home</button>
+  </error>
+</ng-container>

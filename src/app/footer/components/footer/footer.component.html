@@ -13,16 +13,16 @@
       <ul>
         <p class="links-title">Let Us Help You</p>
         <li>
-          <a href="/">Your Account</a>
+          <a routerLink="/">Your Account</a>
         </li>
         <li>
-          <a href="/">Shopping Cart</a>
+          <a routerLink="/shopping-cart">Shopping Cart</a>
         </li>
         <li>
-          <a href="/">Your Orders</a>
+          <a routerLink="/my-orders">Your Orders</a>
         </li>
         <li>
-          <a href="/">Help</a>
+          <a routerLink="/">Help</a>
         </li>
       </ul>
     </div>
@@ -30,13 +30,13 @@
       <ul>
         <p class="links-title">Get to Know Us</p>
         <li>
-          <a href="/">Careers</a>
+          <a routerLink="/">Careers</a>
         </li>
         <li>
-          <a href="/">Blog</a>
+          <a routerLink="/">Blog</a>
         </li>
         <li>
-          <a href="/">About Amazon</a>
+          <a routerLink="/">About Amazon</a>
         </li>
       </ul>
     </div>
@@ -45,16 +45,18 @@
       <ul>
         <p class="links-title">Shop By Brand</p>
         <li>
-          <a href="/">Apple</a>
+          <a routerLink="/products" [queryParams]="{ query: 'apple' }">Apple</a>
         </li>
         <li>
-          <a href="/">Samsung</a>
+          <a routerLink="/products" [queryParams]="{ query: 'samsung' }"
+            >Samsung</a
+          >
         </li>
         <li>
-          <a href="/">LG</a>
+          <a routerLink="/products" [queryParams]="{ query: 'lg' }">LG</a>
         </li>
         <li>
-          <a href="/">Sony</a>
+          <a routerLink="/products" [queryParams]="{ query: 'sony' }">Sony</a>
         </li>
       </ul>
     </div>
@@ -63,13 +65,13 @@
       <ul>
         <p class="links-title">Connect With Us</p>
         <li>
-          <a href="/">Facebook</a>
+          <a routerLink="/">Facebook</a>
         </li>
         <li>
-          <a href="/">Twitter</a>
+          <a routerLink="/">Twitter</a>
         </li>
         <li>
-          <a href="/">Instagram</a>
+          <a routerLink="/">Instagram</a>
         </li>
       </ul>
     </div>

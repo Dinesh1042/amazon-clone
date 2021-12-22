@@ -9,6 +9,7 @@ export class ShoppingCartItem {
   description: string;
   rating: number;
   quantity: number;
+  image: string;
 
   constructor(
     { product, quantity }: ShoppingCartItemModel,
@@ -22,9 +23,10 @@ export class ShoppingCartItem {
     this.description = product.description;
     this.rating = product.rating;
     this.quantity = quantity;
+    this.image = product.images[0];
   }
 
-  get cartItemTotalPrice() {
+  get itemTotalPrice() {
     return this.quantity * this.price;
   }
 

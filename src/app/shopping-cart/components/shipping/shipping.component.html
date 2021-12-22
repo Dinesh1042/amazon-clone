@@ -12,7 +12,10 @@
           ></shipping-form>
         </div>
         <div class="col-md-5 order-md-1 mb-4 col-xl-4">
-          <order-summary [shoppingCart]="shoppingCart"></order-summary>
+          <order-summary
+            [items]="shoppingCart.shoppingCartItems"
+            [total]="shoppingCart.cartTotalPrice"
+          ></order-summary>
         </div>
       </div>
     </ng-container>

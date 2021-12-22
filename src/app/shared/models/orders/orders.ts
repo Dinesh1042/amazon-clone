@@ -8,11 +8,15 @@ export class Orders {
   }
 
   get deliveredOrders() {
-    return this.orders.filter((order) => order.isDelivered);
+    return this.orders
+      .filter((order) => order.isDelivered)
+      .sort((a, b) => b.orderPlaced - a.orderPlaced);
   }
 
   get processingOrders() {
-    return this.orders.filter((order) => !order.isDelivered);
+    return this.orders
+      .filter((order) => !order.isDelivered)
+      .sort((a, b) => b.orderPlaced - a.orderPlaced);
   }
 
   private initialize() {

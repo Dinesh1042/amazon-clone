@@ -7,7 +7,7 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 import { from, Observable, of, throwError } from 'rxjs';
-import { map, mapTo, switchMap } from 'rxjs/operators';
+import { map, mapTo, shareReplay, switchMap } from 'rxjs/operators';
 import { Order, OrderInterface } from 'shared/models/orders/order';
 
 import { Orders, OrdersInterface } from 'shared/models/orders/orders';
@@ -53,7 +53,8 @@ export class OrderService {
 
         const docRef = doc(this.firestore, `/orders/${user.uid}`);
         return docData(docRef).pipe(map((orders) => new Orders(orders)));
-      })
+      }),
+      shareReplay(1)
     );
   }
 

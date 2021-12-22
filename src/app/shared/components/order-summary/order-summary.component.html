@@ -1,0 +1,40 @@
+<div
+  class="card card-shadow"
+  [class.shadow-none]="!boxShadow"
+  [class.p-0]="!padding"
+>
+  <div class="card-header">
+    <h6>Order Summary</h6>
+  </div>
+  <div class="card-body p-0 mx-2">
+    <div
+      class="cart-product"
+      (click)="showProduct(product.pid)"
+      *ngFor="let product of items"
+    >
+      <div class="cart-product-img">
+        <img [src]="product.image" width="50" alt="" />
+      </div>
+
+      <div class="cart-product-content">
+        <div class="product-title">
+          <p class="m-0">{{ product.title | short }}</p>
+        </div>
+        <div class="productAndPrice">
+          <p class="m-0 text-muted">
+            {{ product.price | currency }} x
+            {{ product.quantity }}
+          </p>
+          <p class="product-total m-0">
+            {{ product.itemTotalPrice | currency }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer d-flex align-items-center justify-content-between">
+    <p class="m-0">Total</p>
+    <h6 class="m-0">{{ total | currency }}</h6>
+  </div>
+</div>

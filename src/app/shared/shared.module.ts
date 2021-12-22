@@ -10,6 +10,7 @@ import { AlertComponent } from './components/alert/alert.component';
 import { DropzoneComponent } from './components/dropzone/dropzone.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { ProductCarouselComponent } from './components/product-carousel/product-carousel.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
@@ -32,6 +33,7 @@ import { ShortPipe } from './pipes/short.pipe';
     ErrorComponent,
     FileToDataUrlPipe,
     LoaderComponent,
+    OrderSummaryComponent,
     ProductCarouselComponent,
     ProductDetailComponent,
     ShortPipe,
@@ -57,10 +59,11 @@ import { ShortPipe } from './pipes/short.pipe';
     LoaderComponent,
     MatDialogModule,
     MatSnackBarModule,
+    OrderSummaryComponent,
     ProductDetailComponent,
     ShortPipe,
     StarRatingComponent,
   ],
   providers: [{ provide: 'amazonCartId', useValue: 'amazonCartId' }],
 })
-export class SharedModule {}
+export class SharedModule { }

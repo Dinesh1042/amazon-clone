@@ -7,9 +7,13 @@ import { OrderService } from 'shared/services/order.service';
 @Component({
   selector: 'order-success',
   templateUrl: './order-success.component.html',
+  styleUrls: ['./order-success.component.scss']
 })
 export class OrderSuccessComponent implements OnInit {
-  orderData?: Order;
+
+  // TODO: Need to change the look of the component
+
+  order?: Order;
   navigationOrderData: Order | undefined;
   loading = false;
   error: Error | null = null;
@@ -30,20 +34,20 @@ export class OrderSuccessComponent implements OnInit {
     this.navigationOrderData
       ? this.handleOrderSuccessData(this.navigationOrderData)
       : this.route.paramMap
-          .pipe(
-            take(1),
-            switchMap((params) =>
-              this.orderService.getOrder(params.get('orderId')!)
-            )
-          )
-          .subscribe(
-            this.handleOrderSuccessData.bind(this),
-            this.handleOrderErrorData.bind(this)
-          );
+        .pipe(
+          switchMap((params) =>
+            this.orderService.getOrder(params.get('orderId')!)
+          ),
+          take(1),
+        )
+        .subscribe(
+          this.handleOrderSuccessData.bind(this),
+          this.handleOrderErrorData.bind(this)
+        );
   }
 
   private handleOrderSuccessData(data: Order) {
-    this.orderData = data;
+    this.order = data;
     this.loading = false;
   }
 

@@ -1,0 +1,12 @@
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.order-body,
+.order-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

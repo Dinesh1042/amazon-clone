@@ -4,8 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'shared/shared.module';
 
 import { EmptyCartComponent } from './components/empty-cart/empty-cart.component';
-import { OrderSuccessComponent } from './components/order-success/order-success.component';
-import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { ProceedCardComponent } from './components/proceed-card/proceed-card.component';
 import { ShippingFormComponent } from './components/shipping-form/shipping-form.component';
 import { ShippingComponent } from './components/shipping/shipping.component';
@@ -21,8 +19,6 @@ import { ShoppingCartRoutingModule } from './shopping-cart-routing.module';
     EmptyCartComponent,
     ShippingComponent,
     ShippingFormComponent,
-    OrderSummaryComponent,
-    OrderSuccessComponent,
   ],
   imports: [
     CommonModule,
@@ -31,4 +27,4 @@ import { ShoppingCartRoutingModule } from './shopping-cart-routing.module';
     ReactiveFormsModule,
   ],
 })
-export class ShoppingCartModule {}
+export class ShoppingCartModule { }

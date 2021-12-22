@@ -1,0 +1,47 @@
+<div class="card order-card card-shadow">
+  <div class="card-body">
+    <div class="order-header">
+      <p class="order-id m-0">
+        <span class="fs-sm text-muted"> Order Id: </span>
+        <a
+          class="text-decoration-none text-dark"
+          [routerLink]="['/order-success', order.orderId]"
+          [state]="order"
+        >
+          {{ order.orderId }}</a
+        >
+      </p>
+      <p class="order-placed text-muted m-0 fs-sm mt-1">
+        <span>{{ order.orderPlaced | date }}, </span>
+        <span>{{ order.orderPlaced | date: "shortTime" }}</span>
+      </p>
+    </div>
+    <div class="order-body">
+      <p class="order-quantity m-0">
+        <span class="fs-sm text-muted"> Quantity: </span>
+        <span> {{ order.orderQuantity }}</span>
+      </p>
+      <p class="order-placed m-0">
+        <span class="fs-sm text-muted"> Order Total: </span>
+        <span class="text-bold-500"> {{ order.orderTotal | currency }}</span>
+      </p>
+    </div>
+    <div class="order-foot mt-2">
+      <a
+        [routerLink]="['../', order.orderId]"
+        [state]="order"
+        class="btn btn-outline-dark btn-sm"
+        >View Order</a
+      >
+      <div
+        class="order-status m-0 badge"
+        [ngClass]="{
+          'bg-primary-dark': !order.isDelivered,
+          'bg-success': order.isDelivered
+        }"
+      >
+        {{ order.isDelivered ? "Delivered" : "Processing" }}
+      </div>
+    </div>
+  </div>
+</div>

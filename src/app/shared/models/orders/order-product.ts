@@ -21,7 +21,7 @@ export class OrderProduct {
       : this.originalPrice;
   }
 
-  get productTotal() {
+  get itemTotalPrice() {
     return this.price * this.quantity;
   }
 }

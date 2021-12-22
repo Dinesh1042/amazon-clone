@@ -10,7 +10,7 @@ export class ShoppingCart {
 
   get cartTotalPrice() {
     return this.shoppingCartItems.reduce(
-      (acc, val) => acc + val.cartItemTotalPrice,
+      (acc, val) => acc + val.itemTotalPrice,
       0
     );
   }
