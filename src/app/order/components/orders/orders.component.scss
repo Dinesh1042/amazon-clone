@@ -7,4 +7,5 @@
   min-height: $basicHeight - 12vh;
   margin-top: 1.5rem;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-auto-rows: max-content;
 }

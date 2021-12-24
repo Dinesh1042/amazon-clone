@@ -2,8 +2,11 @@
 
 .order-detail-container {
   display: grid;
-  gap: 2rem 3rem;
+  gap: 2.5rem 3rem;
   grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+  @include breakpoint(md) {
+    gap: 2rem 3rem;
+  }
 }
 
 .card {
