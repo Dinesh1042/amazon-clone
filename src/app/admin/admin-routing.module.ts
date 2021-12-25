@@ -11,34 +11,34 @@ import { EditComponentDeactivateGuard } from './guard/edit-component-deactivate.
 
 const routes: Route[] = [
   {
-    path: 'admin',
+    path: '', // admin
     pathMatch: 'full',
-    redirectTo: 'admin/products',
+    redirectTo: '/admin/products',
   },
   {
-    path: 'admin/products',
+    path: 'products',
     component: AdminProductsComponent,
     canActivate: [AuthGuard, AdminAuthGuard],
   },
   {
-    path: 'admin/products/new',
+    path: 'products/new',
     component: AdminProductEditComponent,
     canActivate: [AuthGuard, AdminAuthGuard],
     canDeactivate: [EditComponentDeactivateGuard],
   },
   {
-    path: 'admin/products/:pid',
+    path: 'products/:pid',
     component: AdminProductDetailComponent,
     canActivate: [AuthGuard, AdminAuthGuard],
   },
   {
-    path: 'admin/products/:pid/edit',
+    path: 'products/:pid/edit',
     component: AdminProductEditComponent,
     canActivate: [AuthGuard, AdminAuthGuard],
     canDeactivate: [EditComponentDeactivateGuard],
   },
   {
-    path: 'admin/orders',
+    path: 'orders',
     component: AdminOrdersComponent,
   },
 ];

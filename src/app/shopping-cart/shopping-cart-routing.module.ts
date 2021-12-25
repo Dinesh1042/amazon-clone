@@ -7,7 +7,7 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 
 const routes: Routes = [
   {
-    path: 'cart',
+    path: '', // cart
     component: ShoppingCartComponent,
   },
   {
@@ -15,11 +15,10 @@ const routes: Routes = [
     component: ShippingComponent,
     canActivate: [AuthGuard],
   },
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ShoppingCartRoutingModule { }
+export class ShoppingCartRoutingModule {}

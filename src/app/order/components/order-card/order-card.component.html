@@ -5,7 +5,7 @@
         <span class="fs-sm text-muted"> Order Id: </span>
         <a
           class="text-decoration-none text-dark"
-          [routerLink]="['/order-success', order.orderId]"
+          [routerLink]="['../order-success', order.orderId]"
           [state]="order"
         >
           {{ order.orderId }}</a

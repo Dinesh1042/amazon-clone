@@ -10,7 +10,7 @@ import { UserOrderDetailComponent } from './components/user-order-detail/user-or
 
 const routes: Routes = [
   {
-    path: 'my-orders',
+    path: '', // orders
     component: OrderComponent,
     canActivate: [AuthGuard],
     children: [
@@ -30,7 +30,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'my-orders/:orderId',
+    path: ':orderId',
     component: UserOrderDetailComponent,
     canActivate: [AuthGuard],
   },

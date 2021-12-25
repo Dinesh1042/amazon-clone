@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShoppingCart } from 'shared/models/shopping-cart';
 
 @Component({
@@ -10,10 +10,10 @@ import { ShoppingCart } from 'shared/models/shopping-cart';
 export class ProceedCardComponent {
   @Input('shoppingCart') shoppingCart!: ShoppingCart;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   navigateToCheckOut() {
     this.shoppingCart.cartProductCount > 0 &&
-      this.router.navigate(['/shipping']);
+      this.router.navigate(['./shipping'], { relativeTo: this.route });
   }
 }
