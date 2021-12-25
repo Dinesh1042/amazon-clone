@@ -5,11 +5,10 @@ import { Order } from 'shared/models/orders/order';
 import { OrderService } from 'shared/services/order.service';
 
 @Component({
-  selector: 'order-detail',
-  templateUrl: './order-detail.component.html',
-  styleUrls: ['./order-detail.component.scss'],
+  selector: 'user-order-detail',
+  templateUrl: './user-order-detail.component.html',
 })
-export class OrderDetailComponent implements OnInit {
+export class UserOrderDetailComponent implements OnInit {
   order?: Order;
   error: Error | null = null;
   loading = false;
@@ -31,16 +30,16 @@ export class OrderDetailComponent implements OnInit {
     this.navigationOrderData
       ? this.handleOrderSuccess(this.navigationOrderData)
       : this.route.paramMap
-        .pipe(
-          switchMap((param) =>
-            this.orderService.getOrder(param.get('orderId')!)
-          ),
-          take(1)
-        )
-        .subscribe(
-          this.handleOrderSuccess.bind(this),
-          this.handleOrderError.bind(this),
-        );
+          .pipe(
+            switchMap((param) =>
+              this.orderService.getOrder(param.get('orderId')!)
+            ),
+            take(1)
+          )
+          .subscribe(
+            this.handleOrderSuccess.bind(this),
+            this.handleOrderError.bind(this)
+          );
   }
 
   private handleOrderSuccess(order: Order) {

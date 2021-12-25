@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'shared/services/auth.guard';
 
-import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
 import { OrderComponent } from './components/order/order.component';
 import { OrdersCompletedComponent } from './components/orders-completed/orders-completed.component';
 import { OrdersUpcomingComponent } from './components/orders-upcoming/orders-upcoming.component';
+import { UserOrderDetailComponent } from './components/user-order-detail/user-order-detail.component';
 
 const routes: Routes = [
   {
@@ -31,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: 'my-orders/:orderId',
-    component: OrderDetailComponent,
+    component: UserOrderDetailComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -45,4 +45,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class OrderRoutingModule { }
+export class OrderRoutingModule {}

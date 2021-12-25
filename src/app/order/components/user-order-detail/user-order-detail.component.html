@@ -1,0 +1,28 @@
+<div class="container-lg mt-4 mb-5">
+  <ng-container *ngIf="order">
+    <header>
+      <h4>Order Detail</h4>
+    </header>
+    <div class="mt-4">
+      <order-detail [order]="order"></order-detail>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="loading">
+    <loader></loader>
+  </ng-container>
+
+  <ng-container *ngIf="error">
+    <error>
+      <ng-container class="alert-heading">
+        Oops! Something went wrong.
+      </ng-container>
+      <ng-container class="alert-message">
+        {{ error.message }}
+      </ng-container>
+      <a routerLink="../" class="alert-action btn btn-outline-dark"
+        >Go To Orders</a
+      >
+    </error>
+  </ng-container>
+</div>

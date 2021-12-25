@@ -1,0 +1,101 @@
+<div class="order-detail-container">
+  <div class="order-detail">
+    <div class="card border-0">
+      <div class="card-header">
+        <h6>Details</h6>
+      </div>
+      <div class="card-body">
+        <div class="text-group">
+          <div class="text-label fs-sm text-muted">
+            <span>Order Date</span>
+          </div>
+          <div class="text">
+            {{ order.orderPlaced | date }}
+          </div>
+        </div>
+        <div class="text-group">
+          <div class="text-label fs-sm text-muted">
+            <span>Order ID</span>
+          </div>
+          <div class="text">
+            <a
+              class="text-decoration-none text-dark"
+              [routerLink]="['/order-success', order.orderId]"
+              [state]="order"
+              >{{ order.orderId }}</a
+            >
+          </div>
+        </div>
+        <div class="text-group">
+          <div class="text-label fs-sm text-muted">
+            <span>Quantity</span>
+          </div>
+          <div class="text">
+            {{ order.orderQuantity }}
+          </div>
+        </div>
+        <div class="text-group">
+          <div class="text-label fs-sm text-muted">
+            <span>Status</span>
+          </div>
+          <div
+            class="order-status m-0 badge"
+            [ngClass]="{
+              'bg-primary-dark': !order.isDelivered,
+              'bg-success': order.isDelivered
+            }"
+          >
+            {{ order.isDelivered ? "Delivered" : "Processing" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-summary">
+    <order-summary
+      [items]="order.productsArr"
+      [total]="order.orderTotal"
+      [boxShadow]="false"
+      [padding]="false"
+    ></order-summary>
+  </div>
+
+  <div class="shipping">
+    <div class="card border-0">
+      <div class="card-header">
+        <h6>Shipping</h6>
+      </div>
+      <div class="card-body">
+        <div class="text-group">
+          <div class="text-label fs-sm text-muted"><span>Name</span></div>
+          <div class="text">
+            {{ order.shipping.name | titlecase }}
+          </div>
+        </div>
+        <div class="text-group">
+          <div class="text-label fs-sm text-muted">
+            <span>Door No</span>
+          </div>
+          <div class="text">
+            {{ order.shipping.doorNo }}
+          </div>
+        </div>
+        <div class="text-group">
+          <div class="text-label fs-sm text-muted">
+            <span>Address</span>
+          </div>
+          <div class="text">
+            {{ order.shipping.address | titlecase }}
+          </div>
+        </div>
+        <div class="text-group">
+          <div class="text-label fs-sm text-muted"><span>City</span></div>
+          <div class="text">
+            {{ order.shipping.city | titlecase }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

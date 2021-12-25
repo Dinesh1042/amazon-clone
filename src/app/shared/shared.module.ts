@@ -20,6 +20,7 @@ import { DropzoneDirective } from './directives/dropzone.directive';
 import { CamelCaseSplitPipe } from './pipes/camel-case-split.pipe';
 import { FileToDataUrlPipe } from './pipes/file-to-data-url.pipe';
 import { ShortPipe } from './pipes/short.pipe';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ShortPipe } from './pipes/short.pipe';
     ProductDetailComponent,
     ShortPipe,
     StarRatingComponent,
+    OrderDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -63,7 +65,8 @@ import { ShortPipe } from './pipes/short.pipe';
     ProductDetailComponent,
     ShortPipe,
     StarRatingComponent,
+    OrderDetailComponent,
   ],
   providers: [{ provide: 'amazonCartId', useValue: 'amazonCartId' }],
 })
-export class SharedModule { }
+export class SharedModule {}
