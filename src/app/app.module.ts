@@ -17,6 +17,7 @@ import { NavbarModule } from './navbar/navbar.module';
 import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
+import { YourAccountModule } from './your-account/your-account.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +37,7 @@ import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
     provideStorage(() => getStorage()),
     SharedModule,
     ShoppingCartModule,
+    YourAccountModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,68 @@
+<div class="container-lg my-4 mb-5">
+  <header class="mb-3">
+    <h4 class="m-0">Your Account</h4>
+  </header>
+  <div class="container-grid">
+    <div class="card" (click)="navigate('/')">
+      <div class="card-body">
+        <div class="icon-wrap">
+          <img src="assets/icons/person.svg" alt="" />
+        </div>
+        <div class="text-content">
+          <h6 class="m-0">Your Profile</h6>
+          <p class="m-0 text-muted fs-sm">View Your account and edit</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" (click)="navigate('/my-orders')">
+      <div class="card-body">
+        <div class="icon-wrap">
+          <img src="assets/icons/orders.svg" alt="" />
+        </div>
+        <div class="text-content">
+          <h6 class="m-0">Your Orders</h6>
+          <p class="m-0 text-muted fs-sm">Track, return or buy things.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" (click)="navigate('/cart')">
+      <div class="card-body">
+        <div class="icon-wrap">
+          <img src="assets/icons/shopping_cart.svg" alt="" />
+        </div>
+        <div class="text-content">
+          <h6 class="m-0">Your Cart</h6>
+          <p class="m-0 text-muted fs-sm">View your cart or modify cart</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" (click)="navigate('/')">
+      <div class="card-body">
+        <div class="icon-wrap">
+          <img src="assets/icons/location.svg" alt="" />
+        </div>
+        <div class="text-content">
+          <h6 class="m-0">Your Addresses</h6>
+          <p class="m-0 text-muted fs-sm">
+            Edit addresses for orders and gifts
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-light-red" (click)="logout()">
+      <div class="card-body">
+        <div class="icon-wrap">
+          <img src="assets/icons/logout.svg" alt="" />
+        </div>
+        <div class="text-content">
+          <h6 class="m-0 text-danger">Logout</h6>
+          <p class="m-0 fs-sm">Logout from this device.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

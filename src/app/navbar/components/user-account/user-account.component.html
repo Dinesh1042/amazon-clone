@@ -1,7 +1,7 @@
 <a
   *ngIf="user$ | async as user; else loadingOrAnonymousUser"
   class="user-account"
-  routerLink="/auth/signin"
+  routerLink="/your-account"
 >
   <div class="user text-1">Hello, {{ user.displayName }}</div>
   <div class="account-list text-bold text-2">Account & Lists</div>

@@ -1,0 +1,42 @@
+@import "src/scss/_variables.scss";
+@import "src/scss/_breakpoints.scss";
+
+.container-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1rem;
+  @include breakpoint(md) {
+    gap: 1.5rem;
+  }
+}
+
+.card {
+  box-shadow: 0 0 6px 0 rgb(202 200 200 / 38%);
+  border: none;
+  padding-block: 0.5rem;
+  cursor: pointer;
+  transition: 200ms ease-in-out background-color;
+  img {
+    width: 40px;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+  &:hover {
+    background-color: $gray-100;
+  }
+  &-body {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.card.bg-light-red {
+  p {
+    color: lighten($danger, 15);
+  }
+
+  &:hover {
+    background-color: darken($lightRed, 1);
+  }
+}

@@ -74,7 +74,10 @@ export class AuthService {
   }
 
   signOut() {
-    return this.auth.signOut().then(this.clearLocalStorageCardId.bind(this));
+    return this.auth.signOut().then(() => {
+      this.clearLocalStorageCardId();
+      window.location.href = '/';
+    });
   }
 
   private clearLocalStorageCardId() {
