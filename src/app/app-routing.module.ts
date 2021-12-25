@@ -1,16 +1,21 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AdminCanLoadGuard } from 'shared/services/can-load/admin-can-load.guard';
+import { AuthCanLoadGuard } from 'shared/services/can-load/auth-can-load.guard';
+import { UserCanLoadGuard } from 'shared/services/can-load/user-can-load.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () =>
       import('./auth/auth.module').then(({ AuthModule }) => AuthModule),
+    canLoad: [AuthCanLoadGuard],
   },
   {
     path: 'admin',
     loadChildren: () =>
       import('./admin/admin.module').then(({ AdminModule }) => AdminModule),
+    canLoad: [AdminCanLoadGuard],
   },
   {
     path: 'products',
@@ -25,11 +30,13 @@ const routes: Routes = [
       import('./your-account/your-account.module').then(
         ({ YourAccountModule }) => YourAccountModule
       ),
+    canLoad: [UserCanLoadGuard],
   },
   {
     path: 'orders',
     loadChildren: () =>
       import('./order/order.module').then(({ OrderModule }) => OrderModule),
+    canLoad: [UserCanLoadGuard],
   },
   {
     path: 'cart',
@@ -41,7 +48,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
