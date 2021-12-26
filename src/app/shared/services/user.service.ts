@@ -1,8 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Auth, authState } from '@angular/fire/auth';
-import { doc, docData, Firestore, updateDoc } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
+import {
+  arrayUnion,
+  doc,
+  docData,
+  Firestore,
+  updateDoc,
+} from '@angular/fire/firestore';
+import { Observable, of, throwError } from 'rxjs';
 import { shareReplay, switchMap } from 'rxjs/operators';
+import { arrayContainsObj } from 'shared/helpers/array-contains-obj';
+import { Shipping } from 'shared/models/shipping';
 import { User } from 'shared/models/user';
 
 @Injectable({
@@ -28,6 +36,25 @@ export class UserService {
         if (!user) return of(null);
         const docRef = doc(this.firestore, `/users/${user.uid}`);
         return updateDoc(docRef, { shoppingCartId: cartId }).then(() => cartId);
+      })
+    );
+  }
+
+  saveAnAddress(address: Shipping) {
+    return this.appUser$.pipe(
+      switchMap((user) => {
+        if (!user) return throwError(new Error('No User Found!'));
+
+        const addresses = user.addresses || [];
+
+        if (!arrayContainsObj(addresses, address)) {
+          const docRef = doc(this.firestore, `/users/${user.uid}`);
+
+          return updateDoc(docRef, {
+            addresses: arrayUnion(address),
+          }).then(() => 'Address Added');
+        }
+        return of('Already was already added');
       })
     );
   }

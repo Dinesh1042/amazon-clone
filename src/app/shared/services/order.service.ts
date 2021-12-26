@@ -9,7 +9,6 @@ import {
 import { from, Observable, of, throwError } from 'rxjs';
 import { map, mapTo, shareReplay, switchMap } from 'rxjs/operators';
 import { Order, OrderInterface } from 'shared/models/orders/order';
-
 import { Orders, OrdersInterface } from 'shared/models/orders/orders';
 
 import { ShoppingCartService } from './shopping-cart.service';
@@ -40,6 +39,7 @@ export class OrderService {
 
         return from(setDoc(docRef, newOrder, { merge: true })).pipe(
           switchMap(() => this.cartService.removeCart()),
+          switchMap(() => this.userService.saveAnAddress(order.shipping)),
           mapTo(newOrder)
         );
       })
