@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { AdminAuthGuard } from 'shared/services/admin-auth.guard';
-import { AuthGuard } from 'shared/services/auth.guard';
+import { AdminAuthGuard } from 'shared/services/guards/admin-auth.guard';
+import { AuthGuard } from 'shared/services/guards/auth.guard';
 
 import { AdminOrdersComponent } from './components/orders/admin-orders/admin-orders.component';
 import { AdminProductDetailComponent } from './components/products/admin-product-detail/admin-product-detail.component';
