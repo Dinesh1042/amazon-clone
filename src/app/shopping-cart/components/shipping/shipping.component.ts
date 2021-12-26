@@ -76,7 +76,7 @@ export class ShippingComponent implements OnInit {
 
   private handleOrderPlacedSuccess(orderSuccess: OrdersInterface) {
     const [orderId, order] = Object.entries(orderSuccess)[0];
-    this.router.navigate(['/order-success', orderId], {
+    this.router.navigate(['/orders/order-success', orderId], {
       state: new Order(order, orderId),
     });
     this.orderPlacedLoading = false;
