@@ -58,12 +58,19 @@
       <div *ngIf="city?.hasError('required')">City is required.</div>
     </div>
   </div>
-
   <button
     [buttonLoader]="orderPlacedLoading"
     [disabled]="shippingForm.invalid"
     class="btn btn-success"
   >
     Place Order
+  </button>
+  <button
+    class="btn btn-outline-dark ms-3 shadow-none"
+    *ngIf="addresses.length > 0"
+    type="button"
+    (click)="showAddresses()"
+  >
+    Select Address
   </button>
 </form>

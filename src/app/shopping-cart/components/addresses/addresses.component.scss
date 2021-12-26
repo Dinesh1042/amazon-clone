@@ -1,0 +1,54 @@
+@import "src/scss/_variables.scss";
+
+.addresses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16.8rem, 1fr));
+  gap: 1rem;
+
+  .address-card {
+    border: 1px solid $gray-300;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: 200ms ease-in-out background-color, border 200ms ease-in-out;
+    position: relative;
+
+    .user-name {
+      transition: 200ms ease color;
+    }
+
+    &:hover {
+      background-color: $gray-100;
+      border-color: $gray-400;
+    }
+
+    .select-icon {
+      position: absolute;
+      opacity: 0;
+      right: 0.8rem;
+      top: 0.8rem;
+      transition: 300ms ease opacity;
+      .bi-check-circle-fill {
+        color: $green;
+      }
+    }
+
+    &.selected,
+    &.selected:hover {
+      border-color: $green;
+      background-color: $lightGreen;
+
+      .select-icon {
+        opacity: 1;
+      }
+
+      .user-name {
+        color: $green;
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}

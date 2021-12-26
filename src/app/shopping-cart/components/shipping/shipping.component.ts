@@ -31,7 +31,6 @@ export class ShippingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.orderService.getOrders().subscribe(console.log);
     this.loading = true;
     this.subscription.add(
       this.cartService

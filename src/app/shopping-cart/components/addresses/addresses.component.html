@@ -1,0 +1,31 @@
+<div class="address-container">
+  <header>
+    <h6 mat-dialog-title class="m-0">Select an Address</h6>
+  </header>
+  <mat-dialog-content class="addresses mt-3 pb-2">
+    <div
+      class="address-card"
+      *ngFor="let address of addresses; index as i"
+      (click)="selectedAddressIndex = i"
+      [class.selected]="selectedAddressIndex === i"
+    >
+      <p class="user-name text-bold-500 mb-2">{{ address.name | titlecase }}</p>
+      <p>{{ address.doorNo }}</p>
+      <p>{{ address.address }}</p>
+      <p>{{ address.city }}</p>
+      <div class="select-icon">
+        <span class="bi bi-check-circle-fill"></span>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-dialog-close class="btn btn-light shadow-none">Cancel</button>
+    <button
+      [mat-dialog-close]="addresses[selectedAddressIndex]"
+      [disabled]="selectedAddressIndex < 0"
+      class="btn btn-success ms-3"
+    >
+      Select
+    </button>
+  </mat-dialog-actions>
+</div>

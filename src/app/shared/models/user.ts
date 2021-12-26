@@ -1,3 +1,5 @@
+import { Shipping } from './shipping';
+
 export interface User {
   displayName: string;
   email: string;
@@ -6,4 +8,5 @@ export interface User {
   username: string;
   isAdmin?: boolean;
   shoppingCartId: string;
+  addresses?: Shipping[];
 }

@@ -10,6 +10,7 @@ import { ShippingComponent } from './components/shipping/shipping.component';
 import { ShoppingCartProductComponent } from './components/shopping-cart-product/shopping-cart-product.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { ShoppingCartRoutingModule } from './shopping-cart-routing.module';
+import { AddressesComponent } from './components/addresses/addresses.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ShoppingCartRoutingModule } from './shopping-cart-routing.module';
     EmptyCartComponent,
     ShippingComponent,
     ShippingFormComponent,
+    AddressesComponent,
   ],
   imports: [
     CommonModule,
