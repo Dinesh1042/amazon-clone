@@ -36,16 +36,6 @@ export class UserService {
     return this.appUser$.pipe(take(1));
   }
 
-  updateCartId(cartId: string) {
-    return this.appUser$.pipe(
-      switchMap((user) => {
-        if (!user) return of(null);
-        const docRef = doc(this.firestore, `/users/${user.uid}`);
-        return updateDoc(docRef, { shoppingCartId: cartId }).then(() => cartId);
-      })
-    );
-  }
-
   saveAnAddress(address: Shipping) {
     return this.getUser().pipe(
       switchMap((user) => {

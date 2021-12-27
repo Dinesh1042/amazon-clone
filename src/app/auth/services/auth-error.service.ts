@@ -20,8 +20,6 @@ export class AuthErrorService {
   }
 
   private getError(code: string) {
-    console.log(code);
-
     const errors: { [key: string]: string } = {
       'auth/wrong-password': 'Your password is incorrect.',
       'auth/email-already-exists.':

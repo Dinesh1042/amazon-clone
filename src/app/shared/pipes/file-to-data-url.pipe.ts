@@ -6,9 +6,6 @@ import { Observable } from 'rxjs';
 })
 export class FileToDataUrlPipe implements PipeTransform {
   transform(value: File | string): Observable<string> {
-    console.log(`called `, this);
-    console.log(value, 'FIleToDataUrl');
-
     return new Observable((observer) => {
       if (!value) observer.error(`Cannot read the property of ${value}`);
       if (typeof value === 'string') observer.next(value);
