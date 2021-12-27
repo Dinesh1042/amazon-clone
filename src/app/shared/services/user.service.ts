@@ -47,23 +47,18 @@ export class UserService {
   }
 
   saveAnAddress(address: Shipping) {
-    return this.appUser$.pipe(
+    return this.getUser().pipe(
       switchMap((user) => {
-        if (!user) return throwError(new Error('No User Found!'));
-
         const addresses = user.addresses || [];
 
         if (!arrayContainsObj(addresses, address)) {
           const docRef = doc(this.firestore, `/users/${user.uid}`);
-          console.log('Not SameAddress');
           return updateDoc(docRef, {
             addresses: arrayUnion(address),
           }).then(() => 'Address Added');
         }
-        console.log('SameAddress');
         return of('Already was already added');
-      }),
-      take(1)
+      })
     );
   }
 
