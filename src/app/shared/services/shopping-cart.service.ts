@@ -170,7 +170,6 @@ export class ShoppingCartService {
               tap(this.saveLocal.bind(this, this.amazonCart)) // Side Effect for storing CartId in LocalStorage
             )
       ),
-      take(1),
       shareReplay(1)
     );
   }
@@ -194,24 +193,22 @@ export class ShoppingCartService {
   }
 
   checkExistingCart() {
-    return this.userService.getUser().pipe(
-      distinctUntilChanged(),
-      switchMap((user) =>
-        !user
-          ? of(`No User!`)
-          : this.getCartId().pipe(
-              switchMap((cartId) =>
-                user.shoppingCartId === cartId
-                  ? of(`Same shoppingCart Id`)
-                  : this.updateOldCartDataWithNewCartData(
-                      user.shoppingCartId,
-                      cartId
-                    )
-              ),
-              take(1)
+    return this.userService
+      .getUser()
+      .pipe(
+        switchMap((user) =>
+          this.getCartId().pipe(
+            switchMap((cartId) =>
+              user.shoppingCartId === cartId
+                ? of(`Same shoppingCart Id`)
+                : this.updateOldCartDataWithNewCartData(
+                    user.shoppingCartId,
+                    cartId
+                  )
             )
-      )
-    );
+          )
+        )
+      );
   }
 
   private updateOldCartDataWithNewCartData(
