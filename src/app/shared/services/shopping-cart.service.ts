@@ -11,6 +11,7 @@ import {
 } from '@angular/fire/firestore';
 import { of } from 'rxjs';
 import {
+  catchError,
   distinctUntilChanged,
   map,
   shareReplay,
@@ -163,12 +164,10 @@ export class ShoppingCartService {
       switchMap((cartId) =>
         cartId
           ? of(cartId)
-          : this.userService.appUser$.pipe(
-              switchMap((user) =>
-                of(user ? user.shoppingCartId : this.createNewCartId())
-              ),
-              tap(this.saveLocal.bind(this, this.amazonCart)), // Side Effect for storing CartId in LocalStorage
-              take(1)
+          : this.userService.getUser().pipe(
+              map((user) => user.shoppingCartId),
+              catchError(() => of(this.createNewCartId())),
+              tap(this.saveLocal.bind(this, this.amazonCart)) // Side Effect for storing CartId in LocalStorage
             )
       ),
       take(1),
@@ -195,7 +194,7 @@ export class ShoppingCartService {
   }
 
   checkExistingCart() {
-    return this.userService.appUser$.pipe(
+    return this.userService.getUser().pipe(
       distinctUntilChanged(),
       switchMap((user) =>
         !user
@@ -211,8 +210,7 @@ export class ShoppingCartService {
               ),
               take(1)
             )
-      ),
-      take(1)
+      )
     );
   }
 

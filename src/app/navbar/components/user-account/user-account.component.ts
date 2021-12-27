@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { User } from 'shared/models/user';
 import { UserService } from 'shared/services/user.service';
 
@@ -9,14 +8,34 @@ import { UserService } from 'shared/services/user.service';
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.component.scss'],
 })
-export class UserAccountComponent implements OnInit {
-  user$: Observable<User | null | undefined>;
+export class UserAccountComponent implements OnInit, OnDestroy {
+  user?: User;
   loading = false;
 
-  constructor(private userService: UserService) {
+  private subscriptions: Subscription = new Subscription();
+
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
     this.loading = true;
-    this.user$ = userService.appUser$.pipe(tap((_) => (this.loading = false)));
+    this.subscriptions.add(
+      this.userService.appUser$.subscribe(
+        this.handleUser.bind(this),
+        this.handleUserError.bind(this)
+      )
+    );
   }
 
-  ngOnInit(): void {}
+  private handleUser(user: User) {
+    this.user = user;
+    this.loading = false;
+  }
+
+  private handleUserError(error: Error) {
+    this.loading = false;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 }

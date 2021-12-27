@@ -8,7 +8,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { Observable, of, throwError } from 'rxjs';
-import { shareReplay, switchMap, take } from 'rxjs/operators';
+import { map, shareReplay, switchMap, take } from 'rxjs/operators';
 import { arrayContainsObj } from 'shared/helpers/array-contains-obj';
 import { Shipping } from 'shared/models/shipping';
 import { User } from 'shared/models/user';
@@ -19,18 +19,14 @@ import { User } from 'shared/models/user';
 export class UserService {
   private user$ = authState(this.auth);
 
-  constructor(private auth: Auth, private firestore: Firestore) {
-    this.getUser().subscribe(
-      console.log,
-      console.error,
-      console.log.bind(null, 'copleted')
-    );
-  }
+  constructor(private auth: Auth, private firestore: Firestore) {}
 
   get appUser$() {
     return this.user$.pipe(
       switchMap((firebaseUser) =>
-        firebaseUser ? this.getUserByUID(firebaseUser.uid) : of(null)
+        firebaseUser
+          ? this.getUserByUID(firebaseUser.uid)
+          : throwError(new Error('No User Found!'))
       ),
       shareReplay(1)
     );
@@ -75,8 +71,11 @@ export class UserService {
   //?               - Should be implemented
   //? DeleteUser -
 
-  private getUserByUID(uid: string): Observable<User | undefined> {
+  private getUserByUID(uid: string): Observable<User> {
     const docRef = doc(this.firestore, `/users/${uid}`);
-    return docData(docRef) as Observable<User | undefined>;
+
+    return docData(docRef).pipe(
+      map((data) => (data ? data : throwError(new Error('No Data Found!'))))
+    ) as Observable<User>;
   }
 }

@@ -1,5 +1,5 @@
 <a
-  *ngIf="user$ | async as user; else loadingOrAnonymousUser"
+  *ngIf="user; else loadingOrAnonymousUser"
   class="user-account"
   routerLink="/your-account"
 >
