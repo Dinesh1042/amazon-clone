@@ -7,7 +7,7 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 import { from, Observable, of, throwError } from 'rxjs';
-import { map, mapTo, shareReplay, switchMap } from 'rxjs/operators';
+import { map, mapTo, shareReplay, switchMap, take } from 'rxjs/operators';
 import { Order, OrderInterface } from 'shared/models/orders/order';
 import { Orders, OrdersInterface } from 'shared/models/orders/orders';
 
@@ -25,7 +25,7 @@ export class OrderService {
   ) {}
 
   placeOrder(order: OrderInterface): Observable<OrdersInterface> {
-    return this.userService.appUser$.pipe(
+    return this.userService.getUser().pipe(
       switchMap((user) => {
         if (!user) return throwError(new Error('No User!'));
 

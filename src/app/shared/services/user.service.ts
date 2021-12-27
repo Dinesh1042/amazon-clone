@@ -8,7 +8,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { Observable, of, throwError } from 'rxjs';
-import { shareReplay, switchMap } from 'rxjs/operators';
+import { shareReplay, switchMap, take } from 'rxjs/operators';
 import { arrayContainsObj } from 'shared/helpers/array-contains-obj';
 import { Shipping } from 'shared/models/shipping';
 import { User } from 'shared/models/user';
@@ -19,7 +19,13 @@ import { User } from 'shared/models/user';
 export class UserService {
   private user$ = authState(this.auth);
 
-  constructor(private auth: Auth, private firestore: Firestore) {}
+  constructor(private auth: Auth, private firestore: Firestore) {
+    this.getUser().subscribe(
+      console.log,
+      console.error,
+      console.log.bind(null, 'copleted')
+    );
+  }
 
   get appUser$() {
     return this.user$.pipe(
@@ -28,6 +34,10 @@ export class UserService {
       ),
       shareReplay(1)
     );
+  }
+
+  getUser() {
+    return this.appUser$.pipe(take(1));
   }
 
   updateCartId(cartId: string) {
@@ -49,13 +59,15 @@ export class UserService {
 
         if (!arrayContainsObj(addresses, address)) {
           const docRef = doc(this.firestore, `/users/${user.uid}`);
-
+          console.log('Not SameAddress');
           return updateDoc(docRef, {
             addresses: arrayUnion(address),
           }).then(() => 'Address Added');
         }
+        console.log('SameAddress');
         return of('Already was already added');
-      })
+      }),
+      take(1)
     );
   }
 
