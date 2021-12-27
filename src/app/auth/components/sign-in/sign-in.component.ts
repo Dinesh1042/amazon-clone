@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { FirebaseError } from '@firebase/util';
+import { User } from 'firebase/auth';
 import { take } from 'rxjs/operators';
 import { SignInUser } from 'shared/models/sign-in-user';
 import { AuthService } from 'shared/services/auth.service';
@@ -21,7 +23,8 @@ export class SignInComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private authErrorService: AuthErrorService,
-    private authSuccessService: AuthSuccessService
+    private authSuccessService: AuthSuccessService,
+    private snackbar: MatSnackBar
   ) {
     this.signInForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
@@ -51,11 +54,20 @@ export class SignInComponent {
     this.loading = false;
   }
 
-  private handleAuthSuccess() {
+  private handleAuthSuccess(user: User) {
     this.signInForm.enable();
     this.authErrorService.removeAuthError();
     this.authSuccessService.navigateUser();
     this.loading = false;
+    this.showSnackBar(user.displayName || 'User');
+  }
+
+  private showSnackBar(name: string) {
+    this.snackbar.open(`Hi ${name}! Welcome back.`, undefined, {
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+    });
   }
 
   // Form Getters

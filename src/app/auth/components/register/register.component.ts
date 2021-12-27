@@ -6,6 +6,8 @@ import { take } from 'rxjs/operators';
 import { AuthErrorService } from '../../services/auth-error.service';
 import { FirebaseError } from '@firebase/util';
 import { AuthSuccessService } from '../../services/auth-success.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from 'firebase/auth';
 
 @Component({
   selector: 'register',
@@ -20,7 +22,8 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private authErrorService: AuthErrorService,
-    private authSuccessService: AuthSuccessService
+    private authSuccessService: AuthSuccessService,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -54,11 +57,20 @@ export class RegisterComponent implements OnInit {
     this.loading = false;
   }
 
-  private handleAuthSuccess() {
+  private handleAuthSuccess(user: User) {
     this.registerForm.enable();
     this.authSuccessService.navigateUser();
     this.authErrorService.removeAuthError();
     this.loading = false;
+    this.showSnackBar(user.displayName || 'User');
+  }
+
+  private showSnackBar(name: string) {
+    this.snackbar.open(`Hi ${name}! Welcome to Amazon.`, undefined, {
+      duration: 2000,
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+    });
   }
 
   // Form Getters
