@@ -77,10 +77,13 @@ export class AdminProductEditComponent
     const dialogRef = this.matDialog.open(AlertComponent, {
       data: {
         title: `Leaving`,
-        body: `Are you sure you want to leave?. After leaving, enter data can't be recovered.`,
+        body: `Are you sure you want to leave? After leaving, enter data can't be recovered.`,
         cancelButton: 'Cancel',
         confirmButton: 'Leave',
       },
+      width: '95%',
+      maxWidth: 500,
+      panelClass: 'mat-dialog-box',
     });
     return dialogRef.afterClosed() as Observable<boolean>;
   }

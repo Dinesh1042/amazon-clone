@@ -1,22 +1,21 @@
-<div class="alert-card">
-  <div class="alert-header">
-    <h4>
-      {{ title }}
-    </h4>
-  </div>
-
-  <div class="alert-body">
-    <span class="bi bi-exclamation-triangle-fill"></span>
-    <p>
-      {{ body }}
-    </p>
-  </div>
-  <div class="alert-footer">
-    <button [mat-dialog-close]="false" class="btn btn-light">
-      {{ cancelButton || "Cancel" }}
-    </button>
-    <button [mat-dialog-close]="true" class="btn btn-danger">
-      {{ confirmButton || "Delete" }}
-    </button>
-  </div>
+<div class="alert-header">
+  <h4 class="m-0" mat-dialog-title>
+    {{ alertData.title }}
+  </h4>
 </div>
+
+<mat-dialog-content class="alert-body mt-2 d-flex">
+  <span class="bi bi-exclamation-triangle-fill"></span>
+  <p class="alert-body-message">
+    {{ alertData.body }}
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="mt-4">
+  <button [mat-dialog-close]="false" class="btn btn-light shadow-none">
+    {{ alertData.cancelButton || "Cancel" }}
+  </button>
+  <button [mat-dialog-close]="true" class="ms-3 btn btn-danger">
+    {{ alertData.confirmButton || "Delete" }}
+  </button>
+</mat-dialog-actions>

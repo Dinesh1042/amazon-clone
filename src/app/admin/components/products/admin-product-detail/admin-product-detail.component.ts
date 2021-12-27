@@ -57,6 +57,9 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
         cancelButton: 'Cancel',
         confirmButton: 'Delete',
       },
+      width: '95%',
+      maxWidth: 500,
+      panelClass: 'mat-dialog-box',
     });
 
     dialogRef
