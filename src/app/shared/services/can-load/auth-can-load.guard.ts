@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Router } from '@angular/router';
+import { CanLoad, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
@@ -11,9 +11,9 @@ import { AuthService } from '../auth.service';
 export class AuthCanLoadGuard implements CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canLoad(): Observable<boolean> {
+  canLoad(): Observable<boolean | UrlTree> {
     return this.authService.user$.pipe(
-      map((user) => !user),
+      map((user) => (!user ? true : this.router.createUrlTree(['/']))),
       take(1)
     );
   }
