@@ -1,15 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { SwiperModule } from 'swiper/angular';
 
 import { AddCartBtnComponent } from './components/add-cart-btn/add-cart-btn.component';
+import { AddressFormComponent } from './components/address-form/address-form.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { DropzoneComponent } from './components/dropzone/dropzone.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { ProductCarouselComponent } from './components/product-carousel/product-carousel.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
@@ -20,11 +23,11 @@ import { DropzoneDirective } from './directives/dropzone.directive';
 import { CamelCaseSplitPipe } from './pipes/camel-case-split.pipe';
 import { FileToDataUrlPipe } from './pipes/file-to-data-url.pipe';
 import { ShortPipe } from './pipes/short.pipe';
-import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
     AddCartBtnComponent,
+    AddressFormComponent,
     AlertComponent,
     AlertDirective,
     ButtonLoaderDirective,
@@ -34,12 +37,12 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     ErrorComponent,
     FileToDataUrlPipe,
     LoaderComponent,
+    OrderDetailComponent,
     OrderSummaryComponent,
     ProductCarouselComponent,
     ProductDetailComponent,
     ShortPipe,
     StarRatingComponent,
-    OrderDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -47,9 +50,11 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     MatSnackBarModule,
     RouterModule.forChild([]),
     SwiperModule,
+    ReactiveFormsModule,
   ],
   exports: [
     AddCartBtnComponent,
+    AddressFormComponent,
     AlertComponent,
     AlertDirective,
     ButtonLoaderDirective,
@@ -61,11 +66,11 @@ import { OrderDetailComponent } from './components/order-detail/order-detail.com
     LoaderComponent,
     MatDialogModule,
     MatSnackBarModule,
+    OrderDetailComponent,
     OrderSummaryComponent,
     ProductDetailComponent,
     ShortPipe,
     StarRatingComponent,
-    OrderDetailComponent,
   ],
   providers: [{ provide: 'amazonCartId', useValue: 'amazonCartId' }],
 })

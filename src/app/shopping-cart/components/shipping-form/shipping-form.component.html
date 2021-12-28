@@ -1,76 +1,16 @@
-<form [formGroup]="shippingForm" (ngSubmit)="placeOrder()" class="form">
-  <div class="form-group mb-3">
-    <label for="name" class="form-label">Name</label>
-    <input
-      [class.is-invalid]="name?.touched && name?.invalid"
-      class="form-control"
-      formControlName="name"
-      id="name"
-      type="text"
-    />
-    <div class="invalid-feedback">
-      <div *ngIf="name?.hasError('required')">Name is required.</div>
-      <div *ngIf="name?.hasError('minlength')">
-        Name must be minimum
-        {{ name?.errors?.minlength.requiredLength }} characters length.
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <label for="doorNo" class="form-label">Door No</label>
-    <input
-      [class.is-invalid]="doorNo?.touched && doorNo?.invalid"
-      class="form-control"
-      formControlName="doorNo"
-      id="doorNo"
-      type="text"
-    />
-    <div class="invalid-feedback">
-      <div *ngIf="doorNo?.hasError('required')">Door no is required.</div>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <label for="address" class="form-label">Address</label>
-    <input
-      [class.is-invalid]="address?.touched && address?.invalid"
-      class="form-control"
-      formControlName="address"
-      id="address"
-      type="text"
-    />
-    <div class="invalid-feedback">
-      <div *ngIf="address?.hasError('required')">Address is required.</div>
-    </div>
-  </div>
-
-  <div class="form-group mb-3">
-    <label for="city" class="form-label">City</label>
-    <input
-      [class.is-invalid]="city?.touched && city?.invalid"
-      class="form-control"
-      formControlName="city"
-      id="city"
-      type="text"
-    />
-    <div class="invalid-feedback">
-      <div *ngIf="city?.hasError('required')">City is required.</div>
-    </div>
-  </div>
+<address-form
+  [addressFormValue]="shippingFormValue!"
+  confirmBtnLabel="Place Order"
+  [confirmBtnLoading]="orderPlacedLoading"
+  (submitEvent)="placeOrder($event)"
+>
   <button
-    [buttonLoader]="orderPlacedLoading"
-    [disabled]="shippingForm.invalid"
-    class="btn btn-success"
-  >
-    Place Order
-  </button>
-  <button
-    class="btn btn-outline-dark ms-3 shadow-none"
-    *ngIf="addresses.length > 0"
+    *ngIf="addresses?.length"
+    (click)="showAddressDialog()"
+    class="btn btn-outline-dark shadow-none"
+    id="secondaryBtnAction"
     type="button"
-    (click)="showAddresses()"
   >
-    Select Address
+    Show Address
   </button>
-</form>
+</address-form>
