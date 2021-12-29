@@ -7,7 +7,7 @@ import {
   setDoc,
 } from '@angular/fire/firestore';
 import { from, Observable, of, throwError } from 'rxjs';
-import { map, mapTo, shareReplay, switchMap } from 'rxjs/operators';
+import { catchError, map, mapTo, shareReplay, switchMap } from 'rxjs/operators';
 import { Order, OrderInterface } from 'shared/models/orders/order';
 import { Orders, OrdersInterface } from 'shared/models/orders/orders';
 
@@ -37,7 +37,11 @@ export class OrderService {
 
         return from(setDoc(docRef, newOrder, { merge: true })).pipe(
           switchMap(() => this.cartService.removeCart()),
-          switchMap(() => this.userService.saveAnAddress(order.shipping)),
+          switchMap(() =>
+            this.userService
+              .saveAddress(order.shipping)
+              .pipe(catchError(() => of(null)))
+          ), // Ignoring address saving Errors
           mapTo(newOrder)
         );
       })

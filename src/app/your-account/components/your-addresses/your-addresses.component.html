@@ -1,0 +1,65 @@
+<div class="container-lg my-4">
+  <ng-container *ngIf="addresses">
+    <header>
+      <h4 class="m-0">Your Addresses</h4>
+    </header>
+    <main class="mt-4">
+      <div class="address-container">
+        <div
+          (click)="navigate('./new')"
+          class="address-card card card-shadow add-address-card"
+        >
+          <div class="address-card-body">
+            <div class="icons">
+              <span class="bi bi-plus-lg"></span>
+            </div>
+            <p class="m-0">Add Address</p>
+          </div>
+        </div>
+
+        <div
+          class="address-card card card-shadow"
+          *ngFor="let address of addresses"
+        >
+          <p class="text-bold-500 m-0 mb-2">{{ address.name | titlecase }}</p>
+          <p class="m-0">{{ address.doorNo }}</p>
+          <p class="m-0">{{ address.address }}</p>
+          <p class="m-0">{{ address.city }}</p>
+          <div class="address-card-footer mt-3">
+            <button
+              class="btn btn-success-light btn-sm"
+              (click)="
+                address.addressID &&
+                  navigate('./' + address.addressID + '/edit')
+              "
+            >
+              Edit
+            </button>
+            <button
+              class="btn btn-danger-light btn-sm ms-3"
+              (click)="address.addressID && deleteAddress(address.addressID)"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </ng-container>
+
+  <ng-container *ngIf="pageLoading">
+    <loader></loader>
+  </ng-container>
+
+  <ng-container *ngIf="error">
+    <error>
+      <ng-container class="alert-heading">
+        Oops! Something went wrong.
+      </ng-container>
+      <ng-container class="alert-message">
+        {{ error.message }}
+      </ng-container>
+      <a routerLink="/" class="btn btn-outline-dark alert-action">Go Home</a>
+    </error>
+  </ng-container>
+</div>

@@ -6,6 +6,7 @@
 @import "~bootstrap-icons/font/bootstrap-icons";
 
 @import "swiper/scss";
+@import "utils.scss";
 
 @mixin boxShadow {
   box-shadow: 0 0 3px 2px rgb(228 121 17 / 50%);

@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Shipping } from 'shared/models/shipping';
 
@@ -6,13 +14,10 @@ import { Shipping } from 'shared/models/shipping';
   selector: 'address-form',
   templateUrl: './address-form.component.html',
 })
-export class AddressFormComponent implements OnInit {
+export class AddressFormComponent implements OnInit, OnChanges {
   @Input('confirmBtnLoading') confirmBtnLoading = false;
   @Input('confirmBtnLabel') confirmBtnLabel = 'Confirm';
-
-  @Input('addressFormValue') set addressFormValue(value: Shipping) {
-    value && this.addressForm.setValue(value);
-  }
+  @Input('addressFormValue') addressFormValue = {} as Shipping;
 
   @Output('submitEvent') submitEvent = new EventEmitter();
 
@@ -31,6 +36,15 @@ export class AddressFormComponent implements OnInit {
       address: [null, [Validators.required]],
       city: [null, [Validators.required]],
     });
+    this.addressForm.patchValue(this.addressFormValue);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    changes.addressFormValue &&
+      this.addressForm?.patchValue(changes.addressFormValue.currentValue);
+
+    changes.confirmBtnLoading &&
+      this.addressForm?.disable(changes.confirmBtnLoading?.currentValue);
   }
 
   // Form Getters

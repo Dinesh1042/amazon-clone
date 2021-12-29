@@ -1,0 +1,43 @@
+@import "src/scss/_variables.scss";
+
+.container-lg {
+  min-height: 68vh;
+}
+
+.address-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1rem;
+  grid-auto-rows: 1fr;
+}
+
+.add-address-card {
+  cursor: pointer;
+  .address-card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed $darkOrange;
+    border-radius: 0.5rem;
+    height: 100%;
+    transition: 200ms ease background-color;
+    user-select: none;
+    padding: 1.5rem;
+    .bi-plus-lg {
+      color: $darkOrange;
+      font-size: 3rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: $darkOrange;
+      user-select: none;
+    }
+  }
+  &:hover {
+    .address-card-body {
+      background-color: lighten($darkOrange, 40);
+    }
+  }
+}

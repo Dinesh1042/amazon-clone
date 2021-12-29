@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'shared/services/auth.service';
 
 @Component({
@@ -8,10 +8,14 @@ import { AuthService } from 'shared/services/auth.service';
   styleUrls: ['./your-account.component.scss'],
 })
 export class YourAccountComponent {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   navigate(path: string) {
-    this.router.navigate([path]);
+    this.router.navigate([path], { relativeTo: this.route });
   }
 
   logout() {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { map, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Shipping } from 'shared/models/shipping';
 import { UserService } from 'shared/services/user.service';
 
@@ -21,12 +21,9 @@ export class ShippingFormComponent implements OnInit {
   constructor(private userService: UserService, private matDialog: MatDialog) {}
 
   ngOnInit(): void {
-    // TODO: Create a separate method for getting addresses
-    this.userService.appUser$
-      .pipe(
-        map((user) => (user && user.addresses ? user.addresses : [])),
-        take(1)
-      )
+    this.userService
+      .getAddress()
+      .pipe(take(1))
       .subscribe((addresses) => (this.addresses = addresses));
   }
 

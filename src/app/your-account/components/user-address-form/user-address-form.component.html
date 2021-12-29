@@ -1,0 +1,31 @@
+<div class="container-lg mt-4 mb-5">
+  <ng-container *ngIf="!pageLoading && !error">
+    <header class="mb-3">
+      <h4 class="m-0">{{ addressID ? "Edit Address" : "New Address" }}</h4>
+    </header>
+    <address-form
+      [confirmBtnLabel]="addressID ? 'Update Address' : 'Save Address'"
+      [confirmBtnLoading]="saveLoading"
+      (submitEvent)="saveAddress($event)"
+      [addressFormValue]="address!"
+    ></address-form>
+  </ng-container>
+
+  <ng-container *ngIf="pageLoading">
+    <loader></loader>
+  </ng-container>
+
+  <ng-container *ngIf="error">
+    <error>
+      <ng-container class="alert-heading">
+        Oops! Something went wrong.
+      </ng-container>
+      <ng-container class="alert-message">
+        {{ error.message }}
+      </ng-container>
+      <a routerLink="../../" class="btn btn-outline-dark alert-action"
+        >View All Address</a
+      >
+    </error>
+  </ng-container>
+</div>

@@ -1,0 +1,25 @@
+@import "variables";
+
+.btn-danger-light {
+  background-color: $lightRed;
+  color: $red;
+  &:focus {
+    box-shadow: none;
+  }
+  &:hover {
+    background-color: darken($lightRed, 3);
+    color: $red;
+  }
+}
+
+.btn-success-light {
+  background-color: $lightGreen;
+  color: $green;
+  &:focus {
+    box-shadow: none;
+  }
+  &:hover {
+    background-color: darken($lightGreen, 3);
+    color: $green;
+  }
+}
