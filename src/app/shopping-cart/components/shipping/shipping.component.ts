@@ -14,6 +14,13 @@ import { ShoppingCartService } from 'shared/services/shopping-cart.service';
 @Component({
   selector: 'shipping',
   templateUrl: './shipping.component.html',
+  styles: [
+    `
+      .container-lg {
+        min-height: 65vh;
+      }
+    `,
+  ],
 })
 export class ShippingComponent implements OnInit {
   shoppingCart?: ShoppingCart;

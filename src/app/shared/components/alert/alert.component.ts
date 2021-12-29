@@ -10,7 +10,7 @@ export class AlertComponent implements OnInit {
   alertData = {
     title: `Delete Product`,
     body: ` Do you want to delete this product?`,
-    confirmButton: `Delete`,
+    confirmButton: ``,
     cancelButton: `Cancel`,
   };
 

@@ -89,6 +89,8 @@ export class UserAddressFormComponent implements OnInit {
         body: message,
         cancelButton: 'Close',
       },
+      width: '95%',
+      maxWidth: 500,
       panelClass: 'mat-dialog-box',
     });
   }
