@@ -43,8 +43,9 @@ export class AddressFormComponent implements OnInit, OnChanges {
     changes.addressFormValue &&
       this.addressForm?.patchValue(changes.addressFormValue.currentValue);
 
-    changes.confirmBtnLoading &&
-      this.addressForm?.disable(changes.confirmBtnLoading?.currentValue);
+    changes.confirmBtnLoading && changes.confirmBtnLoading.currentValue
+      ? this.addressForm?.disable()
+      : this.addressForm?.enable();
   }
 
   // Form Getters
