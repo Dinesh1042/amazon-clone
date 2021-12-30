@@ -1,7 +1,21 @@
-<div class="container-lg">
+<div class="container-lg text-center">
   <ng-container *ngIf="order">
-    <div class="alert alert-success mt-4">
-      Your order has been placed! You will receive an email shortly.
+    <header class="mt-5">
+      <h3 class="mb-2 text-success">
+        Your Order is {{ order.isDelivered ? "Delivered!" : "Confirmed!" }}
+      </h3>
+    </header>
+    <div>
+      <p class="text-muted mb-4">
+        {{
+          order.isDelivered
+            ? "This order has been already delivered."
+            : "This order will be delivered soon."
+        }}
+      </p>
+      <a [routerLink]="['/orders', order.orderId]" class="btn btn-outline-dark">
+        View Order
+      </a>
     </div>
   </ng-container>
   <!-- Loader -->
