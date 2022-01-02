@@ -19,4 +19,8 @@ export class OrderSummaryComponent {
   showProduct(productID: string) {
     this.router.navigate(['/products', productID]);
   }
+
+  trackByProductID(_index: number, item: OrderProduct | ShoppingCartItem) {
+    return item.productID;
+  }
 }

@@ -10,7 +10,7 @@
     <div
       class="cart-product"
       (click)="showProduct(product.productID)"
-      *ngFor="let product of items"
+      *ngFor="let product of items; trackBy: trackByProductID"
     >
       <div class="cart-product-img">
         <img [src]="product.image" width="50" alt="" />
