@@ -1,0 +1,18 @@
+<div class="container-lg mt-4 mb-5 manage-mh">
+  <header class="header mb-3">
+    <h4 class="m-0">Manage Orders</h4>
+  </header>
+  <nav class="order-navigation">
+    <ul class="list-group-orders">
+      <li class="list-group-orders-item" routerLinkActive="active">
+        <a routerLink="./upcoming">Upcoming</a>
+      </li>
+      <li class="list-group-orders-item" routerLinkActive="active">
+        <a routerLink="./completed">Completed</a>
+      </li>
+    </ul>
+  </nav>
+  <div class="orders-container">
+    <router-outlet></router-outlet>
+  </div>
+</div>

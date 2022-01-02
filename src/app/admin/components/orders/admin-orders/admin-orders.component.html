@@ -1,1 +1,51 @@
-<p>admin-orders works!</p>
+<div class="orders-container mt-3">
+  <ng-container *ngIf="orders && !pageLoading && !error">
+    <ng-container *ngIf="orders.length; else emptyOrders">
+      <div class="orders-wrap">
+        <order-card *ngFor="let order of orders" [order]="order">
+          <div class="shipping">
+            <p class="m-0 text-muted fs-sm">Shipping</p>
+            <p class="m-0 text-truncate">{{ order.shipping.name }}</p>
+            <p class="m-0 text-truncate">{{ order.shipping.doorNo }}</p>
+            <p class="m-0 text-truncate">{{ order.shipping.address }}</p>
+            <p class="m-0 text-truncate">{{ order.shipping.city }}</p>
+          </div>
+          <button
+            (click)="
+              order.orderID &&
+                modifyCompleteStatus(order.orderID, order.isDelivered)
+            "
+            class="btn btn-sm btn-action-1 me-3"
+            [class]="
+              isUpcomingOrders ? 'btn-outline-success' : 'btn-outline-danger'
+            "
+          >
+            {{ isUpcomingOrders ? "Completed" : "Uncompleted" }}
+          </button>
+        </order-card>
+      </div>
+    </ng-container>
+
+    <ng-template #emptyOrders>
+      <h5 class="text-center mt-5">
+        Looks like there is no
+        {{ isUpcomingOrders ? "Upcoming" : "delivered" }} orders.
+      </h5>
+    </ng-template>
+  </ng-container>
+
+  <ng-container *ngIf="pageLoading">
+    <loader></loader>
+  </ng-container>
+
+  <ng-container *ngIf="error">
+    <error>
+      <ng-container class="alert-heading"
+        >Oops! Something went wrong</ng-container
+      >
+      <ng-container class="alert-message">
+        {{ error.message }}
+      </ng-container>
+    </error>
+  </ng-container>
+</div>

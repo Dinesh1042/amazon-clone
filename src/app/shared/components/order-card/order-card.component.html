@@ -16,6 +16,7 @@
         <span>{{ order.datePlaced | date: "shortTime" }}</span>
       </p>
     </div>
+    <ng-content select=".shipping"></ng-content>
     <div class="order-body">
       <p class="order-quantity m-0">
         <span class="fs-sm text-muted"> Quantity: </span>
@@ -27,12 +28,15 @@
       </p>
     </div>
     <div class="order-foot mt-2">
-      <a
-        [routerLink]="['../', order.orderID]"
-        [state]="order"
-        class="btn btn-outline-dark btn-sm"
-        >View Order</a
-      >
+      <div class="btn-action">
+        <ng-content select=".btn-action-1"></ng-content>
+        <a
+          [routerLink]="['../', order.orderID]"
+          [state]="order"
+          class="btn btn-outline-dark btn-sm"
+          >View Order</a
+        >
+      </div>
       <div
         class="order-status m-0 badge"
         [ngClass]="{

@@ -1,0 +1,36 @@
+<div class="container-lg mt-4 mb-5">
+  <ng-container *ngIf="order && !pageLoading && !error">
+    <header class="d-flex align-items-center justify-content-between mb-3">
+      <h4 class="m-0">Order Detail</h4>
+      <button
+        (click)="
+          order.orderID &&
+            modifyCompleteStatus(order.orderID, order.isDelivered)
+        "
+        class="btn me-3"
+        [class]="
+          order.isDelivered ? 'btn-outline-danger' : 'btn-outline-success'
+        "
+      >
+        Mark as {{ order.isDelivered ? "Uncompleted" : "Completed" }}
+      </button>
+    </header>
+    <div class="order-detail-container">
+      <order-detail [order]="order"></order-detail>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="pageLoading">
+    <loader></loader>
+  </ng-container>
+  <ng-container *ngIf="error">
+    <error>
+      <ng-container class="alert-heading"
+        >Oops! Something went wrong.</ng-container
+      >
+      <ng-container class="alert-message">{{ error.message }}</ng-container>
+      <a routerLink="../" class="btn btn-outline-dark alert-action">
+        View All Orders
+      </a>
+    </error>
+  </ng-container>
+</div>

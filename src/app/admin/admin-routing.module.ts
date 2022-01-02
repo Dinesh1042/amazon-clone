@@ -3,7 +3,10 @@ import { Route, RouterModule } from '@angular/router';
 import { AdminAuthGuard } from 'shared/services/guards/admin-auth.guard';
 import { AuthGuard } from 'shared/services/guards/auth.guard';
 
-import { AdminOrdersComponent } from './components/orders/admin-orders/admin-orders.component';
+import { AdminCompletedOrdersComponent } from './components/orders/admin-completed-orders/admin-completed-orders.component';
+import { AdminManageOrdersComponent } from './components/orders/admin-manage-orders/admin-manage-orders.component';
+import { AdminOrderDetailComponent } from './components/orders/admin-order-detail/admin-order-detail.component';
+import { AdminUpcomingOrdersComponent } from './components/orders/admin-upcoming-orders/admin-upcoming-orders.component';
 import { AdminProductDetailComponent } from './components/products/admin-product-detail/admin-product-detail.component';
 import { AdminProductEditComponent } from './components/products/admin-product-edit/admin-product-edit.component';
 import { AdminProductsComponent } from './components/products/admin-products/admin-products.component';
@@ -39,7 +42,28 @@ const routes: Route[] = [
   },
   {
     path: 'orders',
-    component: AdminOrdersComponent,
+    component: AdminManageOrdersComponent,
+    canActivate: [AuthGuard, AdminAuthGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'upcoming',
+        pathMatch: 'full',
+      },
+      {
+        path: 'upcoming',
+        component: AdminUpcomingOrdersComponent,
+      },
+      {
+        path: 'completed',
+        component: AdminCompletedOrdersComponent,
+      },
+    ],
+  },
+  {
+    path: 'orders/:orderID',
+    component: AdminOrderDetailComponent,
+    canActivate: [AuthGuard, AdminAuthGuard],
   },
 ];
 

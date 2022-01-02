@@ -1,0 +1,14 @@
+@import "src/scss/_variables.scss";
+
+.orders-wrap {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-auto-rows: max-content;
+}
+
+.shipping {
+  border-block: 1px solid $gray-200;
+  padding-block: 0.6rem;
+}
