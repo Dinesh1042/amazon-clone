@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { AlertComponent } from 'shared/components/alert/alert.component';
+import { snackBarConfig } from 'shared/config/snack-bar-config';
 import { Shipping } from 'shared/models/shipping';
 import { UserService } from 'shared/services/user.service';
 
@@ -84,11 +85,7 @@ export class YourAddressesComponent implements OnInit, OnDestroy {
   }
 
   private showSnackBar(message: string) {
-    this.matSnackBar.open(message, undefined, {
-      duration: 2000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-    });
+    this.matSnackBar.open(message, undefined, snackBarConfig);
   }
 
   ngOnDestroy(): void {

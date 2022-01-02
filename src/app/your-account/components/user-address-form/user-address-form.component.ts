@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertComponent } from 'shared/components/alert/alert.component';
+import { snackBarConfig } from 'shared/config/snack-bar-config';
 import { isSameObj } from 'shared/helpers/is-same-obj';
 import { Shipping } from 'shared/models/shipping';
 import { UserService } from 'shared/services/user.service';
@@ -82,11 +83,7 @@ export class UserAddressFormComponent implements OnInit {
   }
 
   private showSnackBar(message: string) {
-    this.snackBar.open(message, undefined, {
-      duration: 2000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-    });
+    this.snackBar.open(message, undefined, snackBarConfig);
   }
 
   private showAlertDialog(title: string, message: string) {

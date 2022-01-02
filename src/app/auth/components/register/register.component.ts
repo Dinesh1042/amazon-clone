@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FirebaseError } from '@firebase/util';
+import { User } from 'firebase/auth';
+import { take } from 'rxjs/operators';
+import { snackBarConfig } from 'shared/config/snack-bar-config';
 import { NewUser } from 'shared/models/new-user';
 import { AuthService } from 'shared/services/auth.service';
-import { take } from 'rxjs/operators';
+
 import { AuthErrorService } from '../../services/auth-error.service';
-import { FirebaseError } from '@firebase/util';
 import { AuthSuccessService } from '../../services/auth-success.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from 'firebase/auth';
 
 @Component({
   selector: 'register',
@@ -66,11 +68,11 @@ export class RegisterComponent implements OnInit {
   }
 
   private showSnackBar(name: string) {
-    this.snackbar.open(`Hi ${name}! Welcome to Amazon.`, undefined, {
-      duration: 2000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-    });
+    this.snackbar.open(
+      `Hi ${name}! Welcome to Amazon.`,
+      undefined,
+      snackBarConfig
+    );
   }
 
   // Form Getters

@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { snackBarConfig } from 'shared/config/snack-bar-config';
 import { Order } from 'shared/models/order/order';
 import { AdminOrderService } from '../../../services/order/admin-order.service';
 
@@ -57,11 +58,7 @@ export class AdminOrderDetailComponent implements OnInit {
   }
 
   showSnackBar(message: string) {
-    this.snackBar.open(message, undefined, {
-      duration: 2000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-    });
+    this.snackBar.open(message, undefined, snackBarConfig);
   }
 
   ngOnDestroy(): void {

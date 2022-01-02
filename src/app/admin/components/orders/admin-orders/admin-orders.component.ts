@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { snackBarConfig } from 'shared/config/snack-bar-config';
 import { Order } from 'shared/models/order/order';
 import { AdminOrderService } from '../../../services/order/admin-order.service';
 
@@ -26,10 +27,6 @@ export class AdminOrdersComponent {
   }
 
   showSnackBar(message: string) {
-    this.snackBar.open(message, undefined, {
-      duration: 2000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-    });
+    this.snackBar.open(message, undefined, snackBarConfig);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
+import { snackBarConfig } from 'shared/config/snack-bar-config';
 import { Product } from 'shared/models/product';
 import { ShoppingCart } from 'shared/models/shopping-cart';
 import { ShoppingCartItem } from 'shared/models/shopping-cart-item';
@@ -67,11 +68,7 @@ export class AddCartBtnComponent implements OnInit, OnDestroy {
   }
 
   private showSnackBar(value: any) {
-    this.matSnackBar.open(value, undefined, {
-      duration: 2000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-    });
+    this.matSnackBar.open(value, undefined, snackBarConfig);
   }
 
   ngOnDestroy() {

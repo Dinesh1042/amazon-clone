@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { snackBarConfig } from 'shared/config/snack-bar-config';
 import { orderProductFactory } from 'shared/helpers/order-product-factory';
 import { Order, OrderInterface } from 'shared/models/order/order';
 import { Shipping } from 'shared/models/shipping';
@@ -92,11 +93,7 @@ export class ShippingComponent implements OnInit {
   }
 
   private showSnackBar(message: string) {
-    this.snackBar.open(message, undefined, {
-      duration: 2000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-    });
+    this.snackBar.open(message, undefined, snackBarConfig);
   }
 
   ngOnDestroy() {

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FirebaseError } from '@firebase/util';
 import { User } from 'firebase/auth';
 import { take } from 'rxjs/operators';
+import { snackBarConfig } from 'shared/config/snack-bar-config';
 import { SignInUser } from 'shared/models/sign-in-user';
 import { AuthService } from 'shared/services/auth.service';
 
@@ -63,11 +64,7 @@ export class SignInComponent {
   }
 
   private showSnackBar(name: string) {
-    this.snackbar.open(`Hi ${name}! Welcome back.`, undefined, {
-      duration: 2000,
-      horizontalPosition: 'right',
-      verticalPosition: 'bottom',
-    });
+    this.snackbar.open(`Hi ${name}! Welcome back.`, undefined, snackBarConfig);
   }
 
   // Form Getters
