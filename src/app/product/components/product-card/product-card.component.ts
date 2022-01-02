@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'shared/models/product';
-import { ShoppingCart } from 'shared/models/shopping-cart';
 
 @Component({
   selector: 'product-card',
@@ -14,7 +13,7 @@ export class ProductCardComponent {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   navigateToProduct() {
-    this.router.navigate(['./', this.product.pid], {
+    this.router.navigate(['./', this.product.productID], {
       relativeTo: this.route,
       state: this.product,
     });

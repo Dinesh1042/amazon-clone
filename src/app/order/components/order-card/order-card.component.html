@@ -5,15 +5,15 @@
         <span class="fs-sm text-muted"> Order Id: </span>
         <a
           class="text-decoration-none text-dark"
-          [routerLink]="['../order-success', order.orderId]"
+          [routerLink]="['../order-success', order.orderID]"
           [state]="order"
         >
-          {{ order.orderId }}</a
+          {{ order.orderID }}</a
         >
       </p>
       <p class="order-placed text-muted m-0 fs-sm mt-1">
-        <span>{{ order.orderPlaced | date }}, </span>
-        <span>{{ order.orderPlaced | date: "shortTime" }}</span>
+        <span>{{ order.datePlaced | date }}, </span>
+        <span>{{ order.datePlaced | date: "shortTime" }}</span>
       </p>
     </div>
     <div class="order-body">
@@ -28,7 +28,7 @@
     </div>
     <div class="order-foot mt-2">
       <a
-        [routerLink]="['../', order.orderId]"
+        [routerLink]="['../', order.orderID]"
         [state]="order"
         class="btn btn-outline-dark btn-sm"
         >View Order</a

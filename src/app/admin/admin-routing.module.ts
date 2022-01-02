@@ -27,12 +27,12 @@ const routes: Route[] = [
     canDeactivate: [EditComponentDeactivateGuard],
   },
   {
-    path: 'products/:pid',
+    path: 'products/:productID',
     component: AdminProductDetailComponent,
     canActivate: [AuthGuard, AdminAuthGuard],
   },
   {
-    path: 'products/:pid/edit',
+    path: 'products/:productID/edit',
     component: AdminProductEditComponent,
     canActivate: [AuthGuard, AdminAuthGuard],
     canDeactivate: [EditComponentDeactivateGuard],

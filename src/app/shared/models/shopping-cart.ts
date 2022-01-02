@@ -20,16 +20,16 @@ export class ShoppingCart {
   }
 
   getQuantity(product: Product) {
-    if (product.pid) {
-      const cartProduct = this.shoppingCartMap[product.pid];
+    if (product.productID) {
+      const cartProduct = this.shoppingCartMap[product.productID];
       return cartProduct?.quantity || 0;
     } else return 0;
   }
 
   private initializeCart() {
-    for (const pid in this.shoppingCartMap)
+    for (const productID in this.shoppingCartMap)
       this.shoppingCartItems.push(
-        new ShoppingCartItem(this.shoppingCartMap[pid], pid)
+        new ShoppingCartItem(this.shoppingCartMap[productID], productID)
       );
 
     this.shoppingCartItems = this.shoppingCartItems.sort((a, b) =>
@@ -39,5 +39,5 @@ export class ShoppingCart {
 }
 
 export interface ShoppingCartModel {
-  [pid: string]: ShoppingCartItemModel;
+  [productID: string]: ShoppingCartItemModel;
 }

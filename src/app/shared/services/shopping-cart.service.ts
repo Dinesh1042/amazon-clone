@@ -56,7 +56,7 @@ export class ShoppingCartService {
     const shoppingCartId = this.getCartId();
 
     const shoppingCartProduct = {
-      [product.pid!]: {
+      [product.productID!]: {
         product: ShoppingCartProductFactory(product),
         quantity: 1,
       },
@@ -72,33 +72,33 @@ export class ShoppingCartService {
     );
   }
 
-  increaseProductQuantity(pid: string) {
-    return this.getCartProduct(pid).pipe(
+  increaseProductQuantity(productID: string) {
+    return this.getCartProduct(productID).pipe(
       switchMap(({ quantity }) =>
-        this.updateCartQuantity(pid, quantity + 1, true)
+        this.updateCartQuantity(productID, quantity + 1, true)
       )
     );
   }
 
-  decreaseProductQuantity(pid: string) {
-    return this.getCartProduct(pid).pipe(
+  decreaseProductQuantity(productID: string) {
+    return this.getCartProduct(productID).pipe(
       switchMap(({ quantity }) => {
         const newQuantity = quantity - 1;
         return newQuantity <= 0
-          ? this.removeCartItem(pid)
-          : this.updateCartQuantity(pid, newQuantity, false);
+          ? this.removeCartItem(productID)
+          : this.updateCartQuantity(productID, newQuantity, false);
       })
     );
   }
 
-  removeCartItem(pid: string) {
+  removeCartItem(productID: string) {
     const shoppingCartId = this.getCartId();
 
     return shoppingCartId.pipe(
       switchMap((cartId) => {
         const docRef = doc(this.firestore, `shopping_cart/${cartId}`);
         return updateDoc(docRef, {
-          [pid]: deleteField(),
+          [productID]: deleteField(),
         })
           .then(this.handleSuccess.bind(this, `Product has removed from cart!`))
           .catch(this.handleError.bind(this));
@@ -123,15 +123,15 @@ export class ShoppingCartService {
     );
   }
 
-  private getCartProduct(pid: string) {
+  private getCartProduct(productID: string) {
     const shoppingCart = this.getCart().pipe(take(1));
 
-    return shoppingCart.pipe(map((cart) => cart.shoppingCartMap[pid]));
+    return shoppingCart.pipe(map((cart) => cart.shoppingCartMap[productID]));
   }
 
   //TODO: Increase by only one at a time
   private updateCartQuantity(
-    pid: string,
+    productID: string,
     quantity: number,
     isProductIncreased: boolean = false
   ) {
@@ -141,7 +141,7 @@ export class ShoppingCartService {
       switchMap((cartId) => {
         const docRef = doc(this.firestore, `shopping_cart/${cartId}`);
         return updateDoc(docRef, {
-          [`${pid}.quantity`]: quantity,
+          [`${productID}.quantity`]: quantity,
         })
           .then(
             this.handleSuccess.bind(
@@ -237,8 +237,8 @@ export class ShoppingCartService {
 
   private mergeShoppingCart(
     oldCartId: string,
-    oldCartData: { [pid: string]: any } = {},
-    newCartData: { [pid: string]: any } = {}
+    oldCartData: { [productID: string]: any } = {},
+    newCartData: { [productID: string]: any } = {}
   ) {
     const updatedCartData = { ...oldCartData, ...newCartData };
     const docRef = doc(this.firestore, `shopping_cart/${oldCartId}`);

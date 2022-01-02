@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import {
+  addDoc,
   collection,
+  collectionData,
   doc,
-  docData,
   Firestore,
-  setDoc,
+  getDoc,
+  orderBy,
+  query,
+  QueryConstraint,
+  where,
 } from '@angular/fire/firestore';
-import { from, Observable, of, throwError } from 'rxjs';
+import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { catchError, map, mapTo, shareReplay, switchMap } from 'rxjs/operators';
-import { Order, OrderInterface } from 'shared/models/orders/order';
-import { Orders, OrdersInterface } from 'shared/models/orders/orders';
+import { Order, OrderInterface } from 'shared/models/order/order';
 
 import { ShoppingCartService } from './shopping-cart.service';
 import { UserService } from './user.service';
@@ -24,52 +28,76 @@ export class OrderService {
     private cartService: ShoppingCartService
   ) {}
 
-  placeOrder(order: OrderInterface): Observable<OrdersInterface> {
+  storeOrder(order: OrderInterface): Observable<OrderInterface> {
     return this.userService.getUser().pipe(
-      switchMap((user) => {
-        const collectionRef = collection(this.firestore, `orders`);
-        const { id: orderId } = doc(collectionRef);
-
-        const docRef = doc(this.firestore, `/orders/${user.uid}`);
-        const newOrder = {
-          [orderId]: order,
+      switchMap(({ uid }) => {
+        const currentOrder: OrderInterface = {
+          ...order,
+          uid,
         };
 
-        return from(setDoc(docRef, newOrder, { merge: true })).pipe(
-          switchMap(() => this.cartService.removeCart()),
-          switchMap(() =>
-            this.userService
-              .saveAddress(order.shipping)
-              .pipe(catchError(() => of(null)))
-          ), // Ignoring address saving Errors
-          mapTo(newOrder)
+        const collectionRef = collection(this.firestore, `orders`);
+
+        return from(addDoc(collectionRef, currentOrder)).pipe(
+          switchMap(({ id }) =>
+            forkJoin([
+              this.cartService.removeCart(),
+              this.userService
+                .saveAddress(order.shipping)
+                .pipe(catchError(() => of(null))),
+            ]).pipe(mapTo({ ...currentOrder, orderID: id }))
+          )
         );
       })
     );
   }
 
   getOrders() {
-    return this.userService.getUser().pipe(
-      switchMap((user) => {
-        const docRef = doc(this.firestore, `/orders/${user.uid}`);
-        return docData(docRef).pipe(map((orders) => new Orders(orders)));
-      }),
-      shareReplay(1)
+    return this.getOrderByQuery([]);
+  }
+
+  getOrder(orderID: string) {
+    const orderRef = doc(this.firestore, `/orders/${orderID}`);
+
+    return from(getDoc(orderRef)).pipe(
+      switchMap((order) => {
+        if (!order.exists())
+          return throwError(
+            new Error('We Cannot find the order what you are looking for.')
+          );
+
+        return of(new Order({ ...order.data(), orderID } as OrderInterface));
+      })
     );
   }
 
-  getOrder(orderId: string) {
-    return this.getOrders().pipe(
-      switchMap(({ ordersMap }) => {
-        const currentOrder = ordersMap[orderId];
+  getUpcomingOrders() {
+    return this.getOrderByQuery([where('isDelivered', '==', false)]);
+  }
 
-        if (!currentOrder)
-          return throwError(
-            new Error('We cannot find the order what you are looking for!')
-          );
+  getDeliveredOrders() {
+    return this.getOrderByQuery([where('isDelivered', '==', true)]);
+  }
 
-        return of(new Order(currentOrder, orderId));
-      })
+  private getOrderByQuery(queries: QueryConstraint[]) {
+    return this.userService.getUser().pipe(
+      switchMap(({ uid }) => {
+        const collectionRef = collection(this.firestore, `/orders`);
+
+        const orderQuery = query(
+          collectionRef,
+          where('uid', '==', uid),
+          ...queries,
+          orderBy('datePlaced', 'desc')
+        );
+
+        return collectionData(orderQuery, { idField: 'orderID' }).pipe(
+          map((orders) =>
+            orders.map((order) => new Order(order as OrderInterface))
+          )
+        );
+      }),
+      shareReplay(1)
     );
   }
 }

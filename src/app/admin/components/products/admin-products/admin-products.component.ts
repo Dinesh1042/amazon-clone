@@ -54,8 +54,8 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
         : this.products;
   }
 
-  navigateToProduct(pid: string) {
-    this.router.navigate([`./`, pid], { relativeTo: this.route });
+  navigateToProduct(productID: string) {
+    this.router.navigate([`./`, productID], { relativeTo: this.route });
   }
 
   ngOnDestroy() {

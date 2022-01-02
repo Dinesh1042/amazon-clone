@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { OrderProduct } from 'shared/models/orders/order-product';
+import { OrderProduct } from 'shared/models/order/order-product';
 import { ShoppingCartItem } from 'shared/models/shopping-cart-item';
 import { Router } from '@angular/router';
 
@@ -14,9 +14,9 @@ export class OrderSummaryComponent {
   @Input('boxShadow') boxShadow = true;
   @Input('padding') padding = true;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
-  showProduct(pid: string) {
-    this.router.navigate(['/products', pid]);
+  showProduct(productID: string) {
+    this.router.navigate(['/products', productID]);
   }
 }

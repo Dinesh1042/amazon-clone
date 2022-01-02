@@ -1,18 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, take } from 'rxjs/operators';
-import { Order } from 'shared/models/orders/order';
+import { Order } from 'shared/models/order/order';
 import { OrderService } from 'shared/services/order.service';
 
 @Component({
   selector: 'order-success',
   templateUrl: './order-success.component.html',
-  styleUrls: ['./order-success.component.scss']
+  styleUrls: ['./order-success.component.scss'],
 })
 export class OrderSuccessComponent implements OnInit {
-
-  // TODO: Need to change the look of the component
-
   order?: Order;
   navigationOrderData: Order | undefined;
   loading = false;
@@ -34,16 +31,16 @@ export class OrderSuccessComponent implements OnInit {
     this.navigationOrderData
       ? this.handleOrderSuccessData(this.navigationOrderData)
       : this.route.paramMap
-        .pipe(
-          switchMap((params) =>
-            this.orderService.getOrder(params.get('orderId')!)
-          ),
-          take(1),
-        )
-        .subscribe(
-          this.handleOrderSuccessData.bind(this),
-          this.handleOrderErrorData.bind(this)
-        );
+          .pipe(
+            switchMap((params) =>
+              this.orderService.getOrder(params.get('orderId')!)
+            ),
+            take(1)
+          )
+          .subscribe(
+            this.handleOrderSuccessData.bind(this),
+            this.handleOrderErrorData.bind(this)
+          );
   }
 
   private handleOrderSuccessData(data: Order) {

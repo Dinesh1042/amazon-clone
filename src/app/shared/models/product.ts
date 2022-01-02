@@ -1,5 +1,5 @@
 export class Product {
-  pid?: string;
+  productID?: string;
   title: string = '';
   category: string = '';
   originalPrice: number = 0;
@@ -9,6 +9,7 @@ export class Product {
   description: string = '';
 
   constructor(product: any) {
+    //TODO: Create a productInterface
     Object.assign(this, product);
   }
 

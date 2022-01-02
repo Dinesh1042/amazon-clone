@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Orders } from 'shared/models/orders/orders';
+import { Order } from 'shared/models/order/order';
 import { OrderService } from 'shared/services/order.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { OrderService } from 'shared/services/order.service';
   templateUrl: './orders-upcoming.component.html',
 })
 export class OrdersUpcomingComponent implements OnInit, OnDestroy {
-  orders!: Orders;
+  upcomingOrders!: Order[];
   loading = false;
   error: Error | null = null;
 
@@ -20,7 +20,7 @@ export class OrdersUpcomingComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.subscription.add(
       this.orderService
-        .getOrders()
+        .getUpcomingOrders()
         .subscribe(
           this.handleOrderSuccess.bind(this),
           this.handleOrderError.bind(this)
@@ -28,8 +28,8 @@ export class OrdersUpcomingComponent implements OnInit, OnDestroy {
     );
   }
 
-  private handleOrderSuccess(orders: Orders) {
-    this.orders = orders;
+  private handleOrderSuccess(orders: Order[]) {
+    this.upcomingOrders = orders;
     this.loading = false;
   }
 

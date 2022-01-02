@@ -17,7 +17,7 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
   error?: Error;
   pageLoading = false;
   deleteActionLoading = false;
-  private pid: string | null = null;
+  private productID: string | null = null;
   private productSubscription?: Subscription;
 
   constructor(
@@ -29,10 +29,10 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.pageLoading = true;
-    this.pid = this.route.snapshot.paramMap.get('pid');
-    if (this.pid)
+    this.productID = this.route.snapshot.paramMap.get('productID');
+    if (this.productID)
       this.productSubscription = this.productService
-        .getProduct(this.pid)
+        .getProduct(this.productID)
         .subscribe(
           this.handleProductSuccess.bind(this),
           this.handleProductError.bind(this)
@@ -69,12 +69,12 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
   }
 
   private deleteProduct(value: boolean) {
-    if (value && this.product && this.pid) {
+    if (value && this.product && this.productID) {
       this.deleteActionLoading = true;
       this.productSubscription?.unsubscribe();
 
       this.productService
-        .deleteProduct(this.product, this.pid)
+        .deleteProduct(this.product, this.productID)
         .subscribe(() => {
           this.deleteActionLoading = false;
           this.router.navigate(['../'], { relativeTo: this.route });

@@ -31,7 +31,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   trackByCartId(_index: number, cartProduct: ShoppingCartItem) {
-    return cartProduct.pid;
+    return cartProduct.productID;
   }
 
   private handleCartSuccess(cart: ShoppingCart) {

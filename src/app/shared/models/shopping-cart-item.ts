@@ -13,7 +13,7 @@ export class ShoppingCartItem {
 
   constructor(
     { product, quantity }: ShoppingCartItemModel,
-    public pid: string
+    public productID: string
   ) {
     this.title = product.title;
     this.images = product.images;

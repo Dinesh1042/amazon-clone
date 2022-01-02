@@ -107,10 +107,10 @@ export class AdminProductFormComponent implements OnInit, OnDestroy {
     this.productForm.disable();
 
     const submitProduct =
-      this.editProductValue?.pid && this.isEditProduct
+      this.editProductValue?.productID && this.isEditProduct
         ? this.productService.updateProduct(
             productFormValue,
-            this.editProductValue.pid,
+            this.editProductValue.productID,
             this.deleteImages
           )
         : this.productService.addProduct(productFormValue);

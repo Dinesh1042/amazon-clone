@@ -34,7 +34,7 @@
       </thead>
       <tbody>
         <tr
-          (click)="product.pid && navigateToProduct(product.pid)"
+          (click)="product.productID && navigateToProduct(product.productID)"
           *ngFor="let product of filteredProducts; index as i"
         >
           <td>{{ i + 1 }}</td>
@@ -59,7 +59,7 @@
       <li
         *ngFor="let product of filteredProducts; index as i"
         class="list-group-item list-group-item-action"
-        (click)="product.pid && navigateToProduct(product.pid)"
+        (click)="product.productID && navigateToProduct(product.productID)"
       >
         <div class="col-img">
           <div class="product-img">

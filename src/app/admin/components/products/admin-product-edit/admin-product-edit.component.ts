@@ -36,7 +36,7 @@ export class AdminProductEditComponent
   }
 
   ngOnInit(): void {
-    const editProductId = this.route.snapshot.paramMap.get('pid');
+    const editProductId = this.route.snapshot.paramMap.get('productID');
     if (editProductId) {
       this.isEditProduct = true;
       this.loading = true;

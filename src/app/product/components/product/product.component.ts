@@ -28,13 +28,13 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    const pid = this.route.snapshot.paramMap.get('pid');
+    const productID = this.route.snapshot.paramMap.get('productID');
 
     this.navigationData
       ? this.handleProductSuccess(this.navigationData)
       : this.subscription.add(
           this.productService
-            .getProduct(pid!)
+            .getProduct(productID!)
             .subscribe(
               this.handleProductSuccess.bind(this),
               this.handleProductError.bind(this)

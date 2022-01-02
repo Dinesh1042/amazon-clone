@@ -45,18 +45,18 @@ export class AddCartBtnComponent implements OnInit, OnDestroy {
   increaseQuantity(event: Event) {
     event.stopPropagation();
 
-    if (this.product?.pid)
+    if (this.product?.productID)
       this.cartService
-        .increaseProductQuantity(this.product.pid)
+        .increaseProductQuantity(this.product.productID)
         .subscribe((v) => this.showSnackBar(v));
   }
 
   decreaseQuantity(event: Event) {
     event.stopPropagation();
 
-    if (this.product?.pid)
+    if (this.product?.productID)
       this.cartService
-        .decreaseProductQuantity(this.product.pid)
+        .decreaseProductQuantity(this.product.productID)
         .subscribe((v) => this.showSnackBar(v));
   }
 

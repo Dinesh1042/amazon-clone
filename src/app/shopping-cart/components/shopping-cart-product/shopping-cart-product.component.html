@@ -7,7 +7,7 @@
     <div class="cart-product-detail">
       <a
         class="text-decoration-none text-body"
-        [routerLink]="['/products', cartProduct.pid]"
+        [routerLink]="['/products', cartProduct.productID]"
         >{{ cartProduct.title | short }}</a
       >
       <star-rating [fontSize]="1" [rating]="cartProduct.rating"></star-rating>

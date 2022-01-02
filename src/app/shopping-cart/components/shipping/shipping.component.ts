@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { orderProductFactory } from 'shared/helpers/order-product-factory';
-import { Order, OrderInterface } from 'shared/models/orders/order';
-import { OrdersInterface } from 'shared/models/orders/orders';
+import { Order, OrderInterface } from 'shared/models/order/order';
 import { Shipping } from 'shared/models/shipping';
 import { ShoppingCart } from 'shared/models/shopping-cart';
 import { OrderService } from 'shared/services/order.service';
@@ -57,13 +55,13 @@ export class ShippingComponent implements OnInit {
     const order: OrderInterface = {
       products: orderProductFactory(this.shoppingCart.shoppingCartMap),
       shipping,
-      orderPlaced: Date.now(),
+      datePlaced: Date.now(),
       isDelivered: false,
+      orderTotal: this.shoppingCart.cartTotalPrice,
     };
 
     this.orderService
-      .placeOrder(order)
-      .pipe(take(1))
+      .storeOrder(order)
       .subscribe(
         this.handleOrderPlacedSuccess.bind(this),
         this.handleOrderPlacedError.bind(this),
@@ -81,10 +79,9 @@ export class ShippingComponent implements OnInit {
     this.loading = false;
   }
 
-  private handleOrderPlacedSuccess(orderSuccess: OrdersInterface) {
-    const [orderId, order] = Object.entries(orderSuccess)[0];
-    this.router.navigate(['/orders/order-success', orderId], {
-      state: new Order(order, orderId),
+  private handleOrderPlacedSuccess(orderSuccess: OrderInterface) {
+    this.router.navigate(['/orders/order-success', orderSuccess.orderID], {
+      state: new Order(orderSuccess),
     });
     this.orderPlacedLoading = false;
   }

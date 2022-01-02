@@ -29,7 +29,7 @@ export class ProductService {
 
   getAllProduct(): Observable<Product[]> {
     const collectionRef = collection(this.firestore, `products`);
-    return collectionData(collectionRef, { idField: 'pid' }).pipe(
+    return collectionData(collectionRef, { idField: 'productID' }).pipe(
       map((products) => products.map((product) => new Product(product))),
       shareReplay()
     );
@@ -50,9 +50,9 @@ export class ProductService {
       : this.getAllProduct();
   }
 
-  getProduct(pid: string): Observable<Product> {
-    const docRef = doc(this.firestore, `products/${pid}`);
-    return docData(docRef, { idField: 'pid' }).pipe(
+  getProduct(productID: string): Observable<Product> {
+    const docRef = doc(this.firestore, `products/${productID}`);
+    return docData(docRef, { idField: 'productID' }).pipe(
       map((product) => {
         if (product) return new Product(product);
         else throw new Error('No Product Found');
@@ -76,12 +76,12 @@ export class ProductService {
     );
   }
 
-  updateProduct(product: Product, pid: string, deleteImages: string[]) {
-    const updatedProduct = this.updateProductWithUrl(product, pid);
+  updateProduct(product: Product, productID: string, deleteImages: string[]) {
+    const updatedProduct = this.updateProductWithUrl(product, productID);
 
     return updatedProduct.pipe(
       concatMap((product: any) => {
-        const docRef = doc(this.firestore, `products/${pid}`);
+        const docRef = doc(this.firestore, `products/${productID}`);
         if (deleteImages.length)
           deleteImages.forEach(this.removeImage.bind(this));
         return updateDoc(docRef, product)
@@ -91,7 +91,7 @@ export class ProductService {
     );
   }
 
-  deleteProduct(product: Product, pid: string) {
+  deleteProduct(product: Product, productID: string) {
     const { images } = product;
 
     const deleteImages = [...images].map((image) =>
@@ -100,7 +100,7 @@ export class ProductService {
 
     return forkJoin(deleteImages).pipe(
       switchMap(() => {
-        const docRef = doc(this.firestore, `products/${pid}`);
+        const docRef = doc(this.firestore, `products/${productID}`);
         return deleteDoc(docRef)
           .then(this.handleSuccess.bind(this, `Product Deleted Successfully!!`))
           .catch(this.handleError.bind(this));
@@ -148,11 +148,11 @@ export class ProductService {
     );
   }
 
-  private updateProductWithUrl(product: Product, pid: string) {
+  private updateProductWithUrl(product: Product, productID: string) {
     const { images } = product;
 
     const imagesUrl$: Observable<string>[] = [...images].map((file) =>
-      file instanceof File ? this.addImage(file, pid) : of(file)
+      file instanceof File ? this.addImage(file, productID) : of(file)
     );
 
     return forkJoin(imagesUrl$).pipe(
@@ -160,8 +160,8 @@ export class ProductService {
     );
   }
 
-  private addImage(imageFile: File, pid: string) {
-    const path = `products_images/${pid}/${Date.now()}_${imageFile.name}`;
+  private addImage(imageFile: File, productID: string) {
+    const path = `products_images/${productID}/${Date.now()}_${imageFile.name}`;
     const storageRef = ref(this.storage, path);
     return from(uploadBytes(storageRef, imageFile)).pipe(
       switchMap(() => getDownloadURL(storageRef))

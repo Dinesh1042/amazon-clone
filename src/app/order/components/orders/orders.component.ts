@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Order } from 'shared/models/orders/order';
+import { Order } from 'shared/models/order/order';
 
 @Component({
   selector: 'orders',
@@ -7,7 +7,7 @@ import { Order } from 'shared/models/orders/order';
   styleUrls: ['./orders.component.scss'],
 })
 export class OrdersComponent {
-  @Input('orders') orders: Order[] | undefined = [];
+  @Input('orders') orders: Order[] = [];
   @Input('loading') loading: boolean = false;
   @Input('error') error: Error | null = null;
   @Input('isUpComingOrders') isUpComingOrders = true;

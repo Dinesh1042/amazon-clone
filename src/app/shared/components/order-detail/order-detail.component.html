@@ -10,7 +10,7 @@
             <span>Order Date</span>
           </div>
           <div class="text">
-            {{ order.orderPlaced | date }}
+            {{ order.datePlaced | date }}
           </div>
         </div>
         <div class="text-group">
@@ -20,9 +20,9 @@
           <div class="text">
             <a
               class="text-decoration-none text-dark"
-              [routerLink]="['../order-success', order.orderId]"
+              [routerLink]="['../order-success', order.orderID]"
               [state]="order"
-              >{{ order.orderId }}</a
+              >{{ order.orderID }}</a
             >
           </div>
         </div>
@@ -54,7 +54,7 @@
 
   <div class="order-summary">
     <order-summary
-      [items]="order.productsArr"
+      [items]="order.products"
       [total]="order.orderTotal"
       [boxShadow]="false"
       [padding]="false"

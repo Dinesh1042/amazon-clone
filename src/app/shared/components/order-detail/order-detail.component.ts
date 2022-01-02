@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Order } from 'shared/models/orders/order';
+import { Order } from 'shared/models/order/order';
 
 @Component({
   selector: 'order-detail',
