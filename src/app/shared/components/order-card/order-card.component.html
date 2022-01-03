@@ -1,16 +1,14 @@
 <div class="card order-card card-shadow p-0">
   <div class="card-body">
     <div class="order-header">
-      <p class="order-id m-0">
-        <span class="fs-sm text-muted"> Order Id: </span>
-        <a
-          class="text-decoration-none text-dark"
-          [routerLink]="['../order-success', order.orderID]"
-          [state]="order"
-        >
-          {{ order.orderID }}</a
-        >
-      </p>
+      <div class="d-flex align-items-center">
+        <p class="order-id m-0">
+          <span class="fs-sm text-muted"> Order Id: </span>
+        </p>
+        <p class="m-0 ms-1">
+          {{ order.orderID }}
+        </p>
+      </div>
       <p class="order-placed text-muted m-0 fs-sm mt-1">
         <span>{{ order.datePlaced | date }}, </span>
         <span>{{ order.datePlaced | date: "shortTime" }}</span>
