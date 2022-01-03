@@ -42,7 +42,7 @@
         [routerLink]="['./products']"
         [queryParams]="{ query: suggestion }"
         *ngFor="let suggestion of suggestionList; index as i"
-        class="list-group-item list-group-item-action"
+        class="list-group-item list-group-item-action border-0"
         (click)="suggestionListActive = false"
         [class.active]="suggestionIndex === i"
         (click)="suggestionIndex = -1"

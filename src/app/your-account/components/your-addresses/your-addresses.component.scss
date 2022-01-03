@@ -1,4 +1,5 @@
 @import "src/scss/_variables.scss";
+@import "src/scss/_breakpoints.scss";
 
 .container-lg {
   min-height: 68vh;
@@ -8,7 +9,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 1rem;
-  grid-auto-rows: 1fr;
 }
 
 .add-address-card {
@@ -23,7 +23,7 @@
     height: 100%;
     transition: 200ms ease background-color;
     user-select: none;
-    padding: 1.5rem;
+    padding: 1.7rem;
     .bi-plus-lg {
       color: $darkOrange;
       font-size: 3rem;
@@ -40,4 +40,9 @@
       background-color: lighten($darkOrange, 40);
     }
   }
+}
+
+.address-card {
+  display: flex;
+  justify-content: space-evenly;
 }

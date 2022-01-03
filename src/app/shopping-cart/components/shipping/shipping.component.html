@@ -1,5 +1,5 @@
 <div class="container-lg mt-4 mb-4">
-  <ng-container *ngIf="shoppingCart">
+  <ng-container *ngIf="shoppingCart && !loading && !error">
     <ng-container *ngIf="shoppingCart.cartProductCount > 0; else emptyCart">
       <header class="mb-4">
         <h4 class="m-0">Shipping</h4>
