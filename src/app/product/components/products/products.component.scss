@@ -1,5 +1,9 @@
 @import "src/scss/_breakpoints.scss";
 
+.container-lg {
+  min-height: 65vh;
+}
+
 .products-wrap {
   display: grid;
   grid-template-columns: 1fr;
