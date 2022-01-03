@@ -17,17 +17,17 @@ service cloud.firestore {
        allow write : if request.auth.uid == userId && isAuthenticated();
     }
     
-     match /shopping_cart/{cartId} {
-       allow read, write: if cartId == resource.id;
+    match /shopping_cart/{cartId} {
+       allow read, write;
     }
     
     match /shopping_cart/{cartId}/{productId} {
        allow read, write: if cartId == resource.id;
     }
     
-    match /orders/{uid} {
-       allow read: if request.auth.uid == uid;
-       allow write: if request.auth.uid == uid;
+    match /orders/{orderID} {
+       allow read: if request.auth.uid == resource.data.uid || isAdmin();
+       allow write: if request.auth.uid == request.resource.data.uid || isAdmin();
     }
     
     function isAdmin() {
