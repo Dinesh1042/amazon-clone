@@ -10,7 +10,8 @@
             <span>Order Date</span>
           </div>
           <div class="text">
-            {{ order.datePlaced | date }}
+            <span>{{ order.datePlaced | date }}, </span>
+            <span>{{ order.datePlaced | date: "shortTime" }}</span>
           </div>
         </div>
         <div class="text-group">
