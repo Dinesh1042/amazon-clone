@@ -1,0 +1,74 @@
+<form class="form" [formGroup]="userForm" (ngSubmit)="updateProfile()">
+  <header class="mb-3 d-flex align-items-center justify-content-between">
+    <h4 class="m-0">Update profile</h4>
+    <button
+      type="button"
+      [disabled]="updateLoading"
+      class="btn btn-close shadow-none"
+      (click)="onNoClick()"
+    ></button>
+  </header>
+  <div class="alert alert-danger mb-3" *ngIf="error">
+    {{ error.message }}
+  </div>
+  <div mat-dialog-content class="form-fields">
+    <div class="form-group mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        [class.is-invalid]="displayName?.touched && displayName?.invalid"
+        class="form-control"
+        formControlName="displayName"
+        id="name"
+        type="text"
+      />
+      <div class="invalid-feedback">
+        <div *ngIf="displayName?.hasError('required')">Name is required.</div>
+        <div *ngIf="displayName?.hasError('minlength')">
+          Name must be minimum
+          {{ displayName?.getError("minlength").requiredLength }} character
+          length.
+        </div>
+      </div>
+    </div>
+    <div class="form-group mb-3">
+      <label for="userName" class="form-label">UserName</label>
+      <input
+        [class.is-invalid]="username?.touched && username?.invalid"
+        class="form-control"
+        formControlName="username"
+        type="text"
+      />
+      <div class="invalid-feedback">
+        <div *ngIf="username?.hasError('required')">Username is required.</div>
+        <div *ngIf="username?.hasError('minlength')">
+          Username must be minimum
+          {{ username?.getError("minlength").requiredLength }} character length.
+        </div>
+      </div>
+    </div>
+    <div class="form-group mb-4">
+      <label for="email" class="form-label"
+        >Email
+        <span class="text-muted fs-sm align-text-bottom"
+          >(ReadOnly)</span
+        ></label
+      >
+      <input
+        [value]="email"
+        class="form-control"
+        type="text"
+        id="email"
+        readonly
+      />
+    </div>
+  </div>
+  <div class="action text-end">
+    <button
+      [disabled]="userForm.invalid"
+      [buttonLoader]="updateLoading"
+      class="btn btn-success"
+    >
+      Update
+    </button>
+  </div>
+</form>

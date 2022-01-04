@@ -22,6 +22,12 @@
             <p class="text-label fs-sm text-muted m-0">Email</p>
             <p class="m-0">{{ user.email }}</p>
           </div>
+          <button
+            (click)="showProfileEditForm()"
+            class="btn btn-edit shadow-none"
+          >
+            <span class="bi bi-pencil"></span>
+          </button>
         </div>
       </div>
     </main>

@@ -1,4 +1,5 @@
 @import "src/scss/_breakpoints.scss";
+@import "src/scss/_variables.scss";
 
 .container-lg {
   max-width: 600px;
@@ -9,5 +10,26 @@
     flex-direction: row;
     gap: 2rem;
     align-items: flex-start;
+  }
+}
+
+.profile-col-2 {
+  position: relative;
+  flex: 1;
+
+  .btn-edit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    border-radius: 100%;
+    background-color: $gray-100;
+    aspect-ratio: 1;
+    transition: 200ms ease background-color, 200ms ease color;
+    color: $gray-700;
+    &:hover {
+      background-color: $gray-200;
+      color: $gray-900;
+    }
   }
 }

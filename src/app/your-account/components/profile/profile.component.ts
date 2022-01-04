@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from 'shared/models/user';
 import { UserService } from 'shared/services/user.service';
+import { UserProfileFormComponent } from '../user-profile-form/user-profile-form.component';
 
 @Component({
   selector: 'profile',
@@ -15,7 +17,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.pageLoading = true;
@@ -36,6 +38,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private handleGETUserError(error: Error) {
     this.error = error;
     this.pageLoading = false;
+  }
+
+  showProfileEditForm() {
+    this.user &&
+      this.dialog.open(UserProfileFormComponent, {
+        maxWidth: 450,
+        width: '95%',
+        panelClass: 'mat-dialog-box',
+        data: {
+          displayName: this.user.displayName,
+          username: this.user.username,
+          email: this.user.email,
+        },
+      });
   }
 
   ngOnDestroy(): void {
