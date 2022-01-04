@@ -3,19 +3,25 @@
 
 .container-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 1rem;
-  @include breakpoint(md) {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  @include customBreakPoint(654px) {
+    gap: 1rem;
+  }
+  @include customBreakPoint(690px) {
     gap: 1.5rem;
   }
 }
 
 .card {
-  box-shadow: 0 0 6px 0 rgb(202 200 200 / 38%);
-  border: none;
   padding-block: 0.5rem;
   cursor: pointer;
   transition: 200ms ease-in-out background-color;
+  border: 0;
+  border-radius: 0;
+  &:not(&:last-child) {
+    border-bottom: 1px solid $gray-200;
+  }
+
   img {
     width: 40px;
     aspect-ratio: 1;
@@ -29,14 +35,10 @@
     align-items: center;
     gap: 1rem;
   }
-}
 
-.card.bg-light-red {
-  p {
-    color: lighten($danger, 15);
-  }
-
-  &:hover {
-    background-color: darken($lightRed, 1);
+  @include customBreakPoint(638px) {
+    box-shadow: 0 0 6px 0 rgb(202 200 200 / 38%);
+    border: none !important;
+    border-radius: 0.25rem;
   }
 }

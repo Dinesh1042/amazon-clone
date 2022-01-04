@@ -78,18 +78,15 @@
           </div>
         </div>
       </div>
-
-      <div class="card bg-light-red" (click)="logout()">
-        <div class="card-body">
-          <div class="icon-wrap">
-            <img src="assets/icons/logout.svg" alt="" />
-          </div>
-          <div class="text-content">
-            <h6 class="m-0 text-danger">Logout</h6>
-            <p class="m-0 fs-sm">Logout from this device.</p>
-          </div>
-        </div>
-      </div>
+    </div>
+    <div class="btn-sign-out-action mt-4 mt-md-5">
+      <button
+        class="btn btn-danger-light d-flex align-items-center m-auto"
+        (click)="logout()"
+      >
+        <img src="assets/icons/logout.svg" alt="" width="16" />
+        <span class="btn-text ms-2">Sign Out</span>
+      </button>
     </div>
   </ng-container>
 

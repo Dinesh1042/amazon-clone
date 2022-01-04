@@ -3,9 +3,13 @@
 
 .container-lg {
   max-width: 600px;
+  min-height: 50vh;
 }
 
-.card {
+.user-card {
+  display: flex;
+  flex-direction: column;
+
   @include breakpoint(sm) {
     flex-direction: row;
     gap: 2rem;
