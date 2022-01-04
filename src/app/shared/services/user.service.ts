@@ -15,7 +15,7 @@ import {
   uploadBytes,
 } from '@angular/fire/storage';
 import { deleteField } from 'firebase/firestore';
-import { forkJoin, from, Observable, of, throwError } from 'rxjs';
+import { from, Observable, of, throwError } from 'rxjs';
 import { map, mapTo, shareReplay, switchMap, take } from 'rxjs/operators';
 import { arrayContainsObj } from 'shared/helpers/array-contains-obj';
 import { Shipping } from 'shared/models/shipping';
@@ -115,11 +115,16 @@ export class UserService {
   updateUser(userData: {
     displayName?: string;
     photoURL?: string | null;
+    username?: string | null;
   }): Observable<string> {
     return this.getUser().pipe(
       switchMap(({ uid }) => {
         const docRef = doc(this.firestore, `/users/${uid}`);
         return from(updateDoc(docRef, userData)).pipe(mapTo(`User Updated`));
+      }),
+      switchMap(() => {
+        const { username, ...rest } = userData;
+        return this.updateFirebaseUser(rest);
       })
     );
   }
@@ -139,12 +144,8 @@ export class UserService {
         ({ uid }) =>
           (imageFile && this.saveUserImage(uid, imageFile)) || of(null)
       ),
-      switchMap((photoURL) =>
-        forkJoin([
-          this.updateFirebaseUser({ photoURL }),
-          this.updateUser({ photoURL }),
-        ]).pipe(mapTo(imageFile ? 'Profile Updated' : 'Profile Removed'))
-      )
+      switchMap((photoURL) => this.updateUser({ photoURL })),
+      mapTo(imageFile ? 'Profile Updated' : 'Profile Removed')
     );
   }
 
