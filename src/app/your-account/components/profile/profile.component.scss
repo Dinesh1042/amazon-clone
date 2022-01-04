@@ -1,0 +1,13 @@
+@import "src/scss/_breakpoints.scss";
+
+.container-lg {
+  max-width: 600px;
+}
+
+.card {
+  @include breakpoint(sm) {
+    flex-direction: row;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+}

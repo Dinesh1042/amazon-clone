@@ -33,6 +33,11 @@
       }
     }
   }
+  &.btn-outline {
+    .loader {
+      background: #fff;
+    }
+  }
 
   &:focus {
     box-shadow: none;

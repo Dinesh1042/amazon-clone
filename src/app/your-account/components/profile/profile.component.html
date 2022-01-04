@@ -1,0 +1,43 @@
+<div class="container-lg mt-4 mb-5">
+  <ng-container *ngIf="user && !pageLoading && !error">
+    <header class="mb-3">
+      <h4 class="m-0">Profile</h4>
+    </header>
+    <main>
+      <div class="card card-shadow">
+        <user-image
+          [photoURL]="user.photoURL"
+          [displayName]="user.displayName"
+        ></user-image>
+        <div class="profile-col-2">
+          <div class="text-group mb-3">
+            <p class="text-label fs-sm text-muted m-0">Name</p>
+            <p class="m-0">{{ user.displayName }}</p>
+          </div>
+          <div class="text-group mb-3">
+            <p class="text-label fs-sm text-muted m-0">UserName</p>
+            <p class="m-0">{{ user.username }}</p>
+          </div>
+          <div class="text-group mb-3">
+            <p class="text-label fs-sm text-muted m-0">Email</p>
+            <p class="m-0">{{ user.email }}</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </ng-container>
+  <ng-container *ngIf="pageLoading">
+    <loader></loader>
+  </ng-container>
+  <ng-container *ngIf="error">
+    <error>
+      <ng-container class="alert-heading">
+        Oops! Something went wrong.
+      </ng-container>
+      <ng-container class="alert-message">
+        {{ error.message }}
+      </ng-container>
+      <a routerLink="/auth/signin" class="btn btn-outline-dark">Sign In</a>
+    </error>
+  </ng-container>
+</div>

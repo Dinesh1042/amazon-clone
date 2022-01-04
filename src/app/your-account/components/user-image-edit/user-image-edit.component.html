@@ -1,0 +1,64 @@
+<div class="profile-container">
+  <div mat-dialog-title class="header text-end">
+    <button
+      (click)="onNoClick()"
+      [disabled]="updateLoading || removeImageLoading"
+      class="btn btn-close shadow-none"
+    ></button>
+  </div>
+  <div class="user-img">
+    <img
+      [src]="
+        (userProfile.photoURL &&
+          (userProfile.photoURL | fileToDataUrl | async)) ||
+        userProfile.defaultImage
+      "
+      [alt]="userProfile.displayName"
+    />
+  </div>
+
+  <div class="profile-body text-center mt-4">
+    <h5>Profile picture</h5>
+    <p class="text-muted">
+      A picture helps people recognize you and lets you know when you're signed
+      in to your account
+    </p>
+  </div>
+
+  <div class="btn-actions mt-4">
+    <button
+      class="btn btn-outline-danger btn-outline"
+      (click)="removeImage()"
+      [disabled]="
+        updateLoading || removeImageLoading || userProfile.isDefaultImage
+      "
+      [buttonLoader]="removeImageLoading"
+    >
+      Remove
+    </button>
+    <input
+      type="file"
+      #inputFileEl
+      multiple
+      accept=".jpg,.png,.jpeg"
+      maxlength="1"
+      class="d-none"
+      (change)="handleInputImage($event)"
+    />
+    <button
+      (click)="inputFileEl.click()"
+      class="btn btn-outline-primary-dark"
+      [disabled]="updateLoading || removeImageLoading"
+    >
+      Change
+    </button>
+  </div>
+  <button
+    *ngIf="selectedImage"
+    class="btn btn-success mt-4 btn-lg w-100"
+    (click)="updateImage()"
+    [buttonLoader]="updateLoading"
+  >
+    Update
+  </button>
+</div>
