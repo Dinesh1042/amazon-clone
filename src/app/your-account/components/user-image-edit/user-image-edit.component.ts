@@ -13,6 +13,7 @@ export class UserImageEditComponent {
   selectedImage: File | null = null;
   updateLoading = false;
   removeImageLoading = false;
+  error: Error | null = null;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public userProfile: UserProfile,
@@ -69,7 +70,7 @@ export class UserImageEditComponent {
   private handleUpdateImageError(error: Error) {
     this.dialogRef.disableClose = false;
     this.updateLoading = false;
-    this.showSnackBar(error.message);
+    this.error = error;
   }
 
   private handleRemoveImageSuccess(message: string) {
@@ -82,7 +83,7 @@ export class UserImageEditComponent {
   private handleRemoveImageError(error: Error) {
     this.dialogRef.disableClose = false;
     this.removeImageLoading = false;
-    this.showSnackBar(error.message);
+    this.error = error;
   }
 
   showSnackBar(message: string) {
