@@ -13,7 +13,6 @@ export class HomeProductCardComponent {
   constructor(private router: Router) {}
 
   showProduct(product: Product) {
-    console.log(product);
     product.productID &&
       this.router.navigate(['/products', product.productID], {
         state: product,
