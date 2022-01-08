@@ -12,7 +12,7 @@ export class UserAccountComponent implements OnInit, OnDestroy {
   user?: User;
   loading = false;
 
-  private subscriptions: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(private userService: UserService) {}
 

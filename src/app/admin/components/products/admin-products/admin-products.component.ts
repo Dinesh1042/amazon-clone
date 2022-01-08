@@ -15,7 +15,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   filteredProducts?: Product[];
   pageLoading = false;
   error: Error | null = null;
-  private productSubscription?: Subscription;
+  private subscriptions = new Subscription();
 
   constructor(
     private adminProductService: AdminProductService,
@@ -25,12 +25,15 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.pageLoading = true;
-    this.productSubscription = this.adminProductService
-      .getAllProduct()
-      .subscribe(
-        this.handleProductSuccess.bind(this),
-        this.handleProductError.bind(this)
-      );
+
+    this.subscriptions.add(
+      this.adminProductService
+        .getAllProduct()
+        .subscribe(
+          this.handleProductSuccess.bind(this),
+          this.handleProductError.bind(this)
+        )
+    );
   }
 
   private handleProductError(error: Error) {
@@ -60,6 +63,6 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.productSubscription?.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

@@ -28,7 +28,7 @@ export class SearchFormComponent implements OnInit, OnDestroy {
 
   private isKeyDown = false;
   private defaultCategory = 'All Categories';
-  private subscriptions: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     private fb: FormBuilder,

@@ -14,7 +14,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   loading = false;
   error: Error | null = null;
   private navigationData?: Product;
-  private subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     private router: Router,
@@ -32,7 +32,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
     this.navigationData
       ? this.handleProductSuccess(this.navigationData)
-      : this.subscription.add(
+      : this.subscriptions.add(
           this.productService
             .getProduct(productID!)
             .subscribe(
@@ -53,6 +53,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

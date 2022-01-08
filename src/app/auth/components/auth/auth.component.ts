@@ -13,7 +13,7 @@ import { AuthErrorService } from '../../services/auth-error.service';
 })
 export class AuthComponent implements OnInit, OnDestroy {
   private signInURL = 'signin';
-  private routerEventSubscription!: Subscription;
+  private subscriptions = new Subscription();
 
   isSignUrl = this.router.url.includes(this.signInURL);
   authError: Observable<string | null> = of(null);
@@ -25,11 +25,13 @@ export class AuthComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.routerEventSubscription = this.router.events
-      .pipe(filter((events) => events instanceof NavigationEnd))
-      .subscribe(
-        (event: any) => (this.isSignUrl = event.url.includes(this.signInURL))
-      );
+    this.subscriptions.add(
+      this.router.events
+        .pipe(filter((events) => events instanceof NavigationEnd))
+        .subscribe(
+          (event: any) => (this.isSignUrl = event.url.includes(this.signInURL))
+        )
+    );
 
     this.authError = this.authErrorService.authError$;
   }
@@ -43,6 +45,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.routerEventSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

@@ -22,12 +22,12 @@ export class ProductCarouselComponent implements AfterViewInit, OnDestroy {
 
   currentImageIndex = 0;
 
-  private subscription: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
-    this.subscription.add(
+    this.subscriptions.add(
       this.swiperEl.indexChange
         .asObservable()
         .subscribe(this.handleIndexChange.bind(this))
@@ -44,6 +44,6 @@ export class ProductCarouselComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

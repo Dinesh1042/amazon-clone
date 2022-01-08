@@ -18,7 +18,7 @@ export class AddCartBtnComponent implements OnInit, OnDestroy {
   shoppingCart?: ShoppingCart;
   quantity = this.cartProductQuantity;
 
-  private subscription: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     private cartService: ShoppingCartService,
@@ -26,7 +26,7 @@ export class AddCartBtnComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription.add(
+    this.subscriptions.add(
       this.cartService.getCart().subscribe((cart) => {
         this.shoppingCart = cart;
         this.quantity = this.cartProductQuantity;
@@ -72,6 +72,6 @@ export class AddCartBtnComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

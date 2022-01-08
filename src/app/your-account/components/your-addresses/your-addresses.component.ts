@@ -19,7 +19,7 @@ export class YourAddressesComponent implements OnInit, OnDestroy {
   addresses?: Shipping[];
   error: Error | null = null;
 
-  private subscriptions: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     private userService: UserService,

@@ -11,21 +11,23 @@ import { filter } from 'rxjs/operators';
 export class AppComponent implements OnInit, OnDestroy {
   isAuthUrl = false;
   private authURL = 'auth';
-  private routeEventSubscription!: Subscription;
+  private subscriptions = new Subscription();
   isLoading = false;
 
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.routeEventSubscription = this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(
-        (navigationEnd: any) =>
-          (this.isAuthUrl = navigationEnd.url.includes(this.authURL))
-      );
+    this.subscriptions.add(
+      this.router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe(
+          (navigationEnd: any) =>
+            (this.isAuthUrl = navigationEnd.url.includes(this.authURL))
+        )
+    );
   }
 
   ngOnDestroy() {
-    this.routeEventSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

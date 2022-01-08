@@ -12,13 +12,13 @@ export class OrdersCompletedComponent implements OnInit, OnDestroy {
   loading = false;
   error: Error | null = null;
 
-  private subscription: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(private orderService: OrderService) {}
 
   ngOnInit() {
     this.loading = true;
-    this.subscription.add(
+    this.subscriptions.add(
       this.orderService
         .getDeliveredOrders()
         .subscribe(
@@ -39,6 +39,6 @@ export class OrdersCompletedComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

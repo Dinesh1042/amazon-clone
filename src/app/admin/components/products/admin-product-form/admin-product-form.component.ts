@@ -34,11 +34,9 @@ export class AdminProductFormComponent implements OnInit, OnDestroy {
   loading = false;
   categoryList!: Observable<Category[]>;
 
-  private productFormSubscription!: Subscription;
-  private filesEventSubscription!: Subscription;
-  private removeImageEventSubscription!: Subscription;
   private deleteImages: string[] = [];
   private isChangesOccurred = false;
+  private subscriptions = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -65,24 +63,27 @@ export class AdminProductFormComponent implements OnInit, OnDestroy {
 
     this.productFormEvent.emit(this.productForm.value);
 
-    this.productFormSubscription = this.productForm.valueChanges.subscribe(
-      (form) => {
+    this.subscriptions.add(
+      this.productForm.valueChanges.subscribe((form) => {
         this.productFormEvent.emit(form);
         !this.isChangesOccurred &&
           this.productForm.dirty &&
           this.changesSavedEvent.emit(false);
         this.isChangesOccurred = this.productForm.dirty;
-      }
+      })
     );
 
-    this.filesEventSubscription = this.cardComponent.addImageEvent$.subscribe(
-      (file) => this.addImages(file)
+    this.subscriptions.add(
+      this.cardComponent.addImageEvent$.subscribe((file) =>
+        this.addImages(file)
+      )
     );
 
-    this.removeImageEventSubscription =
+    this.subscriptions.add(
       this.cardComponent.removeImageEvent$.subscribe((index) =>
         this.removeImage(index)
-      );
+      )
+    );
 
     if (this.isEditProduct && this.editProductValue) {
       this.productForm.patchValue(this.editProductValue);
@@ -116,8 +117,7 @@ export class AdminProductFormComponent implements OnInit, OnDestroy {
 
     submitProduct.subscribe(
       this.handleSuccess.bind(this),
-      this.handleError.bind(this),
-      () => console.log`Saved To DataBase`
+      this.handleError.bind(this)
     );
   }
 
@@ -187,8 +187,6 @@ export class AdminProductFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.filesEventSubscription.unsubscribe();
-    this.productFormSubscription.unsubscribe();
-    this.removeImageEventSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

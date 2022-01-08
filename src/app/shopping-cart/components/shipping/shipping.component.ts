@@ -27,7 +27,7 @@ export class ShippingComponent implements OnInit {
   error: Error | null = null;
   orderPlacedLoading = false;
 
-  private subscription: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     private cartService: ShoppingCartService,
@@ -38,7 +38,7 @@ export class ShippingComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.subscription.add(
+    this.subscriptions.add(
       this.cartService
         .getCart()
         .subscribe(
@@ -97,6 +97,6 @@ export class ShippingComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

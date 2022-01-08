@@ -14,13 +14,13 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   loading = false;
   error: Error | null = null;
 
-  private subscription: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(private cartService: ShoppingCartService) {}
 
   ngOnInit() {
     this.loading = true;
-    this.subscription.add(
+    this.subscriptions.add(
       this.cartService
         .getCart()
         .subscribe(
@@ -45,6 +45,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

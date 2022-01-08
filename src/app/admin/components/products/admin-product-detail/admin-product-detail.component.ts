@@ -20,7 +20,7 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
   deleteActionLoading = false;
 
   private productID: string | null = null;
-  private productSubscription?: Subscription;
+  private subscriptions = new Subscription();
 
   constructor(
     private adminProductService: AdminProductService,
@@ -33,12 +33,14 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
     this.pageLoading = true;
     this.productID = this.route.snapshot.paramMap.get('productID');
     if (this.productID)
-      this.productSubscription = this.adminProductService
-        .getProduct(this.productID)
-        .subscribe(
-          this.handleProductSuccess.bind(this),
-          this.handleProductError.bind(this)
-        );
+      this.subscriptions.add(
+        this.adminProductService
+          .getProduct(this.productID)
+          .subscribe(
+            this.handleProductSuccess.bind(this),
+            this.handleProductError.bind(this)
+          )
+      );
     else this.handleProductError(new Error('No Product Found'));
   }
 
@@ -74,7 +76,7 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
   private deleteProduct(value: boolean) {
     if (value && this.product && this.productID) {
       this.deleteActionLoading = true;
-      this.productSubscription?.unsubscribe();
+      this.subscriptions.unsubscribe();
 
       this.adminProductService
         .deleteProduct(this.product, this.productID)
@@ -98,6 +100,6 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.productSubscription?.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

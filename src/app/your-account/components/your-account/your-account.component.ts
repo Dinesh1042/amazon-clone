@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { User } from 'shared/models/user';
 import { AuthService } from 'shared/services/auth.service';
 import { UserService } from 'shared/services/user.service';
@@ -15,7 +15,7 @@ export class YourAccountComponent implements OnInit, OnDestroy {
   pageLoading = false;
   error: Error | null = null;
 
-  private subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     private router: Router,
@@ -27,7 +27,7 @@ export class YourAccountComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.pageLoading = true;
 
-    this.subscription.add(
+    this.subscriptions.add(
       this.userService.appUser$.subscribe(
         this.handleUserSuccess.bind(this),
         this.handleUserSuccess.bind(this)
@@ -54,6 +54,6 @@ export class YourAccountComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
