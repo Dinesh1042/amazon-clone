@@ -5,8 +5,9 @@ import { Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AlertComponent } from 'shared/components/alert/alert.component';
 import { Product } from 'shared/models/product';
-import { ProductService } from 'shared/services/product.service';
-import { EditComponentDeactivate } from 'src/app/admin/guard/edit-component-deactivate.guard';
+
+import { EditComponentDeactivate } from '../../../guard/edit-component-deactivate.guard';
+import { AdminProductService } from '../../../services/product/admin-product.service';
 
 @Component({
   selector: 'admin-product-edit',
@@ -21,13 +22,14 @@ export class AdminProductEditComponent
   isEditProduct = false;
   loading = false;
   error: Error | null = null;
+
   private isChangesSaved = true;
   private navigationData: Product | undefined;
 
   constructor(
+    private adminProductService: AdminProductService,
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService,
     private matDialog: MatDialog
   ) {
     this.navigationData = this.router.getCurrentNavigation()?.extras.state as
@@ -43,7 +45,7 @@ export class AdminProductEditComponent
 
       this.navigationData
         ? this.handleEditProductSuccess(this.navigationData)
-        : this.productService
+        : this.adminProductService
             .getProduct(editProductId)
             .pipe(take(1))
             .subscribe(

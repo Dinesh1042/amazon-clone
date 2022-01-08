@@ -10,12 +10,11 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FirebaseError } from '@firebase/util';
 import { Observable, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { Category } from 'shared/models/category';
 import { Product } from 'shared/models/product';
 import { CategoryService } from 'shared/services/category.service';
-import { ProductService } from 'shared/services/product.service';
 
+import { AdminProductService } from '../../../services/product/admin-product.service';
 import { AdminProductCardComponent } from '../admin-product-card/admin-product-card.component';
 
 @Component({
@@ -43,7 +42,7 @@ export class AdminProductFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private productService: ProductService,
+    private adminProductService: AdminProductService,
     private categoryService: CategoryService,
     private router: Router
   ) {
@@ -108,16 +107,18 @@ export class AdminProductFormComponent implements OnInit, OnDestroy {
 
     const submitProduct =
       this.editProductValue?.productID && this.isEditProduct
-        ? this.productService.updateProduct(
+        ? this.adminProductService.updateProduct(
             productFormValue,
             this.editProductValue.productID,
             this.deleteImages
           )
-        : this.productService.addProduct(productFormValue);
+        : this.adminProductService.addProduct(productFormValue);
 
-    submitProduct
-      .pipe(take(1))
-      .subscribe(this.handleSuccess.bind(this), this.handleError.bind(this));
+    submitProduct.subscribe(
+      this.handleSuccess.bind(this),
+      this.handleError.bind(this),
+      () => console.log`Saved To DataBase`
+    );
   }
 
   private addImages(image: File) {

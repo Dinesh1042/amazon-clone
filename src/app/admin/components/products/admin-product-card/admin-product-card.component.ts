@@ -14,11 +14,11 @@ export class AdminProductCardComponent {
     this._product = value;
   }
 
-  private _product = {} as Product;
   mainImageIndex = 0;
-
   addImageEvent$ = new EventEmitter<File>();
   removeImageEvent$ = new EventEmitter<number>();
+
+  private _product = {} as Product;
 
   constructor() {}
 

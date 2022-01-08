@@ -5,7 +5,8 @@ import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AlertComponent } from 'shared/components/alert/alert.component';
 import { Product } from 'shared/models/product';
-import { ProductService } from 'shared/services/product.service';
+
+import { AdminProductService } from '../../../services/product/admin-product.service';
 
 @Component({
   selector: 'admin-product-detail',
@@ -17,13 +18,14 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
   error?: Error;
   pageLoading = false;
   deleteActionLoading = false;
+
   private productID: string | null = null;
   private productSubscription?: Subscription;
 
   constructor(
+    private adminProductService: AdminProductService,
     private router: Router,
     private route: ActivatedRoute,
-    private productService: ProductService,
     private matDialog: MatDialog
   ) {}
 
@@ -31,7 +33,7 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
     this.pageLoading = true;
     this.productID = this.route.snapshot.paramMap.get('productID');
     if (this.productID)
-      this.productSubscription = this.productService
+      this.productSubscription = this.adminProductService
         .getProduct(this.productID)
         .subscribe(
           this.handleProductSuccess.bind(this),
@@ -66,6 +68,7 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(take(1))
       .subscribe(this.deleteProduct.bind(this));
+    // TODO: Refactor this code
   }
 
   private deleteProduct(value: boolean) {
@@ -73,7 +76,7 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
       this.deleteActionLoading = true;
       this.productSubscription?.unsubscribe();
 
-      this.productService
+      this.adminProductService
         .deleteProduct(this.product, this.productID)
         .subscribe(() => {
           this.deleteActionLoading = false;

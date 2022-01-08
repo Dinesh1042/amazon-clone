@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Product } from 'shared/models/product';
-import { ProductService } from 'shared/services/product.service';
+
+import { AdminProductService } from '../../../services/product/admin-product.service';
 
 @Component({
   selector: 'admin-products',
@@ -17,14 +18,14 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   private productSubscription?: Subscription;
 
   constructor(
-    private productService: ProductService,
+    private adminProductService: AdminProductService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.pageLoading = true;
-    this.productSubscription = this.productService
+    this.productSubscription = this.adminProductService
       .getAllProduct()
       .subscribe(
         this.handleProductSuccess.bind(this),
