@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { filter, switchMap, take } from 'rxjs/operators';
 import { AlertComponent } from 'shared/components/alert/alert.component';
 import { Product } from 'shared/models/product';
 
@@ -51,40 +51,45 @@ export class AdminProductDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteAlert() {
-    const dialogRef = this.matDialog.open(AlertComponent, {
-      data: {
-        title: `Delete Product?`,
-        body: `Are you sure to delete ${
-          this.product?.title.split(' ').slice(0, 4).join(' ') || `this product`
-        }. After you delete this, it can't be recovered.`,
-        cancelButton: 'Cancel',
-        confirmButton: 'Delete',
-      },
-      width: '95%',
-      maxWidth: 500,
-      panelClass: 'mat-dialog-box',
-    });
+  deleteProduct() {
+    if (this.product && this.productID)
+      this.showDeleteAlert()
+        .pipe(
+          filter((response) => !!response),
+          switchMap(() => {
+            this.deleteActionLoading = true;
+            this.subscriptions.unsubscribe();
 
-    dialogRef
-      .afterClosed()
-      .pipe(take(1))
-      .subscribe(this.deleteProduct.bind(this));
-    // TODO: Refactor this code
-  }
-
-  private deleteProduct(value: boolean) {
-    if (value && this.product && this.productID) {
-      this.deleteActionLoading = true;
-      this.subscriptions.unsubscribe();
-
-      this.adminProductService
-        .deleteProduct(this.product, this.productID)
+            return this.adminProductService.deleteProduct(
+              this.product!,
+              this.productID!
+            );
+          })
+        )
         .subscribe(() => {
           this.deleteActionLoading = false;
           this.router.navigate(['../'], { relativeTo: this.route });
         }, this.handleProductError.bind(this));
-    }
+  }
+
+  private showDeleteAlert() {
+    const dialogRef: MatDialogRef<AlertComponent, boolean> =
+      this.matDialog.open(AlertComponent, {
+        data: {
+          title: `Delete Product?`,
+          body: `Are you sure to delete ${
+            this.product?.title.split(' ').slice(0, 4).join(' ') ||
+            `this product`
+          }. After you delete this, it can't be recovered.`,
+          cancelButton: 'Cancel',
+          confirmButton: 'Delete',
+        },
+        width: '95%',
+        maxWidth: 500,
+        panelClass: 'mat-dialog-box',
+      });
+
+    return dialogRef.afterClosed();
   }
 
   private handleProductError(error: Error) {
