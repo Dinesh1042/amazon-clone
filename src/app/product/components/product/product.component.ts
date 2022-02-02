@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Product } from 'shared/models/product';
@@ -19,7 +20,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private titleService: Title
   ) {
     this.navigationData = this.router.getCurrentNavigation()?.extras.state as
       | Product
@@ -40,6 +42,8 @@ export class ProductComponent implements OnInit, OnDestroy {
               this.handleProductError.bind(this)
             )
         );
+
+    this.titleService.setTitle('Amazon');
   }
 
   private handleProductSuccess(product: Product) {

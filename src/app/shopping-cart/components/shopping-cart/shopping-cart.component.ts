@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { ShoppingCart } from 'shared/models/shopping-cart';
 import { ShoppingCartItem } from 'shared/models/shopping-cart-item';
@@ -16,7 +17,10 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(private cartService: ShoppingCartService) {}
+  constructor(
+    private cartService: ShoppingCartService,
+    private titleService: Title
+  ) {}
 
   ngOnInit() {
     this.loading = true;
@@ -28,6 +32,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
           this.handleCartError.bind(this)
         )
     );
+
+    this.titleService.setTitle('Cart - Amazon');
   }
 
   trackByCartId(_index: number, cartProduct: ShoppingCartItem) {

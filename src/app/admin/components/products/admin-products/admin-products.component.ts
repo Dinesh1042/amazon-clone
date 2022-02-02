@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Product } from 'shared/models/product';
@@ -20,7 +21,8 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   constructor(
     private adminProductService: AdminProductService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +36,8 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
           this.handleProductError.bind(this)
         )
     );
+
+    this.titleService.setTitle('Admin - Amazon');
   }
 
   private handleProductError(error: Error) {

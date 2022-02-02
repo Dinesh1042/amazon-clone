@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Observable, of, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -21,7 +22,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private authErrorService: AuthErrorService
+    private authErrorService: AuthErrorService,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +36,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     );
 
     this.authError = this.authErrorService.authError$;
+    this.titleService.setTitle('Auth - Amazon');
   }
 
   removeAuthError() {

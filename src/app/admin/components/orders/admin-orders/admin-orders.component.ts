@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { snackBarConfig } from 'shared/config/snack-bar-config';
 import { Order } from 'shared/models/order/order';
+
 import { AdminOrderService } from '../../../services/order/admin-order.service';
 
 @Component({
@@ -9,7 +11,7 @@ import { AdminOrderService } from '../../../services/order/admin-order.service';
   templateUrl: './admin-orders.component.html',
   styleUrls: ['./admin-orders.component.scss'],
 })
-export class AdminOrdersComponent {
+export class AdminOrdersComponent implements OnInit {
   @Input('orders') orders?: Order[];
   @Input('pageLoading') pageLoading = false;
   @Input('error') error?: Error | null = null;
@@ -17,8 +19,13 @@ export class AdminOrdersComponent {
 
   constructor(
     private adminOrderService: AdminOrderService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private titleService: Title
   ) {}
+
+  ngOnInit(): void {
+    this.titleService.setTitle('Admin - Amazon');
+  }
 
   modifyCompleteStatus(orderID: string, isCompleted: boolean) {
     this.adminOrderService[

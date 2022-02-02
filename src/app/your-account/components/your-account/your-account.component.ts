@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'shared/models/user';
@@ -21,7 +22,8 @@ export class YourAccountComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +35,7 @@ export class YourAccountComponent implements OnInit, OnDestroy {
         this.handleUserSuccess.bind(this)
       )
     );
+    this.titleService.setTitle('Your Account - Amazon');
   }
 
   private handleUserSuccess(user: User) {
